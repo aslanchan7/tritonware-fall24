@@ -10,9 +10,22 @@ public class OverlayManager : MonoBehaviour
         HoverOverlay.SetActive(true);
     }
 
+
+
     public void HoverTile(Vector2Int pos)
     {
         HoverOverlay.transform.position = MapManager.Instance.GetWorldPos(pos);
+
+        /*
+        foreach (MapTile tile in MapManager.Instance.Tiles)
+        {
+            tile.SpriteRenderer.enabled = false;
+        }
+        foreach (MapTile tile in MapManager.Instance.GetTilesInRadius(pos, 2.5f))
+        {
+            tile.SpriteRenderer.enabled = true;
+        }
+        */
     }
 
     public void SelectTiles(Vector2Int pos1, Vector2Int pos2)
@@ -38,4 +51,6 @@ public class OverlayManager : MonoBehaviour
     {
         HoverOverlay.transform.localScale = Vector2.one;
     }
+
+
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -15,7 +16,7 @@ public class MapManager : MonoBehaviour
     public Transform GameGrid;
 
     public Vector2Int MapSize = new Vector2Int(80, 50);
-    private MapTile[,] tiles;
+    public MapTile[,] Tiles;
 
 
 
@@ -29,12 +30,38 @@ public class MapManager : MonoBehaviour
 
     public MapTile GetTile(Vector2Int pos)
     {
-        return tiles[pos.x, pos.y];
+        return Tiles[pos.x, pos.y];
     }
 
     public Unit GetUnit(Vector2Int pos)
     {
         return GetTile(pos).ContainedUnit;
+    }
+
+    public List<MapTile> GetTilesInRadius(Vector2Int origin, float radius)
+    {
+        int roundedRadius = (int)radius + 1;
+        List<MapTile> tiles = new List<MapTile>();
+        // draw a square with side 2r first, then select tiles that fit in the circle
+        for (int i = origin.x - roundedRadius; i <= origin.x + roundedRadius; i++)
+        {
+            for (int j = origin.y - roundedRadius; j <= origin.y + roundedRadius; j++)
+            {
+                Vector2Int pos = new Vector2Int(i, j);
+                // +0.05 to account for floating point precision
+                if (InBounds(pos) && Vector2Int.Distance(pos, origin) <= radius + 0.05f)
+                {
+                    tiles.Add(GetTile(pos));
+                }     
+
+            }
+        }
+        return tiles;
+    }
+
+    public bool InBounds(Vector2Int pos)
+    {
+        return pos.x >= 0 && pos.x < MapSize.x && pos.y >= 0 && pos.y < MapSize.y;
     }
 
     public Vector3 GetWorldPos(Vector2Int pos)
@@ -63,12 +90,12 @@ public class MapManager : MonoBehaviour
 
     public void CreateGameGrid()
     {
-        if (tiles != null)
+        if (Tiles != null)
         {
             Debug.LogWarning("Game Grid already exists");
             return;
         }
-        tiles = new MapTile[MapSize.x, MapSize.y];
+        Tiles = new MapTile[MapSize.x, MapSize.y];
         for (int i = 0; i < MapSize.x; i++)
         {
             for (int j = 0; j < MapSize.y; j++)
@@ -79,7 +106,7 @@ public class MapManager : MonoBehaviour
                 newTile.transform.position = new Vector2(i, j);
                 newTile.Pos = new Vector2Int(i, j);
                 newTile.SpriteRenderer.enabled = false;
-                tiles[i, j] = newTile;
+                Tiles[i, j] = newTile;
             }
         }
     }
@@ -98,7 +125,7 @@ public class MapManager : MonoBehaviour
         {
             DestroyImmediate(GameGrid.GetChild(0).gameObject);
         }
-        tiles = null;
+        Tiles = null;
     }
 
     public List<Unit> FindUnitsInArea(Vector2Int pos1, Vector2Int pos2)
