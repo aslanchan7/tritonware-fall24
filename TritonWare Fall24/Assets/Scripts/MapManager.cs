@@ -16,31 +16,38 @@ public class MapManager : MonoBehaviour
     public Vector2Int MapSize = new Vector2Int(80, 50);
     private MapTile[,] tiles;
 
+
+
     private void Awake()
     {
         Instance = this;
-        tiles = new MapTile[MapSize.x,MapSize.y];
-
         CreateGameGrid();
     }
 
-    private void CreateGameGrid()
+
+
+    public MapTile GetTile(Vector2Int pos)
     {
-        for (int i = 0; i < MapSize.x; i++)
-        {
-            for (int j = 0; j < MapSize.y; j++)
-            {
-                MapTile newTile = Instantiate(MapTilePrefab);
-                newTile.transform.SetParent(GameGrid, false);
-                newTile.transform.position = new Vector2(i, j);
-                newTile.Pos = new Vector2Int(i, j);
-                newTile.SpriteRenderer.enabled = false;
-                tiles[i, j] = newTile;
-            }
-        }
+        return tiles[pos.x,pos.y];
     }
 
-    [ExecuteInEditMode]
+    public Unit GetUnit(Vector2Int pos)
+    {
+        return GetTile(pos).ContainedUnit;
+    }
+
+    public Vector3 GetWorldPos(Vector2Int pos)
+    {
+        return Tilemap.CellToWorld((Vector3Int)pos);
+    }
+
+    public bool IsPassable(Vector2Int pos)
+    {
+        return GetTile(pos).ContainedUnit == null;
+        // todo structures
+    }
+
+
     public void CreateTileMap()
     {
         for (int x = 0; x < MapSize.x; x++)
@@ -53,8 +60,30 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    [ExecuteInEditMode]
-    public void ClearTiles()
+    public void CreateGameGrid()
+    {
+        if (tiles != null)
+        {
+            Debug.LogWarning("Game Grid already exists");
+            return;
+        }
+        tiles = new MapTile[MapSize.x, MapSize.y];
+        for (int i = 0; i < MapSize.x; i++)
+        {
+            for (int j = 0; j < MapSize.y; j++)
+            {
+                MapTile newTile = Instantiate(MapTilePrefab);
+                newTile.gameObject.name = $"Tile {i}, {j}";
+                newTile.transform.SetParent(GameGrid, false);
+                newTile.transform.position = new Vector2(i, j);
+                newTile.Pos = new Vector2Int(i, j);
+                newTile.SpriteRenderer.enabled = false;
+                tiles[i, j] = newTile;
+            }
+        }
+    }
+
+    public void ClearMap()
     {
         for (int x = 0; x < MapSize.x; x++)
         {
@@ -64,5 +93,11 @@ public class MapManager : MonoBehaviour
                 Tilemap.SetTile(tilePosition, null);
             }
         }
+        while (GameGrid.childCount > 0)
+        {
+            DestroyImmediate(GameGrid.GetChild(0).gameObject);
+        }
+        tiles = null;
     }
+
 }

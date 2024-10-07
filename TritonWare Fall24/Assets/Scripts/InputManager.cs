@@ -7,44 +7,44 @@ public class InputManager : MonoBehaviour
 {
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPos.z = 0;
+        Vector3Int tilemapCellPosition = MapManager.Instance.Tilemap.WorldToCell(mouseWorldPos);
+        Vector2Int pos = (Vector2Int)tilemapCellPosition;
+        if (MapManager.Instance.Tilemap.HasTile(tilemapCellPosition))
         {
-            SelectTile();
+            if (Input.GetMouseButtonUp(0))
+            {
+                SelectTile(pos);
+            }
+            if (Input.GetMouseButtonUp(1))
+            {
+                OrderTile(pos);
+            }
+            HoverTile(pos);
         }
+
 
     }
 
 
-    void HoverTile()
+    void HoverTile(Vector2Int pos)
     {
-        // Get the mouse position in world space
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorldPos.z = 0; // Reset the z-axis to 0 (since the tilemap is 2D)
-
-        // Convert the world position to the corresponding cell position in the grid
-        Vector3Int cellPosition = MapManager.Instance.Tilemap.WorldToCell(mouseWorldPos);
-
-        // Check if the tile exists at this cell position
-        if (MapManager.Instance.Tilemap.HasTile(cellPosition))
+        if (MapTile.lastHovered != MapManager.Instance.GetTile(pos))
         {
-            
+            OverlayManager.Instance.HoverTile(pos);
         }
     }
 
-    void SelectTile()
+    // LClick
+    void SelectTile(Vector2Int pos)
     {
-        // Get the mouse position in world space
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorldPos.z = 0; // Reset the z-axis to 0 (since the tilemap is 2D)
+        UnitController.Instance.SelectUnitAtPos(pos);
+    }
 
-        // Convert the world position to the corresponding cell position in the grid
-        Vector3Int cellPosition = MapManager.Instance.Tilemap.WorldToCell(mouseWorldPos);
-
-        // Check if the tile exists at this cell position
-        if (MapManager.Instance.Tilemap.HasTile(cellPosition))
-        {
-            Debug.Log("Tile clicked at: " + cellPosition);
-            // Do something when the tile is clicked, e.g., change the tile, highlight, etc.
-        }
+    // RClick
+    void OrderTile(Vector2Int pos)
+    {
+        UnitController.Instance.GiveOrder(pos);
     }
 }
