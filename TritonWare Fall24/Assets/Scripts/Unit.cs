@@ -20,15 +20,15 @@ public abstract class Unit : MonoBehaviour
     public void Move(Vector2Int targetPos)
     {
         if (targetPos == Pos) return;
+
         MapTile targetTile = MapManager.Instance.GetTile(targetPos);
-        MapManager.Instance.GetTile(Pos).ContainedUnit = null;
-        transform.SetParent(MapManager.Instance.GetTile(targetPos).transform, false);
         if (targetTile.ContainedUnit != null)
         {
             Debug.LogError("Tried to move into tile occupied by unit");
         }
+        MapManager.Instance.GetTile(Pos).ContainedUnit = null;
+        transform.SetParent(MapManager.Instance.GetTile(targetPos).transform, false);
         targetTile.ContainedUnit = this;
         Pos = targetPos;
     }
-
 }

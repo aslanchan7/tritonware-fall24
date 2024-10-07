@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.U2D.Aseprite;
@@ -28,7 +29,7 @@ public class MapManager : MonoBehaviour
 
     public MapTile GetTile(Vector2Int pos)
     {
-        return tiles[pos.x,pos.y];
+        return tiles[pos.x, pos.y];
     }
 
     public Unit GetUnit(Vector2Int pos)
@@ -98,6 +99,40 @@ public class MapManager : MonoBehaviour
             DestroyImmediate(GameGrid.GetChild(0).gameObject);
         }
         tiles = null;
+    }
+
+    public List<Unit> FindUnitsInArea(Vector2Int pos1, Vector2Int pos2)
+    {
+        int minX = Mathf.Min(pos1.x, pos2.x);
+        int maxX = Mathf.Max(pos1.x, pos2.x);
+        int minY = Mathf.Min(pos1.y, pos2.y);
+        int maxY = Mathf.Max(pos1.y, pos2.y);
+
+        List<Unit> foundUnits = new();
+
+        if (pos1 == pos2)
+        {
+            Unit unit = GetTile(pos1).ContainedUnit;
+            if (unit != null)
+            {
+                foundUnits.Add(unit);
+                return foundUnits;
+            }
+        }
+
+        for (int i = minX; i < maxX + 1; i++)
+        {
+            for (int j = minY; j < maxY + 1; j++)
+            {
+                Unit unit = GetTile(new Vector2Int(i, j)).ContainedUnit;
+                if (unit != null)
+                {
+                    foundUnits.Add(unit);
+                }
+            }
+        }
+
+        return foundUnits;
     }
 
 }
