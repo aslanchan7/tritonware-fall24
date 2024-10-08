@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
+using System.Collections;
 
 
 public abstract class Unit : Entity, IDamageable
 {
     public override bool BlocksMovement => true;
     public override bool BlocksVision => false;
-    public override Vector2Int Size => new Vector2Int(1,1);  
+    public override Vector2Int Size => new Vector2Int(1, 1);
 
     public int Health = 100;
     public int MaxHealth = 100;
@@ -14,10 +16,39 @@ public abstract class Unit : Entity, IDamageable
     public SpriteRenderer SelectIndicator;
     public UnitDisplay UnitDisplay;
 
+    // Pathfinding
+    public Seeker Seeker;
+    public Path CurrentPath;
+
+    public void Awake()
+    {
+        Seeker = GetComponent<Seeker>();
+    }
+
     // Pathfinding should be done as a series of Move() calls
     public void Pathfind(Vector2Int targetPos)
     {
-        // todo
+        Vector2 startPos = Pos.GetTileCenter();
+        Vector2 targetPosCenter = targetPos.GetTileCenter();
+        Seeker.StartPath(startPos, targetPosCenter, OnPathComplete);
+    }
+
+    public void OnPathComplete(Path p)
+    {
+        if (!p.error)
+        {
+            CurrentPath = p;
+
+            for (int i = 0; i < CurrentPath.vectorPath.Count; i++)
+            {
+                Vector2Int targetPos = new Vector2Int((int)CurrentPath.vectorPath[i].x, (int)CurrentPath.vectorPath[i].y);
+                Move(targetPos);
+            }
+        }
+        else
+        {
+            Debug.LogError("Error while finding path using A*");
+        }
     }
 
     // Finalizes moves a unit from one tile to another
@@ -44,11 +75,11 @@ public abstract class Unit : Entity, IDamageable
 
         UnitDisplay.UpdateDisplay();
     }
-    
+
     public List<Unit> GetUnitsInRadius(float radius)
     {
         List<Unit> result = new List<Unit>();
-        foreach (MapTile tile in MapManager.Instance.GetTilesInRadius(Pos,radius))
+        foreach (MapTile tile in MapManager.Instance.GetTilesInRadius(Pos, radius))
         {
             if (tile.ContainedUnit != null)
             {
@@ -57,5 +88,4 @@ public abstract class Unit : Entity, IDamageable
         }
         return result;
     }
-    
 }

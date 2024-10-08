@@ -75,7 +75,7 @@ public class Weapon : MonoBehaviour
     // allied units do not block bullets
     private List<IDamageable> GetShootableTargets()
     {
-        
+
         List<IDamageable> targets = WeaponHolder.GetUnitsInRadius(WeaponRange).Cast<IDamageable>().ToList();
         // TODO: find other damageables (if any)
         List<IDamageable> result = new List<IDamageable>();
@@ -124,11 +124,11 @@ public class Weapon : MonoBehaviour
                     continue;
                 }
             }
-            
+
         }
         return result;
     }
-    
+
     // find the closest one or priority target
     private void SelectTarget()
     {
@@ -155,7 +155,7 @@ public class Weapon : MonoBehaviour
     // Can only shoot at anything damageable
     private void FireAt(IDamageable target)
     {
-        Vector2 direction = target.Pos - WeaponHolder.Pos; 
+        Vector2 direction = target.Pos - WeaponHolder.Pos;
         // Weapon Range +1 to account for target moving just out of range when firing
         float angleDeviation = UnityEngine.Random.Range(-Spread, Spread);   // inaccuracy
         direction = direction.Rotate(angleDeviation);

@@ -38,14 +38,16 @@ public class UnitController : MonoBehaviour
         AlliedUnit alliedUnit = (AlliedUnit)SelectedUnits[0];
         if (alliedUnit.IsControllable())
         {
-            SelectedUnits[0].Move(initPos);
+            // SelectedUnits[0].Move(initPos);
+            SelectedUnits[0].Pathfind(initPos);
             for (int i = 1; i < SelectedUnits.Count; i++)
             {
                 alliedUnit = (AlliedUnit)SelectedUnits[i];
                 if (alliedUnit.IsControllable())
                 {
                     pos = (Vector2Int)FindFreeNeighbor(initPos);
-                    SelectedUnits[i].Move(pos);
+                    // SelectedUnits[i].Move(pos);
+                    SelectedUnits[0].Pathfind(pos);
                 }
             }
         }
