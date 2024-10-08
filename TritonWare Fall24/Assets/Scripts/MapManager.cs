@@ -9,14 +9,16 @@ using UnityEngine.WSA;
 
 public class MapManager : MonoBehaviour
 {
-    public Tilemap Tilemap;
+    public Tilemap FloorTilemap;
+    public Tilemap WallTilemap;
     public TileBase TileBase;
     public static MapManager Instance;
     public MapTile MapTilePrefab;
+    public PermanentWall WallPrefab;
     public Transform GameGrid;
 
     public Vector2Int MapSize = new Vector2Int(80, 50);
-    public static Vector2 TileSize = new Vector2(1, 1);     // I hope we never need to change this
+    public static float TileSize = 1;     // I hope we never need to change this
     public MapTile[,] Tiles;
 
 
@@ -24,7 +26,7 @@ public class MapManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        CreateGameGrid();
+        InitGameGrid();
     }
 
 
@@ -67,13 +69,12 @@ public class MapManager : MonoBehaviour
 
     public Vector3 GetWorldPos(Vector2Int pos)
     {
-        return Tilemap.CellToWorld((Vector3Int)pos);
+        return FloorTilemap.CellToWorld((Vector3Int)pos);
     }
 
     public bool IsPassable(Vector2Int pos)
     {
-        return GetTile(pos).ContainedUnit == null;
-        // todo structures
+        return GetTile(pos).IsPassable();
     }
 
 
@@ -84,12 +85,12 @@ public class MapManager : MonoBehaviour
             for (int y = 0; y < MapSize.y; y++)
             {
                 Vector3Int tilePosition = new Vector3Int(x, y, 0);
-                Tilemap.SetTile(tilePosition, TileBase);
+                FloorTilemap.SetTile(tilePosition, TileBase);
             }
         }
     }
 
-    public void CreateGameGrid()
+    public void InitGameGrid()
     {
         if (Tiles != null)
         {
@@ -101,13 +102,19 @@ public class MapManager : MonoBehaviour
         {
             for (int j = 0; j < MapSize.y; j++)
             {
+                Vector2Int pos = new Vector2Int(i, j);
                 MapTile newTile = Instantiate(MapTilePrefab);
                 newTile.gameObject.name = $"Tile {i}, {j}";
                 newTile.transform.SetParent(GameGrid, false);
-                newTile.transform.position = new Vector2(i, j);
-                newTile.Pos = new Vector2Int(i, j);
+                newTile.transform.position = (Vector2)pos * TileSize;
+                newTile.Pos = pos;
                 newTile.SpriteRenderer.enabled = false;
                 Tiles[i, j] = newTile;
+
+                if (WallTilemap.HasTile((Vector3Int)pos))
+                {
+                    Instantiate(WallPrefab).Place(pos);
+                }
             }
         }
     }
@@ -119,7 +126,7 @@ public class MapManager : MonoBehaviour
             for (int y = 0; y < MapSize.y; y++)
             {
                 Vector3Int tilePosition = new Vector3Int(x, y, 0);
-                Tilemap.SetTile(tilePosition, null);
+                FloorTilemap.SetTile(tilePosition, null);
             }
         }
         while (GameGrid.childCount > 0)

@@ -13,6 +13,8 @@ public abstract class Entity : MonoBehaviour
         set { pos = value; }
     }
 
+    public abstract Vector2Int Size { get; }    // How many tiles does this entity extend from the bottom left corner
+
     public abstract bool BlocksMovement { get; }
     public abstract bool BlocksVision { get; }
     public abstract Team Team { get; }

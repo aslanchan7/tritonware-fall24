@@ -22,7 +22,7 @@ public class MapEditor : Editor
             }
             if (GUILayout.Button("Create Game Grid"))
             {
-                myScript.CreateGameGrid();
+                myScript.InitGameGrid();
             }
             if (GUILayout.Button("Clear Map"))
             {

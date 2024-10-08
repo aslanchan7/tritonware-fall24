@@ -11,9 +11,9 @@ public class InputManager : MonoBehaviour
     {
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0;
-        Vector3Int tilemapCellPosition = MapManager.Instance.Tilemap.WorldToCell(mouseWorldPos);
+        Vector3Int tilemapCellPosition = MapManager.Instance.FloorTilemap.WorldToCell(mouseWorldPos);
         Vector2Int pos = (Vector2Int)tilemapCellPosition;
-        if (MapManager.Instance.Tilemap.HasTile(tilemapCellPosition))
+        if (MapManager.Instance.FloorTilemap.HasTile(tilemapCellPosition))
         {
             if (Input.GetMouseButtonDown(0))
             {

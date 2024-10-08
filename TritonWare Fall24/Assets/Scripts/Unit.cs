@@ -6,6 +6,7 @@ public abstract class Unit : Entity, IDamageable
 {
     public override bool BlocksMovement => true;
     public override bool BlocksVision => false;
+    public override Vector2Int Size => new Vector2Int(1,1);  
 
     public int Health = 100;
     public int MaxHealth = 100;
@@ -26,9 +27,9 @@ public abstract class Unit : Entity, IDamageable
         if (targetPos == Pos) return;
 
         MapTile targetTile = MapManager.Instance.GetTile(targetPos);
-        if (targetTile.ContainedUnit != null)
+        if (!targetTile.IsPassable())
         {
-            Debug.LogError("Tried to move into tile occupied by unit");
+            Debug.LogError("Tried to move into occupied tile");
         }
         MapManager.Instance.GetTile(Pos).ContainedUnit = null;
         transform.SetParent(MapManager.Instance.GetTile(targetPos).transform, false);

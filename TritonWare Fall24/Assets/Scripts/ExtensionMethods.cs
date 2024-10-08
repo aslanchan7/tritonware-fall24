@@ -5,7 +5,7 @@ public static class ExtensionMethods
 {
     public static Vector2 GetTileCenter(this Vector2Int pos)
     {
-        return new Vector2(pos.x + MapManager.TileSize.x / 2, pos.y + MapManager.TileSize.y / 2);
+        return new Vector2(pos.x + MapManager.TileSize / 2, pos.y + MapManager.TileSize / 2);
     }
 
     public static Vector2 Rotate(this Vector2 v, float degrees)
