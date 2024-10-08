@@ -13,8 +13,6 @@ public abstract class Unit : Entity, IDamageable
     public SpriteRenderer SelectIndicator;
     public UnitDisplay UnitDisplay;
 
-
-
     // Pathfinding should be done as a series of Move() calls
     public void Pathfind(Vector2Int targetPos)
     {

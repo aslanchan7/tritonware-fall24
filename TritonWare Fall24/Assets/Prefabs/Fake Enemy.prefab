@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3893003577654363129}
   - component: {fileID: 6240536350291422159}
-  - component: {fileID: 8363232444821491787}
+  - component: {fileID: 2764859968438858023}
   m_Layer: 0
-  m_Name: Unit
+  m_Name: Fake Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,8 +54,8 @@ MonoBehaviour:
   Speed: 5
   SelectIndicator: {fileID: 8444976134248469652}
   UnitDisplay: {fileID: 7877729971490285209}
-  ForceEnemy: 0
---- !u!58 &8363232444821491787
+  ForceEnemy: 1
+--- !u!58 &2764859968438858023
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,7 +164,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0.92006624, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.018101081, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

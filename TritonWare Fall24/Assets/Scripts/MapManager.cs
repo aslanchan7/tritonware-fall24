@@ -16,6 +16,7 @@ public class MapManager : MonoBehaviour
     public Transform GameGrid;
 
     public Vector2Int MapSize = new Vector2Int(80, 50);
+    public static Vector2 TileSize = new Vector2(1, 1);     // I hope we never need to change this
     public MapTile[,] Tiles;
 
 
@@ -160,6 +161,11 @@ public class MapManager : MonoBehaviour
         }
 
         return foundUnits;
+    }
+
+    public static Vector2 GetTileCenter(Vector2Int pos)
+    {
+        return new Vector2(pos.x + 0.5f, pos.y + 0.5f);
     }
 
 }
