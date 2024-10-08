@@ -16,4 +16,9 @@ public static class ExtensionMethods
             v.x * Mathf.Sin(degrees) + v.y * Mathf.Cos(degrees)
         );
     }
+
+    public static Vector2Int GetGridPos(this Vector3 position)
+    {
+        return new Vector2Int((int)position.x, (int)position.y);
+    }
 }

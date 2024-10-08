@@ -19,6 +19,13 @@ public abstract class Unit : Entity, IDamageable
     // Pathfinding
     public Seeker Seeker;
     public Path CurrentPath;
+    public bool ReachedEndOfPath;
+    private int currentWaypoint = 0;
+    private float nextWaypointDistance = .2f;
+
+    // public Queue<Vector2> Moves = new();
+    // public Vector2 NextWaypoint;
+    // private Vector2 moveDir = Vector2.zero;
 
     public void Awake()
     {
@@ -38,12 +45,16 @@ public abstract class Unit : Entity, IDamageable
         if (!p.error)
         {
             CurrentPath = p;
+            currentWaypoint = 0;
+            // Moves.Clear();
 
-            for (int i = 0; i < CurrentPath.vectorPath.Count; i++)
-            {
-                Vector2Int targetPos = new Vector2Int((int)CurrentPath.vectorPath[i].x, (int)CurrentPath.vectorPath[i].y);
-                Move(targetPos);
-            }
+            // for (int i = 0; i < CurrentPath.vectorPath.Count; i++)
+            // {
+            //     Vector2Int targetPos = new Vector2Int((int)CurrentPath.vectorPath[i].x, (int)CurrentPath.vectorPath[i].y);
+            //     Move(targetPos);
+            //     // Moves.Enqueue(CurrentPath.vectorPath[i]);
+            // }
+            // // NextWaypoint = Moves.Dequeue();
         }
         else
         {
@@ -55,17 +66,17 @@ public abstract class Unit : Entity, IDamageable
     // In game this should normally be called for neighboring tiles only
     public void Move(Vector2Int targetPos)
     {
-        if (targetPos == Pos) return;
+        // if (targetPos == Pos) return;
 
-        MapTile targetTile = MapManager.Instance.GetTile(targetPos);
-        if (!targetTile.IsPassable())
-        {
-            Debug.LogError("Tried to move into occupied tile");
-        }
-        MapManager.Instance.GetTile(Pos).ContainedUnit = null;
-        transform.SetParent(MapManager.Instance.GetTile(targetPos).transform, false);
-        targetTile.ContainedUnit = this;
-        Pos = targetPos;
+        // MapTile targetTile = MapManager.Instance.GetTile(targetPos);
+        // if (!targetTile.IsPassable())
+        // {
+        //     Debug.LogError("Tried to move into occupied tile");
+        // }
+        // MapManager.Instance.GetTile(Pos).ContainedUnit = null;
+        // transform.SetParent(MapManager.Instance.GetTile(targetPos).transform, false);
+        // targetTile.ContainedUnit = this;
+        // Pos = targetPos;
     }
 
     public void Damage(int value)
@@ -87,5 +98,45 @@ public abstract class Unit : Entity, IDamageable
             }
         }
         return result;
+    }
+
+    void Update()
+    {
+        // If there is no path then don't run any of this code
+        // Note: If anything is to be added in Update func do it above these lines of code
+        if (CurrentPath == null) return;
+
+        ReachedEndOfPath = false;
+        // Find the center position of the unit
+        Vector3 unitPosCenter = new(transform.position.x + 0.5f, transform.position.y + 0.5f);
+        float distToWaypoint = Vector2.Distance(unitPosCenter, CurrentPath.vectorPath[currentWaypoint]);
+        if (distToWaypoint < nextWaypointDistance)
+        {
+            MapTile targetTile = MapManager.Instance.GetTile(CurrentPath.vectorPath[currentWaypoint].GetGridPos());
+            MapManager.Instance.GetTile(Pos).ContainedUnit = null;
+            transform.SetParent(targetTile.transform, false);
+            targetTile.ContainedUnit = this;
+            Pos = CurrentPath.vectorPath[currentWaypoint].GetGridPos();
+            // Reset localPosition because localPosition is being offset when moving between tiles
+            // Once unit has reached a tile then it should snap to that new tile - which is what this is doing
+            transform.localPosition = Vector2.zero;
+
+            if (currentWaypoint + 1 < CurrentPath.vectorPath.Count)
+            {
+                currentWaypoint++;
+            }
+            else
+            {
+                ReachedEndOfPath = true;
+            }
+        }
+
+        Vector2 moveDir = (CurrentPath.vectorPath[currentWaypoint] - unitPosCenter).normalized;
+        Vector2 velocity = moveDir * Speed;
+
+        if (!ReachedEndOfPath)
+        {
+            transform.localPosition += (Vector3)velocity * Time.deltaTime;
+        }
     }
 }

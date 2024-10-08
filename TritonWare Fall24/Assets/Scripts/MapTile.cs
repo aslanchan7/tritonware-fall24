@@ -9,6 +9,7 @@ public class MapTile : MonoBehaviour
 
     public static MapTile lastHovered = null;
 
+
     // whether movement can pass through
     public bool IsPassable()
     {

@@ -47,7 +47,7 @@ public class UnitController : MonoBehaviour
                 {
                     pos = (Vector2Int)FindFreeNeighbor(initPos);
                     // SelectedUnits[i].Move(pos);
-                    SelectedUnits[0].Pathfind(pos);
+                    SelectedUnits[i].Pathfind(pos);
                 }
             }
         }
