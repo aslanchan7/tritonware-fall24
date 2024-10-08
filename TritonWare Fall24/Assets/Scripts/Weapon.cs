@@ -77,7 +77,6 @@ public class Weapon : MonoBehaviour
     {
         
         List<IDamageable> targets = WeaponHolder.GetUnitsInRadius(WeaponRange).Cast<IDamageable>().ToList();
-        Debug.Log($"targets in range: {targets.ToCommaSeparatedString()}");
         // TODO: find other damageables (if any)
         List<IDamageable> result = new List<IDamageable>();
         Vector2 source = WeaponHolder.Pos.GetTileCenter();
@@ -97,7 +96,6 @@ public class Weapon : MonoBehaviour
             RaycastHit2D[] hits = Physics2D.RaycastAll(source, direction, WeaponRange, layermask);
             foreach (RaycastHit2D hit in hits)
             {
-                Debug.Log(hit.collider.gameObject.name);
                 Entity hitEntity = hit.collider.GetComponent<Entity>();
                 if (hitEntity is IDamageable d && target == d)
                 {
@@ -128,7 +126,6 @@ public class Weapon : MonoBehaviour
             }
             
         }
-        Debug.Log($"targets found: {result.ToCommaSeparatedString()}");
         return result;
     }
     
@@ -208,8 +205,8 @@ public class Weapon : MonoBehaviour
 
         if (target is IDamageable dam)
         {
-            if (GameManager.OpposingTeams(target.Team, WeaponHolder.Team))
-                Debug.LogWarning("undefined weapon behavior");
+            if (!GameManager.OpposingTeams(target.Team, WeaponHolder.Team))
+                Debug.LogWarning($"undefined weapon behavior - hit {target.name}");
             dam.Damage(Damage);
         }
         Instantiate(TrailPrefab, transform).RenderTrail(source, source + direction * (distance + 0.5f), 0.1f);

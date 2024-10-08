@@ -17,7 +17,6 @@ public class StartingUnitSpawner : MonoBehaviour
                 Debug.LogError("Tried to spawn into tile occupied by unit");
             }
             targetTile.ContainedUnit = unit;
-            Debug.Log($"Moved {unit.name} to {unit.Pos}");
         }
     }
 }
