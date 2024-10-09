@@ -32,12 +32,22 @@ public abstract class Unit : Entity, IDamageable
         Seeker = GetComponent<Seeker>();
     }
 
+    public IEnumerator PathfindCoroutine(Vector2Int targetPos)
+    {
+        yield return StartCoroutine(Pathfind(targetPos));
+    }
+
     // Pathfinding should be done as a series of Move() calls
-    public void Pathfind(Vector2Int targetPos)
+    private IEnumerator Pathfind(Vector2Int targetPos)
     {
         Vector2 startPos = Pos.GetTileCenter();
         Vector2 targetPosCenter = targetPos.GetTileCenter();
         Seeker.StartPath(startPos, targetPosCenter, OnPathComplete);
+
+        // Wait for a small amount of time for A* algo to do its thing
+        // Usually A* takes 3-4ms to calculate the first time then the rest are almost instant (0.0ms)
+        // Note: this is a lil janky/hacky but works quite well
+        yield return new WaitForSeconds(0.05f);
     }
 
     public void OnPathComplete(Path p)
@@ -48,16 +58,6 @@ public abstract class Unit : Entity, IDamageable
 
             // currentWaypoint skips path's 1st tile because the 1st tile is the current tile that the unit is on
             currentWaypoint = 1;
-
-            // Moves.Clear();
-
-            // for (int i = 0; i < CurrentPath.vectorPath.Count; i++)
-            // {
-            //     Vector2Int targetPos = new Vector2Int((int)CurrentPath.vectorPath[i].x, (int)CurrentPath.vectorPath[i].y);
-            //     Move(targetPos);
-            //     // Moves.Enqueue(CurrentPath.vectorPath[i]);
-            // }
-            // // NextWaypoint = Moves.Dequeue();
         }
         else
         {

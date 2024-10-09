@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,28 +33,48 @@ public class UnitController : MonoBehaviour
 
     public void OrderMove(Vector2Int pos)
     {
+        // Vector2Int initPos = pos;
+        // // This is just used to check if selected unit is controllable
+        // AlliedUnit alliedUnit = (AlliedUnit)SelectedUnits[0];
+        // if (alliedUnit.IsControllable())
+        // {
+        //     // SelectedUnits[0].Move(initPos);
+        //     SelectedUnits[0].Pathfind(initPos);
+        //     for (int i = 1; i < SelectedUnits.Count; i++)
+        //     {
+        //         alliedUnit = (AlliedUnit)SelectedUnits[i];
+        //         if (alliedUnit.IsControllable())
+        //         {
+        //             pos = (Vector2Int)FindFreeNeighbor(initPos, i);
+        //             // SelectedUnits[i].Move(pos);
+        //             SelectedUnits[i].Pathfind(pos);
+        //         }
+        //     }
+        // }
+        StartCoroutine(OrderMoveCoroutine(pos));
+    }
 
+    private IEnumerator OrderMoveCoroutine(Vector2Int pos)
+    {
         Vector2Int initPos = pos;
         // This is just used to check if selected unit is controllable
         AlliedUnit alliedUnit = (AlliedUnit)SelectedUnits[0];
         if (alliedUnit.IsControllable())
         {
-            // SelectedUnits[0].Move(initPos);
-            SelectedUnits[0].Pathfind(initPos);
+            yield return StartCoroutine(SelectedUnits[0].PathfindCoroutine(initPos));
             for (int i = 1; i < SelectedUnits.Count; i++)
             {
                 alliedUnit = (AlliedUnit)SelectedUnits[i];
                 if (alliedUnit.IsControllable())
                 {
-                    pos = (Vector2Int)FindFreeNeighbor(initPos);
-                    // SelectedUnits[i].Move(pos);
-                    SelectedUnits[i].Pathfind(pos);
+                    pos = (Vector2Int)FindFreeNeighbor(initPos, i);
+                    yield return StartCoroutine(SelectedUnits[i].PathfindCoroutine(pos));
                 }
             }
         }
     }
 
-    private Vector2Int? FindFreeNeighbor(Vector2Int pos)
+    private Vector2Int? FindFreeNeighbor(Vector2Int pos, int index)
     {
         Queue<Vector2Int> toCheck = new Queue<Vector2Int>();
         toCheck.Enqueue(pos);
@@ -66,7 +87,23 @@ public class UnitController : MonoBehaviour
             // Check if the current box is free
             if (currentTile.ContainedUnit == null && MapManager.Instance.IsPassable(currentPos))
             {
-                return currentPos; // Found a free box
+                bool occupied = false;
+                for (int j = 0; j < index; j++)
+                {
+                    // This is just for debugging purposes if something goes wrong
+                    if (SelectedUnits[j].CurrentPath == null)
+                    {
+                        Debug.LogError("A* pathfinding needed more time to calculate the path. Look at UnitController.cs:50");
+                    }
+
+                    if (currentPos.Equals(SelectedUnits[j].CurrentPath.vectorPath[^1].GetGridPos()))
+                    {
+                        occupied = true;
+                        break;
+                    }
+                }
+
+                if (!occupied) return currentPos; // Found a free box
             }
 
             // Add neighboring positions to the queue
