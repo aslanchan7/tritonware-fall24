@@ -45,7 +45,10 @@ public abstract class Unit : Entity, IDamageable
         if (!p.error)
         {
             CurrentPath = p;
-            currentWaypoint = 0;
+
+            // currentWaypoint skips path's 1st tile because the 1st tile is the current tile that the unit is on
+            currentWaypoint = 1;
+
             // Moves.Clear();
 
             // for (int i = 0; i < CurrentPath.vectorPath.Count; i++)
@@ -117,6 +120,7 @@ public abstract class Unit : Entity, IDamageable
             transform.SetParent(targetTile.transform, false);
             targetTile.ContainedUnit = this;
             Pos = CurrentPath.vectorPath[currentWaypoint].GetGridPos();
+
             // Reset localPosition because localPosition is being offset when moving between tiles
             // Once unit has reached a tile then it should snap to that new tile - which is what this is doing
             transform.localPosition = Vector2.zero;
