@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &20604564 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1170834984752948479, guid: 9c28bf8f55cf13e4ba5438d3c4fa67c6, type: 3}
-  m_PrefabInstance: {fileID: 448856998}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &27599607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -199,16 +194,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1170834984752948479, guid: 9c28bf8f55cf13e4ba5438d3c4fa67c6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 618366067}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c28bf8f55cf13e4ba5438d3c4fa67c6, type: 3}
---- !u!1 &40622108 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1170834984752948479, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
-  m_PrefabInstance: {fileID: 865400497}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &52257574
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -274,11 +261,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e7dc2eb1cb6744408d781372c27e40a, type: 3}
---- !u!1 &67536870 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1170834984752948479, guid: 9c28bf8f55cf13e4ba5438d3c4fa67c6, type: 3}
-  m_PrefabInstance: {fileID: 27599607}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &103045104 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3131390582832021465, guid: 5e7dc2eb1cb6744408d781372c27e40a, type: 3}
@@ -727,10 +709,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1170834984752948479, guid: 9c28bf8f55cf13e4ba5438d3c4fa67c6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1474194512}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c28bf8f55cf13e4ba5438d3c4fa67c6, type: 3}
 --- !u!4 &497002565 stripped
 Transform:
@@ -2174,34 +2153,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3893003577654363129, guid: 9c28bf8f55cf13e4ba5438d3c4fa67c6, type: 3}
   m_PrefabInstance: {fileID: 27599607}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &618366067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 67536870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: -1
 --- !u!212 &635871353 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 8775065050691159645, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
@@ -2384,44 +2335,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3893003577654363129, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 497002565}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1170834984752948479, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 865400501}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
 --- !u!4 &865400498 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3893003577654363129, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
   m_PrefabInstance: {fileID: 865400497}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &865400501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40622108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: -1
 --- !u!1 &870424601
 GameObject:
   m_ObjectHideFlags: 0
@@ -2460,7 +2380,7 @@ Transform:
   m_GameObject: {fileID: 870424601}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8202672, y: -0.47228518, z: -9.964299}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2548,49 +2468,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3893003577654363129, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 103045104}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1170834984752948479, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1891489573}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
---- !u!1 &1109458803 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1170834984752948479, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
-  m_PrefabInstance: {fileID: 1274107181}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1109458804 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3893003577654363129, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
   m_PrefabInstance: {fileID: 1274107181}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1109458806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1109458803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: -1
 --- !u!1001 &1121199310
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2673,10 +2557,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3893003577654363129, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2091345398}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1170834984752948479, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1957493756}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
 --- !u!1001 &1274107181
 PrefabInstance:
@@ -2760,10 +2641,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3893003577654363129, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1802853108}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1170834984752948479, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1109458806}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
 --- !u!212 &1442210804 stripped
 SpriteRenderer:
@@ -2775,34 +2653,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3893003577654363129, guid: 9c28bf8f55cf13e4ba5438d3c4fa67c6, type: 3}
   m_PrefabInstance: {fileID: 448856998}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1474194512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 20604564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: -1
 --- !u!1 &1496976542
 GameObject:
   m_ObjectHideFlags: 0
@@ -15019,82 +14869,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3131390582832021465, guid: 5e7dc2eb1cb6744408d781372c27e40a, type: 3}
   m_PrefabInstance: {fileID: 203356220}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1810906839 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1170834984752948479, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
-  m_PrefabInstance: {fileID: 2025437973}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1810906840 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3893003577654363129, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
   m_PrefabInstance: {fileID: 2025437973}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1810906842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1810906839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: -1
---- !u!1 &1891489570 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1170834984752948479, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
-  m_PrefabInstance: {fileID: 1107564117}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1891489571 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3893003577654363129, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
   m_PrefabInstance: {fileID: 1107564117}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1891489573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1891489570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: -1
 --- !u!1 &1914752128
 GameObject:
   m_ObjectHideFlags: 0
@@ -15145,44 +14929,11 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 8775065050691159645, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
   m_PrefabInstance: {fileID: 1107564117}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1957493753 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1170834984752948479, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
-  m_PrefabInstance: {fileID: 1121199310}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1957493754 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3893003577654363129, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
   m_PrefabInstance: {fileID: 1121199310}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1957493756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1957493753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: -1
 --- !u!1001 &2000411754
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15330,10 +15081,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3893003577654363129, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 536435253}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1170834984752948479, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1810906842}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
 --- !u!4 &2091345398 stripped
 Transform:

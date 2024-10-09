@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3893003577654363129}
   - component: {fileID: 6240536350291422159}
   - component: {fileID: 8363232444821491787}
+  - component: {fileID: 9110870361944811131}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Untagged
@@ -52,8 +53,11 @@ MonoBehaviour:
   Health: 100
   MaxHealth: 100
   Speed: 5
+  TaskQueue: []
   SelectIndicator: {fileID: 8444976134248469652}
   UnitDisplay: {fileID: 7877729971490285209}
+  Seeker: {fileID: 0}
+  ReachedEndOfPath: 0
   ForceEnemy: 0
 --- !u!58 &8363232444821491787
 CircleCollider2D:
@@ -90,6 +94,34 @@ CircleCollider2D:
   m_Offset: {x: 0.5, y: 0.5}
   serializedVersion: 2
   m_Radius: 0.4
+--- !u!114 &9110870361944811131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170834984752948479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
 --- !u!1 &3232462707821083613
 GameObject:
   m_ObjectHideFlags: 0

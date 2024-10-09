@@ -45,24 +45,6 @@ public class UnitController : MonoBehaviour
 
     public void OrderMove(Vector2Int pos)
     {
-        // Vector2Int initPos = pos;
-        // // This is just used to check if selected unit is controllable
-        // AlliedUnit alliedUnit = (AlliedUnit)SelectedUnits[0];
-        // if (alliedUnit.IsControllable())
-        // {
-        //     // SelectedUnits[0].Move(initPos);
-        //     SelectedUnits[0].Pathfind(initPos);
-        //     for (int i = 1; i < SelectedUnits.Count; i++)
-        //     {
-        //         alliedUnit = (AlliedUnit)SelectedUnits[i];
-        //         if (alliedUnit.IsControllable())
-        //         {
-        //             pos = (Vector2Int)FindFreeNeighbor(initPos, i);
-        //             // SelectedUnits[i].Move(pos);
-        //             SelectedUnits[i].Pathfind(pos);
-        //         }
-        //     }
-        // }
         StartCoroutine(OrderMoveCoroutine(pos));
     }
 

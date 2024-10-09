@@ -15,7 +15,7 @@ public abstract class Unit : Entity, IDamageable
     public int Health = 100;
     public int MaxHealth = 100;
     public float Speed = 5f;
-    
+
     // Tasks
     public List<Task> TaskQueue = new List<Task>();     // stores the immediate next task at index 0
 
@@ -29,10 +29,6 @@ public abstract class Unit : Entity, IDamageable
     public bool ReachedEndOfPath;
     private int currentWaypoint = 0;
     private float nextWaypointDistance = .2f;
-
-    // public Queue<Vector2> Moves = new();
-    // public Vector2 NextWaypoint;
-    // private Vector2 moveDir = Vector2.zero;
 
     public void Awake()
     {
@@ -108,23 +104,6 @@ public abstract class Unit : Entity, IDamageable
         {
             Debug.LogError("Error while finding path using A*");
         }
-    }
-
-    // Finalizes moves a unit from one tile to another
-    // In game this should normally be called for neighboring tiles only
-    public void Move(Vector2Int targetPos)
-    {
-        // if (targetPos == Pos) return;
-
-        // MapTile targetTile = MapManager.Instance.GetTile(targetPos);
-        // if (!targetTile.IsPassable())
-        // {
-        //     Debug.LogError("Tried to move into occupied tile");
-        // }
-        // MapManager.Instance.GetTile(Pos).ContainedUnit = null;
-        // transform.SetParent(MapManager.Instance.GetTile(targetPos).transform, false);
-        // targetTile.ContainedUnit = this;
-        // Pos = targetPos;
     }
 
     public void Damage(int value)
