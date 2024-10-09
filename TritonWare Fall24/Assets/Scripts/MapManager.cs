@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.WSA;
 
+
 public class MapManager : MonoBehaviour
 {
     public Tilemap FloorTilemap;
@@ -27,6 +28,7 @@ public class MapManager : MonoBehaviour
     {
         Instance = this;
         InitGameGrid();
+
     }
 
 

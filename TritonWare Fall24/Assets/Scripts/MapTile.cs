@@ -6,6 +6,7 @@ public class MapTile : MonoBehaviour
     public SpriteRenderer SpriteRenderer;
     public Unit ContainedUnit;
     public Structure ContainedStructure;
+    public Workstation ReservingWorkstation;
 
     public static MapTile lastHovered = null;
 
@@ -13,7 +14,9 @@ public class MapTile : MonoBehaviour
     // whether movement can pass through
     public bool IsPassable()
     {
-        return (ContainedUnit == null && (ContainedStructure == null || !ContainedStructure.BlocksMovement));
+        return (ContainedUnit == null &&                                                    // there is no unit in the way
+                (ContainedStructure == null || !ContainedStructure.BlocksMovement));        // there is no structure in the way that blocks movement
+                //ReservingWorkstation == null);                                              // there is no workstation that reserves this tile as a WorkTile
     }
 
     // whether vision can pass through

@@ -27,6 +27,18 @@ public class UnitController : MonoBehaviour
         if (MapManager.Instance.IsPassable(pos) && SelectedUnits.Count > 0
             && SelectedUnits[0] is AlliedUnit a)
         {
+            foreach (var unit in SelectedUnits)
+            {
+                unit.ClearTasks();
+            }
+            if (SelectedUnits.Count == 1)   // can only give tasks to one unit at a time (for now)
+            {
+                Workstation ws = MapManager.Instance.GetTile(pos).ReservingWorkstation;
+                if (ws != null)     // clicked on a work tile
+                {
+                    ws.PrepareTask(SelectedUnits[0]);
+                }
+            }
             OrderMove(pos);
         }
     }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 using System.Collections;
+using UnityEditor.Experimental.GraphView;
 
 
 public abstract class Unit : Entity, IDamageable
@@ -10,9 +11,15 @@ public abstract class Unit : Entity, IDamageable
     public override bool BlocksVision => false;
     public override Vector2Int Size => new Vector2Int(1, 1);
 
+    // Stats
     public int Health = 100;
     public int MaxHealth = 100;
     public float Speed = 5f;
+    
+    // Tasks
+    public List<Task> TaskQueue = new List<Task>();     // stores the immediate next task at index 0
+
+
     public SpriteRenderer SelectIndicator;
     public UnitDisplay UnitDisplay;
 
@@ -30,6 +37,44 @@ public abstract class Unit : Entity, IDamageable
     public void Awake()
     {
         Seeker = GetComponent<Seeker>();
+    }
+
+
+    public void EnqueueTask(Task task)          // instantiated (non template) classes only!
+    {
+        if (task.IsTemplate) Debug.LogError("Trying to assign template task!");
+        TaskQueue.Add(task);
+    }
+
+    public void ClearTasks()                    // pauses all ongoing tasks and remove from queue
+    {
+        while (TaskQueue.Count > 0)
+        {
+            TaskQueue[0].PauseTask();
+        }
+    }
+
+    public bool RemoveTask(Task task)           // unassigns this task from this unit but do not destroy it
+    {
+        return TaskQueue.Remove(task);
+    }
+
+    public Task GetCurrentTask()
+    {
+        if (TaskQueue.Count > 0) { return TaskQueue[0]; }
+        else return null;
+    }
+
+    private void CheckWorkableTask()    // on arriving at move destination, see if the enqueued task is workable, and start working if yes
+    {
+        Task currentTask = GetCurrentTask();
+        if (currentTask != null)
+        {
+            if (currentTask.ValidWorkingPositions.Contains(Pos))
+            {
+                currentTask.StartTask();
+            }
+        }
     }
 
     public IEnumerator PathfindCoroutine(Vector2Int targetPos)
@@ -90,6 +135,7 @@ public abstract class Unit : Entity, IDamageable
         UnitDisplay.UpdateDisplay();
     }
 
+
     public List<Unit> GetUnitsInRadius(float radius)
     {
         List<Unit> result = new List<Unit>();
@@ -141,6 +187,11 @@ public abstract class Unit : Entity, IDamageable
         if (!ReachedEndOfPath)
         {
             transform.localPosition += (Vector3)velocity * Time.deltaTime;
+        }
+        else
+        {
+            CheckWorkableTask();
+            ReachedEndOfPath = false;
         }
     }
 }
