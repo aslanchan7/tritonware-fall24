@@ -91,6 +91,22 @@ public abstract class Unit : Entity, IDamageable
         yield return new WaitForSeconds(0.05f);
     }
 
+    // Finalizes moves a unit from one tile to another
+    // In game this should normally be called for neighboring tiles only
+    public void Move(Vector2Int targetPos)
+    {
+        if (targetPos == Pos) return;
+        MapTile targetTile = MapManager.Instance.GetTile(targetPos);
+        if (!targetTile.IsPassable())
+        {
+            Debug.LogWarning("Tried to move into occupied tile");
+        }
+        MapManager.Instance.GetTile(Pos).ContainedUnit = null;
+        transform.SetParent(targetTile.transform, false);
+        targetTile.ContainedUnit = this;
+        Pos = targetPos;
+    }
+
     public void OnPathComplete(Path p)
     {
         if (!p.error)
@@ -128,11 +144,10 @@ public abstract class Unit : Entity, IDamageable
         return result;
     }
 
-    void Update()
+    // returns true if destination is reached
+    public bool MoveAlongPath()
     {
-        // If there is no path then don't run any of this code
-        // Note: If anything is to be added in Update func do it above these lines of code
-        if (CurrentPath == null) return;
+        if (CurrentPath == null) return false;
 
         ReachedEndOfPath = false;
         // Find the center position of the unit
@@ -140,11 +155,7 @@ public abstract class Unit : Entity, IDamageable
         float distToWaypoint = Vector2.Distance(unitPosCenter, CurrentPath.vectorPath[currentWaypoint]);
         if (distToWaypoint < nextWaypointDistance)
         {
-            MapTile targetTile = MapManager.Instance.GetTile(CurrentPath.vectorPath[currentWaypoint].GetGridPos());
-            MapManager.Instance.GetTile(Pos).ContainedUnit = null;
-            transform.SetParent(targetTile.transform, false);
-            targetTile.ContainedUnit = this;
-            Pos = CurrentPath.vectorPath[currentWaypoint].GetGridPos();
+            Move(CurrentPath.vectorPath[currentWaypoint].GetGridPos());
 
             // Reset localPosition because localPosition is being offset when moving between tiles
             // Once unit has reached a tile then it should snap to that new tile - which is what this is doing
@@ -161,6 +172,7 @@ public abstract class Unit : Entity, IDamageable
         }
 
         Vector2 moveDir = (CurrentPath.vectorPath[currentWaypoint] - unitPosCenter).normalized;
+        Debug.Log($"wp:{CurrentPath.vectorPath[currentWaypoint]}, pos:{unitPosCenter}");
         Vector2 velocity = moveDir * Speed;
 
         if (!ReachedEndOfPath)
@@ -169,8 +181,22 @@ public abstract class Unit : Entity, IDamageable
         }
         else
         {
-            CheckWorkableTask();
             ReachedEndOfPath = false;
+            return true;
+        }
+        return false;
+    }
+
+    void Update()
+    {
+        bool reachedDestination = false;
+        if (CurrentPath != null)
+        {
+            reachedDestination = MoveAlongPath();
+        }
+        if (reachedDestination)
+        {
+            CheckWorkableTask();
         }
     }
 }

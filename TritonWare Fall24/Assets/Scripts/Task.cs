@@ -24,14 +24,14 @@ public abstract class Task : MonoBehaviour
         return clone;
     }
 
-    public virtual void AssignTask(Unit worker)
+    public virtual void AssignTask(Unit worker) // adds this task to the work queue of the targeted unit but do not start it yet
     {
         if (IsTemplate) Debug.LogWarning("Using Template Task instead of Instantiated Task");
         Worker = worker;
         worker.EnqueueTask(this);
     }
 
-    public virtual void StartTask()
+    public virtual void StartTask()             // starts progress on the task
     {
         if (IsTemplate) Debug.LogWarning("Using Template Task instead of Instantiated Task");
         IsStarted = true;
@@ -43,7 +43,7 @@ public abstract class Task : MonoBehaviour
 
     }
 
-    public virtual void PauseTask()     // pauses the task in progress and unassigns the worker but do not destroy unless not started or CancelOnInterrupt is true
+    public virtual void PauseTask()     // pauses the task in progress and unassigns the worker but do not destroy this task unless not started or CancelOnInterrupt is true
     {
         IsWorking = false;
         if (Worker != null) Worker.TaskQueue.Remove(this);
@@ -51,9 +51,10 @@ public abstract class Task : MonoBehaviour
         if (!IsStarted || CancelOnInterrupt) RemoveTask();
     }
 
-    public virtual void FinishTask()       // finishes a task and destroys it
+    public virtual void FinishTask()       // completes a task, triggering its completion effects and destroying it afterwards
     {
-
+        // individual task code
+        RemoveTask();
     }
 
     public virtual void RemoveTask()       // destroys an ongoing or finished task
