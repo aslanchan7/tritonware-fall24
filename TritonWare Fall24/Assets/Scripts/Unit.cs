@@ -172,7 +172,6 @@ public abstract class Unit : Entity, IDamageable
         }
 
         Vector2 moveDir = (CurrentPath.vectorPath[currentWaypoint] - unitPosCenter).normalized;
-        Debug.Log($"wp:{CurrentPath.vectorPath[currentWaypoint]}, pos:{unitPosCenter}");
         Vector2 velocity = moveDir * Speed;
 
         if (!ReachedEndOfPath)
