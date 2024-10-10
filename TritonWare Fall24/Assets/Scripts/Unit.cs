@@ -99,7 +99,7 @@ public abstract class Unit : Entity, IDamageable
         MapTile targetTile = MapManager.Instance.GetTile(targetPos);
         if (!targetTile.IsPassable())
         {
-            Debug.LogWarning("Tried to move into occupied tile");
+            Debug.LogWarning(this.gameObject.name + " tried to move into occupied tile");
         }
         MapManager.Instance.GetTile(Pos).ContainedUnit = null;
         transform.SetParent(targetTile.transform, false);
