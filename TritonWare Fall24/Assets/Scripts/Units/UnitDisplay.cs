@@ -6,10 +6,27 @@ using UnityEngine;
 
 public class UnitDisplay : MonoBehaviour
 {
-    public Unit Unit;
+    [HideInInspector] public Unit Unit;
     public RectTransform HealthForeground;
     public SpriteRenderer HealthSprite;
     public Color[] colors = new Color[5];
+
+    private void Awake()
+    {
+        Unit attachedUnit = GetComponentInParent<Unit>();
+        Debug.Log(attachedUnit);
+        if (attachedUnit != null)
+        {
+            Unit = attachedUnit;
+        }
+        else
+        {
+            Debug.LogWarning("UnitDisplay is not attached to an object of type Unit");
+        }
+
+        gameObject.SetActive(false);
+    }
+
     public void UpdateDisplay()
     {
         int Health = Unit.Health >= 0 ? Unit.Health : 0;
@@ -18,12 +35,15 @@ public class UnitDisplay : MonoBehaviour
 
 
         HealthSprite.color = colors[color];
-        if (Unit.Health == 100) {
+        if (Unit.Health == 100)
+        {
             gameObject.SetActive(false);
-        } else {
+        }
+        else
+        {
             gameObject.SetActive(true);
             HealthForeground.localScale = new Vector3(Health / 100f, 1f, 1f);
         }
     }
-    
+
 }

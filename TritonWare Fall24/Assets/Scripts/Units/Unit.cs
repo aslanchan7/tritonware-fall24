@@ -26,7 +26,7 @@ public abstract class Unit : Entity, IDamageable
     // Pathfinding
     public Seeker Seeker;
     public Path CurrentPath;
-    public bool ReachedEndOfPath;
+    [HideInInspector] public bool ReachedEndOfPath;
     private int currentWaypoint = 0;
     private float nextWaypointDistance = .2f;
 

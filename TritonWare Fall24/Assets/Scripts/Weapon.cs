@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 
 public class Weapon : MonoBehaviour
 {
-    public Unit WeaponHolder;
+    [HideInInspector] public Unit WeaponHolder;
     public int Damage = 10;
     public float Firerate = 2;  // shots per second
     public float WeaponRange = 6;   // radius in tiles
@@ -31,6 +31,11 @@ public class Weapon : MonoBehaviour
         {
             WeaponHolder = attachedUnit;
         }
+        else
+        {
+            Debug.LogWarning("Weapon is not attached to an object of type Unit");
+        }
+
         layermask = LayerMask.GetMask("Units", "Structures"); // anything that may interact with the path of a bullet
         shootingEnabled = true;
     }
