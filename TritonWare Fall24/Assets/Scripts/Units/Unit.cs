@@ -32,7 +32,7 @@ public abstract class Unit : Entity, IDamageable
     // private float nextWaypointDistance = .2f;
     private bool enableMovement = true;
     private int routeReservePenalty = 300;
-    private int standingPenalty = 1500;
+    private int standingPenalty = 4000;
     private int interruptsUntilRepath = 8;
     private int currentInterrupts = 0;
     private int repathsUntilGiveUp = 4;
@@ -55,6 +55,7 @@ public abstract class Unit : Entity, IDamageable
         }
         targetTile.ContainedUnit = this;
         ReserveTile(pos, standingPenalty);
+        GameManager.AllUnits.Add(this);
     }
 
 
@@ -95,8 +96,13 @@ public abstract class Unit : Entity, IDamageable
         }
     }
 
-    public IEnumerator PathfindCoroutine(Vector2Int targetPos)
+    public IEnumerator PathfindCoroutine(Vector2Int targetPos, bool resetCounters = true)
     {
+        if (resetCounters)
+        {
+            currentRepaths = 0;
+            currentInterrupts = 0;
+        }
         yield return StartCoroutine(Pathfind(targetPos));
     }
 
@@ -254,7 +260,7 @@ public abstract class Unit : Entity, IDamageable
             currentInterrupts = 0;
             currentRepaths++;
             InterruptMove(-1, true);
-            StartCoroutine(PathfindCoroutine(Destination));
+            StartCoroutine(PathfindCoroutine(Destination, false));
             return false;
         }
         if (!MapManager.Instance.IsPassable(nextTargetPos) && MapManager.Instance.GetTile(nextTargetPos).ContainedUnit != this)
@@ -314,11 +320,12 @@ public abstract class Unit : Entity, IDamageable
 
 
 
-    void Update()
+    protected virtual void Update()
     {
         bool reachedDestination = false;
         if (enableMovement && CurrentPath != null)
         {
+
             reachedDestination = MoveAlongPath();
         }
         if (reachedDestination)

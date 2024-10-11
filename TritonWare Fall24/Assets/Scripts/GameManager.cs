@@ -1,5 +1,22 @@
+using System.Collections.Generic;
+
 public class GameManager
 {
+    public static List<Unit> AllUnits = new List<Unit>();
+
+    public static List<Unit> GetUnitsOfTeam(Team team)
+    {
+        List<Unit> units = new List<Unit>();
+        foreach (Unit unit in AllUnits)
+        {
+            if (unit.Team == team)
+            {
+                units.Add(unit);
+            }
+        }
+        return units;
+    }
+
     public static bool OpposingTeams(Team team1, Team team2)
     {
         if (

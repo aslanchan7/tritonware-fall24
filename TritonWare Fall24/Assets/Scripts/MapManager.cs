@@ -188,4 +188,57 @@ public class MapManager : MonoBehaviour
         return new Vector2(pos.x + 0.5f, pos.y + 0.5f);
     }
 
+    // orthogonal adjacents only
+    public List<Vector2Int> GetAdjacents(Vector2Int pos)
+    {
+        List<Vector2Int> adjacents = new List<Vector2Int>();
+        foreach (Vector2Int toAdd in new Vector2Int[] {
+            new Vector2Int(pos.x - 1, pos.y), // Left
+            new Vector2Int(pos.x + 1, pos.y), // Right
+            new Vector2Int(pos.x, pos.y - 1), // Down
+            new Vector2Int(pos.x, pos.y + 1) }) { // Up
+
+            if (InBounds(toAdd)) adjacents.Add(toAdd);
+        }  
+
+        return adjacents;
+    }
+
+    // neighbors including diagonals
+    public List<Vector2Int> GetNeighbors(Vector2Int pos)
+    {
+        List<Vector2Int> neighbors = new();
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                if (i == j && i == 0) continue;
+                Vector2Int neighbor = pos + new Vector2Int(i, j);
+                if (InBounds(neighbor)) 
+                {
+                    neighbors.Add(neighbor);
+                }
+            }
+        }
+        return neighbors;
+    }
+
+    public List<Vector2Int> GetFreeNeighbors(Vector2Int pos)
+    {
+        List<Vector2Int> neighbors = new();
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                if (i == j && i == 0) continue;
+                Vector2Int neighbor = pos + new Vector2Int(i, j);
+                if (InBounds(neighbor) && IsPassable(neighbor))
+                {
+                    neighbors.Add(neighbor);
+                }
+            }
+        }
+        return neighbors;
+    }
+
 }

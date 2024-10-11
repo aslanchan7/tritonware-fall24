@@ -39,7 +39,7 @@ public class InputManager : MonoBehaviour
                 List<Unit> foundUnits = MapManager.Instance.FindUnitsInArea(startPos, pos);
                 foreach (var unit in foundUnits)
                 {
-                    SelectTile(unit.Pos);
+                    if (unit is AlliedUnit) SelectTile(unit.Pos);
                 }
 
                 OverlayManager.Instance.ResetHoverOverlay();

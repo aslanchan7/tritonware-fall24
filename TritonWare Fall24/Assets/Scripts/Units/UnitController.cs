@@ -101,7 +101,7 @@ public class UnitController : MonoBehaviour
             }
 
             // Add neighboring positions to the queue
-            foreach (Vector2Int neighbor in GetNeighbors(currentPos))
+            foreach (Vector2Int neighbor in MapManager.Instance.GetAdjacents(currentPos))
             {
                 if (neighbor.x >= 0 && neighbor.x < MapManager.Instance.MapSize.x &&
                     neighbor.y >= 0 && neighbor.y < MapManager.Instance.MapSize.y)
@@ -116,16 +116,5 @@ public class UnitController : MonoBehaviour
         return null;
     }
 
-    private List<Vector2Int> GetNeighbors(Vector2Int pos)
-    {
-        List<Vector2Int> neighbors = new List<Vector2Int>
-    {
-        new Vector2Int(pos.x - 1, pos.y), // Left
-        new Vector2Int(pos.x + 1, pos.y), // Right
-        new Vector2Int(pos.x, pos.y - 1), // Down
-        new Vector2Int(pos.x, pos.y + 1)  // Up
-    };
 
-        return neighbors;
-    }
 }

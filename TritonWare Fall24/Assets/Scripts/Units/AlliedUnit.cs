@@ -12,6 +12,5 @@ public abstract class AlliedUnit : Unit
     {
         return true; // todo
     }
-
     public abstract void SetEfficiencyValues();
 }
