@@ -26,13 +26,35 @@ public abstract class Unit : Entity, IDamageable
     // Pathfinding
     public Seeker Seeker;
     public Path CurrentPath;
+    public Vector2Int Destination;
     [HideInInspector] public bool ReachedEndOfPath;
     private int currentWaypoint = 0;
-    private float nextWaypointDistance = .2f;
+    // private float nextWaypointDistance = .2f;
+    private bool enableMovement = true;
+    private int routeReservePenalty = 300;
+    private int standingPenalty = 1500;
+    private int interruptsUntilRepath = 8;
+    private int currentInterrupts = 0;
+    private int repathsUntilGiveUp = 4;
+    private int currentRepaths = 0;
+    private Queue<TileReservation> reservedTiles = new Queue<TileReservation>();
+
 
     public void Awake()
     {
         Seeker = GetComponent<Seeker>();
+    }
+
+    public void Place(Vector2Int pos)
+    {
+        MapTile targetTile = MapManager.Instance.GetTile(pos);
+        transform.SetParent(MapManager.Instance.GetTile(pos).transform, false);
+        if (targetTile.ContainedUnit != null)
+        {
+            Debug.LogError("Tried to spawn into tile occupied by unit");
+        }
+        targetTile.ContainedUnit = this;
+        ReserveTile(pos, standingPenalty);
     }
 
 
@@ -81,10 +103,11 @@ public abstract class Unit : Entity, IDamageable
     // Pathfinding should be done as a series of Move() calls
     private IEnumerator Pathfind(Vector2Int targetPos)
     {
+        ClearPath();
         Vector2 startPos = Pos.GetTileCenter();
         Vector2 targetPosCenter = targetPos.GetTileCenter();
         Seeker.StartPath(startPos, targetPosCenter, OnPathComplete);
-
+        Destination = targetPos;
         // Wait for a small amount of time for A* algo to do its thing
         // Usually A* takes 3-4ms to calculate the first time then the rest are almost instant (0.0ms)
         // Note: this is a lil janky/hacky but works quite well
@@ -97,14 +120,20 @@ public abstract class Unit : Entity, IDamageable
     {
         if (targetPos == Pos) return;
         MapTile targetTile = MapManager.Instance.GetTile(targetPos);
-        if (!targetTile.IsPassable())
+        if (!targetTile.IsPassable() && targetTile.ContainedUnit != this)
         {
             Debug.LogWarning(this.gameObject.name + " tried to move into occupied tile");
         }
-        MapManager.Instance.GetTile(Pos).ContainedUnit = null;
+        UnreserveTile();
+        MapTile prevTile = MapManager.Instance.GetTile(Pos);
+        prevTile.ContainedUnit = null;
+        // PathfindingUtils.SetWalkable(Pos, prevTile.IsPassable());
         transform.SetParent(targetTile.transform, false);
         targetTile.ContainedUnit = this;
         Pos = targetPos;
+        currentInterrupts = 0;
+        currentRepaths = 0;
+        // PathfindingUtils.SetWalkable(Pos, targetTile.IsPassable());
     }
 
     public void OnPathComplete(Path p)
@@ -115,6 +144,12 @@ public abstract class Unit : Entity, IDamageable
 
             // currentWaypoint skips path's 1st tile because the 1st tile is the current tile that the unit is on
             currentWaypoint = 1;
+
+
+            foreach (var waypoint in CurrentPath.vectorPath)
+            {
+                ReserveTile(waypoint.GetGridPos(), routeReservePenalty);
+            }
         }
         else
         {
@@ -144,18 +179,107 @@ public abstract class Unit : Entity, IDamageable
         return result;
     }
 
+    // pauses movement towards destination for set amount of time. If time is negative, stop and also destroys the path.
+    private void InterruptMove(float time, bool preservePos)
+    {
+        if (!preservePos)
+        {
+            transform.localPosition = Vector2.zero;
+        }
+        if (time < 0)
+        {
+            ClearPath();
+        }
+        else
+        {
+            StopCoroutine("PauseMove");
+            StartCoroutine(PauseMove(time));
+        }
+
+    }
+
+    private void ClearPath()
+    {
+        while (reservedTiles.Count > 0)
+        {
+            UnreserveTile();
+        }
+        CurrentPath = null;
+    }
+
+    private void ReserveTile(Vector2Int pos, int penalty)
+    {
+        reservedTiles.Enqueue(new TileReservation(pos, penalty));
+        PathfindingUtils.ChangePenalty(pos, penalty);
+    }
+    private void UnreserveTile()
+    {
+        TileReservation tr = reservedTiles.Dequeue();
+        PathfindingUtils.ChangePenalty(tr.Pos, -tr.Penalty);
+    } 
+
+    private IEnumerator PauseMove(float time)
+    {
+        enableMovement = false;
+        yield return new WaitForSeconds(time);
+        enableMovement = true;
+    }
+
+    private void FinishPath()
+    {
+        ClearPath();
+        ReserveTile(Pos, standingPenalty);
+    }
+
+
     // returns true if destination is reached
     public bool MoveAlongPath()
     {
         if (CurrentPath == null) return false;
 
         ReachedEndOfPath = false;
+
+        Vector2Int nextTargetPos = CurrentPath.vectorPath[currentWaypoint].GetGridPos();
+        if (currentRepaths >= repathsUntilGiveUp)
+        {
+            Debug.LogWarning("Giving up -- terminating path");
+            currentInterrupts = 0;
+            currentRepaths = 0;
+            InterruptMove(-1, false);
+            return true;
+        }
+        if (currentInterrupts >= interruptsUntilRepath)
+        {
+            Debug.Log("Retrying -- Finding new path");
+            currentInterrupts = 0;
+            currentRepaths++;
+            InterruptMove(-1, true);
+            StartCoroutine(PathfindCoroutine(Destination));
+            return false;
+        }
+        if (!MapManager.Instance.IsPassable(nextTargetPos) && MapManager.Instance.GetTile(nextTargetPos).ContainedUnit != this)
+        {
+            Debug.Log("Path blocked -- waiting, current interrupts: " + currentInterrupts);
+            currentInterrupts++;
+            InterruptMove(0.05f, true);
+            return false;
+        }
+
+
+
         // Find the center position of the unit
         Vector3 unitPosCenter = new(transform.position.x + 0.5f, transform.position.y + 0.5f);
-        float distToWaypoint = Vector2.Distance(unitPosCenter, CurrentPath.vectorPath[currentWaypoint]);
-        if (distToWaypoint < nextWaypointDistance)
+        // float distToWaypoint = Vector2.Distance(unitPosCenter, CurrentPath.vectorPath[currentWaypoint]);
+        
+
+
+
+        // check if local position has deviated from grid position by one tile
+        if (Mathf.Abs(transform.localPosition.x) > 1 || Mathf.Abs(transform.localPosition.y) > 1)
         {
-            Move(CurrentPath.vectorPath[currentWaypoint].GetGridPos());
+
+
+            Move(nextTargetPos);
 
             // Reset localPosition because localPosition is being offset when moving between tiles
             // Once unit has reached a tile then it should snap to that new tile - which is what this is doing
@@ -181,15 +305,19 @@ public abstract class Unit : Entity, IDamageable
         else
         {
             ReachedEndOfPath = false;
+            FinishPath();
             return true;
         }
         return false;
     }
 
+
+
+
     void Update()
     {
         bool reachedDestination = false;
-        if (CurrentPath != null)
+        if (enableMovement && CurrentPath != null)
         {
             reachedDestination = MoveAlongPath();
         }

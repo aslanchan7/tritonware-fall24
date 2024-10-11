@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class MapTile : MonoBehaviour
@@ -9,6 +10,8 @@ public class MapTile : MonoBehaviour
     public Workstation ReservingWorkstation;
 
     public static MapTile lastHovered = null;
+
+    public TMP_Text DebugText;
 
 
     // whether movement can pass through
@@ -23,5 +26,10 @@ public class MapTile : MonoBehaviour
     public bool IsUnobstructed()
     {
         return ContainedStructure == null || !ContainedStructure.BlocksVision;
+    }
+
+    public void SetDebugText(string text)
+    {
+        DebugText.text = text;
     }
 }

@@ -20,13 +20,7 @@ public class StartingEntitySpawner : MonoBehaviour
         foreach (Unit unit in UnitList.GetComponentsInChildren<Unit>())
         {
             unit.transform.position = Vector3.zero;
-            MapTile targetTile = MapManager.Instance.GetTile(unit.Pos);
-            unit.transform.SetParent(MapManager.Instance.GetTile(unit.Pos).transform, false);
-            if (targetTile.ContainedUnit != null)
-            {
-                Debug.LogError("Tried to spawn into tile occupied by unit");
-            }
-            targetTile.ContainedUnit = unit;
+            unit.Place(unit.Pos);
         }
         foreach (Structure structure in StructureList.GetComponentsInChildren<Structure>())
         {

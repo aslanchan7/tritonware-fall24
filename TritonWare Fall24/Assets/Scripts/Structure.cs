@@ -17,8 +17,14 @@ public abstract class Structure : Entity
                     Debug.LogError("Tried to place into occupied tile");
                 }
                 partialTile.ContainedStructure = this;     
+                if (BlocksMovement)
+                {
+                    PathfindingUtils.SetWalkable(partialTile.Pos, false);
+                }
             }
         }
         Pos = targetPos;
+
+
     }
 }
