@@ -1,7 +1,7 @@
 using Pathfinding;
 using UnityEngine;
 
-public struct TileReservation
+public class TileReservation
 {
 
 

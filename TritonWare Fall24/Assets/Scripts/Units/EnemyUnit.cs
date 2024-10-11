@@ -8,7 +8,7 @@ public abstract class EnemyUnit : Unit
     public override Team Team => Team.Enemy;
 
     private float farTargetDistance = 8f;
-    private float closeRetargetInterval = 0.1f; // how often to reselect a target in seconds
+    private float closeRetargetInterval = 0.3f; // how often to reselect a target in seconds
     private float farRetargetInterval = 2f; // how often to reselect a target in seconds
     private float currentRetargetTimer = 0;
     private Entity currentAttackTarget;

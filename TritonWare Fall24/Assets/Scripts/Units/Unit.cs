@@ -31,8 +31,9 @@ public abstract class Unit : Entity, IDamageable
     private int currentWaypoint = 0;
     // private float nextWaypointDistance = .2f;
     private bool enableMovement = true;
-    private int routeReservePenalty = 300;
+    private int routeReservePenalty = 200;
     private int standingPenalty = 4000;
+    private int passingPenalty = 700;
     private int interruptsUntilRepath = 8;
     private int currentInterrupts = 0;
     private int repathsUntilGiveUp = 4;
@@ -109,7 +110,7 @@ public abstract class Unit : Entity, IDamageable
     // Pathfinding should be done as a series of Move() calls
     private IEnumerator Pathfind(Vector2Int targetPos)
     {
-        ClearPath();
+        
         Vector2 startPos = Pos.GetTileCenter();
         Vector2 targetPosCenter = targetPos.GetTileCenter();
         Seeker.StartPath(startPos, targetPosCenter, OnPathComplete);
@@ -131,6 +132,7 @@ public abstract class Unit : Entity, IDamageable
             Debug.LogWarning(this.gameObject.name + " tried to move into occupied tile");
         }
         UnreserveTile();
+        ChangeNextTilePenalty(passingPenalty);
         MapTile prevTile = MapManager.Instance.GetTile(Pos);
         prevTile.ContainedUnit = null;
         // PathfindingUtils.SetWalkable(Pos, prevTile.IsPassable());
@@ -146,6 +148,7 @@ public abstract class Unit : Entity, IDamageable
     {
         if (!p.error)
         {
+            ClearPath();
             CurrentPath = p;
 
             // currentWaypoint skips path's 1st tile because the 1st tile is the current tile that the unit is on
@@ -218,6 +221,13 @@ public abstract class Unit : Entity, IDamageable
         reservedTiles.Enqueue(new TileReservation(pos, penalty));
         PathfindingUtils.ChangePenalty(pos, penalty);
     }
+    private void ChangeNextTilePenalty(int penalty)
+    {
+        TileReservation nextTile = reservedTiles.Peek();
+        nextTile.Penalty += penalty;
+        PathfindingUtils.ChangePenalty(nextTile.Pos, penalty);
+    }
+
     private void UnreserveTile()
     {
         TileReservation tr = reservedTiles.Dequeue();
