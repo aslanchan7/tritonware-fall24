@@ -32,11 +32,11 @@ public abstract class Unit : Entity, IDamageable
     // private float nextWaypointDistance = .2f;
     private bool enableMovement = true;
     private int routeReservePenalty = 200;
-    private int standingPenalty = 4000;
+    private int standingPenalty = 10000;
     private int passingPenalty = 1000;
-    private int interruptsUntilRepath = 8;
+    private int interruptsUntilRepath = 4;
     private int currentInterrupts = 0;
-    private int repathsUntilGiveUp = 4;
+    private int repathsUntilGiveUp = 3;
     private int currentRepaths = 0;
     private Queue<TileReservation> reservedTiles = new Queue<TileReservation>();
 
@@ -152,8 +152,7 @@ public abstract class Unit : Entity, IDamageable
 
     public void OnPathComplete(Path p)
     {
-        ClearPath();
-        while (reservedTiles.Count > 0) UnreserveTile();
+        ClearPath(false);
         if (!p.error)
         {
             CurrentPath = p;
@@ -176,9 +175,18 @@ public abstract class Unit : Entity, IDamageable
     public void Damage(int value)
     {
         Health -= value;
-        // todo death
-
         UnitDisplay.UpdateDisplay();
+        if (Health <= 0) TriggerDeath();
+    }
+
+    private void TriggerDeath()
+    {
+        GameManager.AllUnits.Remove(this);
+        MapManager.Instance.GetTile(Pos).ContainedUnit = null;
+        ClearPath();
+        UnitController.Instance.SelectedUnits.Remove(this);
+        Destroy(this.gameObject);
+
     }
 
 
@@ -214,14 +222,14 @@ public abstract class Unit : Entity, IDamageable
 
     }
 
-    protected void ClearPath()
+    protected void ClearPath(bool stay = true)
     {
         while (reservedTiles.Count > 0)
         {
             UnreserveTile();
         }
         CurrentPath = null;
-        ReserveTile(Pos, standingPenalty);
+        if (stay) ReserveTile(Pos, standingPenalty);
     }
 
     private void ReserveTile(Vector2Int pos, int penalty)
@@ -299,7 +307,7 @@ public abstract class Unit : Entity, IDamageable
 
 
         // check if local position has deviated from grid position by one tile
-        if (Mathf.Abs(transform.localPosition.x) > 1 || Mathf.Abs(transform.localPosition.y) > 1)
+        if (Mathf.Abs(transform.localPosition.x) > 0.99 || Mathf.Abs(transform.localPosition.y) > 0.99)
         {
 
 
@@ -365,7 +373,7 @@ public abstract class Unit : Entity, IDamageable
         if (!isReversing)
         {
             moveDir = (advanceMoveDestination.GetTileCenter() - unitPosCenter).normalized;
-            velocity = moveDir * Speed;
+            velocity = moveDir * Speed * 1.2f;
         }
         else
         {
