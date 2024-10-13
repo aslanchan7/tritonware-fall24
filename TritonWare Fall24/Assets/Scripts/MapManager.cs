@@ -247,4 +247,26 @@ public class MapManager : MonoBehaviour
             (worldPos.y >= tilePos.y * TileSize) && (worldPos.y <= (tilePos.y + 1) * TileSize));
     }
 
+    public List<Vector2Int> GetMapEdge()
+    {
+        List<Vector2Int> result = new();
+        for (int i = 0; i < MapSize.x - 1; i++)
+        {
+            result.Add(new Vector2Int(i, 0));
+        }
+        for (int j = 0; j < MapSize.y - 1; j++)
+        {
+            result.Add(new Vector2Int(MapSize.x - 1, j));
+        }
+        for (int i = MapSize.x - 1; i >= 1; i--)
+        {
+            result.Add(new Vector2Int(i, MapSize.y - 1));
+        }
+        for (int j = MapSize.y - 1; j >= 1; j--)
+        {
+            result.Add(new Vector2Int(0, j));
+        }
+        return result;
+    }
+
 }

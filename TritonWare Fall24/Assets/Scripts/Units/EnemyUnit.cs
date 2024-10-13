@@ -48,7 +48,7 @@ public abstract class EnemyUnit : Unit
                 )
                 {
                     // update the destination to be closer to target
-                    Debug.Log("close retarget");
+                    // Debug.Log("close retarget");
                     UpdateTarget();
                     return;
                 }

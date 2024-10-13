@@ -51,6 +51,7 @@ public abstract class Unit : Entity, IDamageable
 
     public void Place(Vector2Int pos)
     {
+        Pos = pos;
         MapTile targetTile = MapManager.Instance.GetTile(pos);
         transform.SetParent(MapManager.Instance.GetTile(pos).transform, false);
         if (targetTile.ContainedUnit != null)
@@ -291,7 +292,7 @@ public abstract class Unit : Entity, IDamageable
         }
         if (!MapManager.Instance.IsPassable(nextTargetPos) && MapManager.Instance.GetTile(nextTargetPos).ContainedUnit != this)
         {
-            Debug.Log("Path blocked -- waiting, current interrupts: " + currentInterrupts);
+            //Debug.Log("Path blocked -- waiting, current interrupts: " + currentInterrupts);
             currentInterrupts++;
             InterruptMove(0.05f, true);
             return false;
@@ -391,8 +392,8 @@ public abstract class Unit : Entity, IDamageable
 
     }
 
-    protected virtual void AdvanceMoveSucceed() { Debug.Log("Advance move succeeded"); }
-    protected virtual void AdvanceMoveFail() { Debug.Log("Advance move failed"); }
+    protected virtual void AdvanceMoveSucceed() { }
+    protected virtual void AdvanceMoveFail() { }
     protected virtual void AdvanceMoveEnd() { }
 
     protected float DistanceToDestination()
