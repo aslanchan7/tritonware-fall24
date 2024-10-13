@@ -56,6 +56,9 @@ public class UnitController : MonoBehaviour
         if (alliedUnit.IsControllable())
         {
             yield return StartCoroutine(SelectedUnits[0].PathfindCoroutine(initPos));
+            // this is the new code
+            yield return new WaitUntil(() => SelectedUnits[0].PathSetupFinished);
+            SelectedUnits[0].PathSetupFinished = false;
             for (int i = 1; i < SelectedUnits.Count; i++)
             {
                 alliedUnit = (AlliedUnit)SelectedUnits[i];
@@ -63,6 +66,9 @@ public class UnitController : MonoBehaviour
                 {
                     pos = (Vector2Int)FindFreeNeighbor(initPos, i);
                     yield return StartCoroutine(SelectedUnits[i].PathfindCoroutine(pos));
+                    // this is the new code
+                    yield return new WaitUntil(() => SelectedUnits[i].PathSetupFinished);
+                    SelectedUnits[i].PathSetupFinished = false;
                 }
             }
         }
@@ -87,7 +93,7 @@ public class UnitController : MonoBehaviour
                     // This is just for debugging purposes if something goes wrong
                     if (SelectedUnits[j].CurrentPath == null)
                     {
-                        Debug.LogError("A* pathfinding needed more time to calculate the path. Look at UnitController.cs:50");
+                        Debug.LogError("A* pathfinding needed more time to calculate the path. Look at Unit.cs under Pathfind()");
                     }
 
                     if (currentPos.Equals(SelectedUnits[j].CurrentPath.vectorPath[^1].GetGridPos()))

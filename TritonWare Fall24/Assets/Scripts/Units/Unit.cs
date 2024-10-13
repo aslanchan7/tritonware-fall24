@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 using System.Collections;
-using UnityEditor.Experimental.GraphView;
 
 
 public abstract class Unit : Entity, IDamageable
@@ -24,10 +23,11 @@ public abstract class Unit : Entity, IDamageable
     public UnitDisplay UnitDisplay;
 
     // Pathfinding
-    public Seeker Seeker;
+    [HideInInspector] public Seeker Seeker;
     public Path CurrentPath;
-    public Vector2Int Destination;
+    [HideInInspector] public Vector2Int Destination;
     [HideInInspector] public bool ReachedEndOfPath;
+    [HideInInspector] public bool PathSetupFinished;
     private int currentWaypoint = 0;
     // private float nextWaypointDistance = .2f;
     private bool enableMovement = true;
@@ -122,7 +122,8 @@ public abstract class Unit : Entity, IDamageable
         // Wait for a small amount of time for A* algo to do its thing
         // Usually A* takes 3-4ms to calculate the first time then the rest are almost instant (0.0ms)
         // Note: this is a lil janky/hacky but works quite well
-        yield return new WaitForSeconds(0.05f);
+        // yield return new WaitForSeconds(0.05f);
+        yield return null;
     }
 
     // Finalizes moves a unit from one tile to another
@@ -138,7 +139,7 @@ public abstract class Unit : Entity, IDamageable
         if (reservedTiles.Count > 0)
         {
             UnreserveTile();
-            if (reservedTiles.Count > 0)  ChangeNextTilePenalty(passingPenalty);
+            if (reservedTiles.Count > 0) ChangeNextTilePenalty(passingPenalty);
         }
         MapTile prevTile = MapManager.Instance.GetTile(Pos);
         prevTile.ContainedUnit = null;
@@ -166,6 +167,8 @@ public abstract class Unit : Entity, IDamageable
             {
                 ReserveTile(waypoint.GetGridPos(), routeReservePenalty);
             }
+
+            PathSetupFinished = true;
         }
         else
         {
@@ -249,7 +252,7 @@ public abstract class Unit : Entity, IDamageable
     {
         TileReservation tr = reservedTiles.Dequeue();
         PathfindingUtils.ChangePenalty(tr.Pos, -tr.Penalty);
-    } 
+    }
 
     private IEnumerator PauseMove(float time)
     {
@@ -261,7 +264,7 @@ public abstract class Unit : Entity, IDamageable
     protected virtual void FinishPath()
     {
         ClearPath();
-        
+
     }
 
 
@@ -303,7 +306,7 @@ public abstract class Unit : Entity, IDamageable
         // Find the center position of the unit
         Vector3 unitPosCenter = new(transform.position.x + 0.5f, transform.position.y + 0.5f);
         // float distToWaypoint = Vector2.Distance(unitPosCenter, CurrentPath.vectorPath[currentWaypoint]);
-        
+
 
 
 
