@@ -63,4 +63,6 @@ public static class PathfindingUtils
 
         return gg.GetNode(pos.x, pos.y);
     }
+
+    public static Vector2Int InvalidPos = new Vector2Int(int.MinValue, int.MinValue);
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Zombie : EnemyUnit
 {
     // attacks the closest allied or visitor unit
-    protected override Entity FindAttackTarget()
+    protected override IDamageable FindAttackTarget()
     {
         Unit closest = null;
         float closestDist = float.MaxValue;

@@ -29,20 +29,20 @@ public class UnitDisplay : MonoBehaviour
 
     public void UpdateDisplay()
     {
-        int Health = Unit.Health >= 0 ? Unit.Health : 0;
-        int color = (4 - Health / 20) > 4 ? 4 : (4 - Health / 20);
-        print(Health + " " + color + " " + colors[color]);
+        int HealthPercent = (int)(Mathf.Clamp01((float)Unit.Health / Unit.MaxHealth) * 100);
+        int color = (4 - HealthPercent / 20) > 4 ? 4 : (4 - HealthPercent / 20);
+        // print(Health + " " + color + " " + colors[color]);
 
 
         HealthSprite.color = colors[color];
-        if (Unit.Health == 100)
+        if (Unit.Health == Unit.MaxHealth)
         {
             gameObject.SetActive(false);
         }
         else
         {
             gameObject.SetActive(true);
-            HealthForeground.localScale = new Vector3(Health / 100f, 1f, 1f);
+            HealthForeground.localScale = new Vector3(HealthPercent / 100f, 1f, 1f);
         }
     }
 

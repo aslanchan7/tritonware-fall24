@@ -33,12 +33,15 @@ public abstract class Unit : Entity, IDamageable
     private bool enableMovement = true;
     private int routeReservePenalty = 200;
     private int standingPenalty = 4000;
-    private int passingPenalty = 700;
+    private int passingPenalty = 1000;
     private int interruptsUntilRepath = 8;
     private int currentInterrupts = 0;
     private int repathsUntilGiveUp = 4;
     private int currentRepaths = 0;
     private Queue<TileReservation> reservedTiles = new Queue<TileReservation>();
+
+    protected Vector2Int advanceMoveDestination = PathfindingUtils.InvalidPos;
+    private bool isReversing = false;
 
 
     public void Awake()
@@ -110,7 +113,7 @@ public abstract class Unit : Entity, IDamageable
     // Pathfinding should be done as a series of Move() calls
     private IEnumerator Pathfind(Vector2Int targetPos)
     {
-        
+        while (reservedTiles.Count > 0) UnreserveTile();
         Vector2 startPos = Pos.GetTileCenter();
         Vector2 targetPosCenter = targetPos.GetTileCenter();
         Seeker.StartPath(startPos, targetPosCenter, OnPathComplete);
@@ -131,8 +134,11 @@ public abstract class Unit : Entity, IDamageable
         {
             Debug.LogWarning(this.gameObject.name + " tried to move into occupied tile");
         }
-        UnreserveTile();
-        ChangeNextTilePenalty(passingPenalty);
+        if (reservedTiles.Count > 0)
+        {
+            UnreserveTile();
+            if (reservedTiles.Count > 0)  ChangeNextTilePenalty(passingPenalty);
+        }
         MapTile prevTile = MapManager.Instance.GetTile(Pos);
         prevTile.ContainedUnit = null;
         // PathfindingUtils.SetWalkable(Pos, prevTile.IsPassable());
@@ -146,9 +152,10 @@ public abstract class Unit : Entity, IDamageable
 
     public void OnPathComplete(Path p)
     {
+        ClearPath();
+        while (reservedTiles.Count > 0) UnreserveTile();
         if (!p.error)
         {
-            ClearPath();
             CurrentPath = p;
 
             // currentWaypoint skips path's 1st tile because the 1st tile is the current tile that the unit is on
@@ -207,13 +214,14 @@ public abstract class Unit : Entity, IDamageable
 
     }
 
-    private void ClearPath()
+    protected void ClearPath()
     {
         while (reservedTiles.Count > 0)
         {
             UnreserveTile();
         }
         CurrentPath = null;
+        ReserveTile(Pos, standingPenalty);
     }
 
     private void ReserveTile(Vector2Int pos, int penalty)
@@ -241,10 +249,10 @@ public abstract class Unit : Entity, IDamageable
         enableMovement = true;
     }
 
-    private void FinishPath()
+    protected virtual void FinishPath()
     {
         ClearPath();
-        ReserveTile(Pos, standingPenalty);
+        
     }
 
 
@@ -327,20 +335,91 @@ public abstract class Unit : Entity, IDamageable
         return false;
     }
 
+    // Called every frame; try to move into a tile regardless of whether it is occupied or not, 
+    // hoping that it will become unoccupied when the unit arrives. If tile is still occupied,
+    // go back to original position at a slower speed.
+    protected void AdvanceMove()
+    {
+        if (CurrentPath != null || advanceMoveDestination == PathfindingUtils.InvalidPos) return;
+
+        if (!isReversing && (Mathf.Abs(transform.localPosition.x) > 1 || Mathf.Abs(transform.localPosition.y) > 1))
+        {
+            if (MapManager.Instance.IsPassable(advanceMoveDestination))
+            {
+                Move(advanceMoveDestination);
+                advanceMoveDestination = PathfindingUtils.InvalidPos;
+                transform.localPosition = Vector2.zero;
+                AdvanceMoveSucceed();
+                AdvanceMoveEnd();
+                return;
+            }
+            else
+            {
+                isReversing = true;
+                AdvanceMoveFail();
+            }
+        }
+
+        Vector2 unitPosCenter = new(transform.position.x + 0.5f, transform.position.y + 0.5f);
+        Vector2 moveDir, velocity;
+        if (!isReversing)
+        {
+            moveDir = (advanceMoveDestination.GetTileCenter() - unitPosCenter).normalized;
+            velocity = moveDir * Speed;
+        }
+        else
+        {
+            moveDir = (Pos.GetTileCenter() - unitPosCenter).normalized;
+            velocity = moveDir * Speed * 0.3f;
+        }
+        transform.localPosition += (Vector3)velocity * Time.deltaTime;
+        if (isReversing && transform.localPosition.magnitude <= 0.05f)
+        {
+            isReversing = false;
+            transform.localPosition = Vector2.zero;
+            advanceMoveDestination = PathfindingUtils.InvalidPos;
+            AdvanceMoveEnd();
+        }
+
+    }
+
+    protected virtual void AdvanceMoveSucceed() { Debug.Log("Advance move succeeded"); }
+    protected virtual void AdvanceMoveFail() { Debug.Log("Advance move failed"); }
+    protected virtual void AdvanceMoveEnd() { }
+
+    protected float DistanceToDestination()
+    {
+        if (CurrentPath == null) return -1;
+        return Vector2Int.Distance(Pos, Destination);
+    }
 
 
+    public Vector2Int GetPendingWaypoint(int index)
+    {
+        try
+        {
+            return CurrentPath.vectorPath[currentWaypoint + index].GetGridPos();
+        }
+        catch (System.Exception)        // either no path or index out of range
+        {
+            return PathfindingUtils.InvalidPos;
+        }
+    }
 
     protected virtual void Update()
     {
         bool reachedDestination = false;
         if (enableMovement && CurrentPath != null)
         {
-
             reachedDestination = MoveAlongPath();
         }
         if (reachedDestination)
         {
             CheckWorkableTask();
+        }
+        if (CurrentPath == null && advanceMoveDestination != PathfindingUtils.InvalidPos)
+        {
+            AdvanceMove();
         }
     }
 }

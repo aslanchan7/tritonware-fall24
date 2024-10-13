@@ -19,11 +19,13 @@ public class StartingEntitySpawner : MonoBehaviour
     {
         foreach (Unit unit in UnitList.GetComponentsInChildren<Unit>())
         {
+            if (!unit.gameObject.activeSelf) continue;
             unit.transform.position = Vector3.zero;
             unit.Place(unit.Pos);
         }
         foreach (Structure structure in StructureList.GetComponentsInChildren<Structure>())
         {
+            if (!structure.gameObject.activeSelf) continue;
             structure.transform.position = Vector3.zero;
             structure.Place(structure.Pos);
         }

@@ -33,12 +33,12 @@ public class MapManager : MonoBehaviour
 
     private void Update()
     {
-        /*
+        
         foreach (var tile in Tiles)
         {
             tile.SetDebugText(PathfindingUtils.GetNode(tile.Pos).Penalty.ToString());
         }
-        */
+        
         
     }
 
@@ -239,6 +239,12 @@ public class MapManager : MonoBehaviour
             }
         }
         return neighbors;
+    }
+
+    public static bool WorldPosWithinTile(Vector3 worldPos, Vector2Int tilePos)
+    {
+        return ((worldPos.x >= tilePos.x * TileSize) && (worldPos.x <= (tilePos.x + 1) * TileSize) &&
+            (worldPos.y >= tilePos.y * TileSize) && (worldPos.y <= (tilePos.y + 1) * TileSize));
     }
 
 }

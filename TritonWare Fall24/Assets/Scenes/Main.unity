@@ -14886,6 +14886,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zombie (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6455408948894246716, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14917,6 +14921,10 @@ PrefabInstance:
     - target: {fileID: 3625454875471731485, guid: 327c33c7d609bc24dbaa392ba32a70e8, type: 3}
       propertyPath: m_Name
       value: Doctor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4268162725944533891, guid: 327c33c7d609bc24dbaa392ba32a70e8, type: 3}
+      propertyPath: Speed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5981152362460081664, guid: 327c33c7d609bc24dbaa392ba32a70e8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15088,7 +15096,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3286144908946100186, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
       propertyPath: Speed
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3352391022570754239, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15133,6 +15141,10 @@ PrefabInstance:
     - target: {fileID: 6455408948894246716, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
       propertyPath: m_Name
       value: Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 6455408948894246716, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

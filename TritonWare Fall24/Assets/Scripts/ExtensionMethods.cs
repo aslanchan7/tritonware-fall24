@@ -21,4 +21,5 @@ public static class ExtensionMethods
     {
         return new Vector2Int((int)position.x, (int)position.y);
     }
+
 }
