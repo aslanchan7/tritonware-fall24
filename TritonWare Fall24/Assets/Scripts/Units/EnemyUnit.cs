@@ -1,7 +1,12 @@
-using System;
+
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+
+public enum EnemyState
+{
+    Idle, AttackClosest, Rush
+}
 
 // Enemy unit that uses melee attacks
 public abstract class EnemyUnit : Unit
@@ -14,15 +19,43 @@ public abstract class EnemyUnit : Unit
     private float farRetargetInterval = 2f; // how often to reselect a target in seconds
     private float currentRetargetTimer = 0;
     private IDamageable currentAttackTarget;
-    
+    public EnemyState CurrentState = EnemyState.Idle;
+
     private bool isAttacking = false;
     protected float attackCooldown = 0.5f;
     private float attackTimer = 0f;
+
+    private float loiterInterval = 3f;
+    private float loiterTimer = 0f;
 
 
     protected override void Update()
     {
         base.Update();
+
+        if (CurrentState == EnemyState.Idle)
+        {
+            if (GetAttackableTarget(12f) != null)
+            {
+                ChangeState(EnemyState.AttackClosest);
+                return;
+            }
+
+            if (CurrentPath == null && loiterTimer > 0f) loiterTimer -= Time.deltaTime;
+            else
+            {
+                var freeTiles = FreeTilesInRadius(8f);
+                if (freeTiles.Count == 0) return;
+                Vector2Int loiterDest = freeTiles[Random.Range(0, freeTiles.Count)];
+                if (CurrentPath == null)
+                {
+                    StartCoroutine(PathfindCoroutine(loiterDest));
+                    loiterTimer = loiterInterval * Random.Range(0.5f, 2f);
+                }
+            }
+            return;
+        }
+        
         if (currentRetargetTimer > 0)
         {
             currentRetargetTimer -= Time.deltaTime;
@@ -33,15 +66,17 @@ public abstract class EnemyUnit : Unit
         }
         if (!isAttacking && CanAttack())
         {
-            if (currentAttackTarget != null)
+            IDamageable attackableTarget = GetAttackableTarget();
+            if (attackableTarget != null)                                    // close enough for attack, stop pathing
             {
-                if (Vector2Int.Distance(Pos, currentAttackTarget.Pos) < 1.5)
-                {
-                    ClearPath();
-                    advanceMoveDestination = currentAttackTarget.Pos;
-                    isAttacking = true;
-                }
-                else if (
+                currentAttackTarget = attackableTarget;
+                ClearPath();
+                TryAttack();
+            }
+            else if (currentAttackTarget != null)
+            {
+
+                if (
                     CurrentPath != null &&                                                                    // is currently pathfinding
                     DistanceToDestination() < 3 &&                                                            // almost reached the current destination
                     Vector2Int.Distance(Destination, FindAttackablePosition(currentAttackTarget)) > 2         // the current destination is not close enough to target
@@ -62,6 +97,12 @@ public abstract class EnemyUnit : Unit
         }                                        
     }
 
+    public void ChangeState(EnemyState state)
+    {
+        CurrentState = state;
+        ClearPath();
+    }
+
     protected override void AdvanceMoveFail()
     {
         base.AdvanceMoveFail();
@@ -78,6 +119,12 @@ public abstract class EnemyUnit : Unit
     {
         base.AdvanceMoveEnd();
         isAttacking = false;
+    }
+
+    private void TryAttack()
+    {
+        advanceMoveDestination = currentAttackTarget.Pos;
+        isAttacking = true;
     }
 
     protected virtual void LandAttack()
@@ -143,13 +190,17 @@ public abstract class EnemyUnit : Unit
     protected override void FinishPath()
     {
         base.FinishPath();
-        UpdateTarget();
+        if (CurrentState != EnemyState.Idle) 
+            UpdateTarget();
     }
 
     public bool CanAttack()
     {
         return attackTimer <= 0;
     }
+
+    // closest target within attacking distance right now
+    protected abstract IDamageable GetAttackableTarget(float radius = 1.5f);
 
     protected abstract IDamageable FindAttackTarget();
 }

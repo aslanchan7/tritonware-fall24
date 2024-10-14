@@ -207,6 +207,23 @@ public abstract class Unit : Entity, IDamageable
         return result;
     }
 
+    public List<IDamageable> GetDamageablesInRadius(float radius)
+    {
+        List<IDamageable> result = new List<IDamageable>();
+        foreach (MapTile tile in MapManager.Instance.GetTilesInRadius(Pos, radius))
+        {
+            if (tile.ContainedUnit != null)
+            {
+                result.Add(tile.ContainedUnit);
+            }
+            if (tile.ContainedStructure != null && tile.ContainedStructure is IDamageable d)
+            {
+                if (!result.Contains(d)) result.Add(d);
+            }
+        }
+        return result;
+    }
+
     // pauses movement towards destination for set amount of time. If time is negative, stop and also destroys the path.
     private void InterruptMove(float time, bool preservePos)
     {
@@ -433,5 +450,17 @@ public abstract class Unit : Entity, IDamageable
         {
             AdvanceMove();
         }
+    }
+
+    public List<Vector2Int> FreeTilesInRadius(float radius)
+    {
+        List<MapTile> tiles = MapManager.Instance.GetTilesInRadius(Pos, radius);
+        List<Vector2Int> result = new();
+
+        foreach (MapTile tile in tiles)
+        {
+            if (tile.IsPassable()) result.Add(tile.Pos);
+        }
+        return result;
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Zombie : EnemyUnit
@@ -26,5 +27,18 @@ public class Zombie : EnemyUnit
             }
         }
         return closest;
+    }
+
+    // 1.5 = 1 tile distance + diagonals
+    protected override IDamageable GetAttackableTarget(float radius = 1.5f)
+    {
+        List<Unit> possible = new();
+        foreach (Unit u in GetUnitsInRadius(radius))
+        {
+            if (GameManager.OpposingTeams(u.Team, Team)) possible.Add(u);
+
+        }
+        if (possible.Count > 0) { return possible[Random.Range(0, possible.Count)]; }
+        return null;
     }
 }

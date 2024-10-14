@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UnitSpawner : MonoBehaviour
@@ -16,6 +17,7 @@ public class UnitSpawner : MonoBehaviour
     private void Awake()
     {
         spawnablePositions = MapManager.Instance.GetMapEdge();
+
     }
 
 
@@ -25,19 +27,16 @@ public class UnitSpawner : MonoBehaviour
         float spawnRateNoise = Mathf.PerlinNoise(Time.time * spawnRateRandomness, 0);
         float currentSpawnInterval = Mathf.Lerp(minSpawnInterval, maxSpawnInterval, spawnRateNoise);  // Interpolate between minRate and maxRate
 
-        float spawnPositionNoise = Mathf.PerlinNoise(Time.time * spawnPositionRandomness, 100);
-        int spawnPosition = (int)Mathf.Lerp(0, spawnablePositions.Count, spawnPositionNoise);
-
         if (spawnTimer <= 0f)
         {
             spawnTimer = currentSpawnInterval;
-            SpawnGroup(spawnablePositions[spawnPosition]);
+            SpawnGroup(spawnablePositions[Random.Range(0, spawnablePositions.Count)]);
 
             // todo if spawn position is occupied try again
         }
         spawnTimer -= Time.deltaTime;
 
-        Debug.Log($"Current spawn interval: {currentSpawnInterval}, Current spawn position: {spawnPosition}");
+        // Debug.Log($"Current spawn interval: {currentSpawnInterval}");
 
     }
 
@@ -45,7 +44,7 @@ public class UnitSpawner : MonoBehaviour
     private void SpawnGroup(Vector2Int origin)
     {
         List<MapTile> positions = MapManager.Instance.GetTilesInRadius(origin, 3);
-        for (int i = 0; i < groupSize; i++)
+        for (int i = 0; i < groupSize + Random.Range(-2,3); i++)
         {
             int index = Random.Range(0, positions.Count);
             if (positions[index].IsPassable()) 
@@ -54,7 +53,7 @@ public class UnitSpawner : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("impassable");
+                Debug.LogWarning("invalid spawn location");
             }
         }
     }

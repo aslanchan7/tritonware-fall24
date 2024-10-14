@@ -507,97 +507,6 @@ Transform:
   - {fileID: 1726227128}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &380931864
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 380931867}
-  - component: {fileID: 380931866}
-  - component: {fileID: 380931865}
-  m_Layer: 7
-  m_Name: Permanent Wall(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!61 &380931865
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 380931864}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 128
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.5, y: 0.5}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!114 &380931866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 380931864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31954d31aabe80b44a99a47e51be2680, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pos: {x: 5, y: 5}
---- !u!4 &380931867
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 380931864}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &412326371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -946,7 +855,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3286144908946100186, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
       propertyPath: Speed
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3286144908946100186, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
       propertyPath: pos.x
@@ -3543,12 +3452,12 @@ GameObject:
   - component: {fileID: 1115916149}
   - component: {fileID: 1115916148}
   m_Layer: 0
-  m_Name: Unit Spawner
+  m_Name: Unit Spawner - DISABLE TO TURN OFF ZOMBIE SPAWNING
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1115916148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3561,11 +3470,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35688c3ca75e5144e889e571e2656e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpawnInterval: 15
+  maxSpawnInterval: 10
   minSpawnInterval: 5
   spawnRateRandomness: 0.1
   spawnPositionRandomness: 1
-  groupSize: 4
+  groupSize: 6
   StandardEnemy: {fileID: 3286144908946100186, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
 --- !u!4 &1115916149
 Transform:
@@ -51873,6 +51782,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6625278498407735797, guid: 44ea4a3375447ae449aca31c3dd83257, type: 3}
   m_PrefabInstance: {fileID: 1592447742}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1837833845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1837833847}
+  - component: {fileID: 1837833846}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1837833846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837833845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f508e4c9563bdc49ae4ab88e38b42b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1837833847
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837833845}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1914752128
 GameObject:
   m_ObjectHideFlags: 0
@@ -51928,7 +51881,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3286144908946100186, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
       propertyPath: Speed
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3286144908946100186, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
       propertyPath: pos.x
@@ -52002,7 +51955,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3286144908946100186, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
       propertyPath: Speed
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3286144908946100186, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
       propertyPath: pos.x
@@ -52271,7 +52224,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3286144908946100186, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
       propertyPath: Speed
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3352391022570754239, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -52754,4 +52707,4 @@ SceneRoots:
   - {fileID: 412742384}
   - {fileID: 7664514922974842624}
   - {fileID: 1115916149}
-  - {fileID: 380931867}
+  - {fileID: 1837833847}
