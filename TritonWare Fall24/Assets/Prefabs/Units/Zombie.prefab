@@ -620,10 +620,12 @@ MonoBehaviour:
   pos: {x: 20, y: 0}
   Health: 100
   MaxHealth: 100
-  Speed: 5
+  Speed: 4
   TaskQueue: []
   SelectIndicator: {fileID: 1751389183041611419}
   UnitDisplay: {fileID: 2830979096487014946}
   Seeker: {fileID: 4169987428054787796}
   Destination: {x: 0, y: 0}
   ReachedEndOfPath: 0
+  PathSetupFinished: 0
+  AttackDamage: 10

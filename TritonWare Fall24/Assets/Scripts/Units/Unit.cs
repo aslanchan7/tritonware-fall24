@@ -31,12 +31,12 @@ public abstract class Unit : Entity, IDamageable
     private int currentWaypoint = 0;
     // private float nextWaypointDistance = .2f;
     private bool enableMovement = true;
-    private int routeReservePenalty = 200;
+    private int routeReservePenalty = 100;
     private int standingPenalty = 10000;
     private int passingPenalty = 1000;
-    private int interruptsUntilRepath = 4;
+    private int interruptsUntilRepath = 6;
     private int currentInterrupts = 0;
-    private int repathsUntilGiveUp = 3;
+    private int repathsUntilGiveUp = 6;
     private int currentRepaths = 0;
     private Queue<TileReservation> reservedTiles = new Queue<TileReservation>();
 
