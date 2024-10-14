@@ -1,3 +1,4 @@
+using Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,18 +29,18 @@ public class MapManager : MonoBehaviour
     {
         Instance = this;
         InitGameGrid();
-
+        InitPathfinder();
     }
 
     private void Update()
     {
-        
+     /*   
         foreach (var tile in Tiles)
         {
             tile.SetDebugText(PathfindingUtils.GetNode(tile.Pos).Penalty.ToString());
         }
         
-        
+        */
     }
 
 
@@ -130,6 +131,26 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void InitPathfinder()
+    {
+        // This holds all graph data
+        AstarData data = AstarPath.active.data;
+
+        // This creates a Grid Graph
+        GridGraph gg = data.gridGraph;
+
+        // Setup a grid graph with some values
+        float nodeSize = 1;
+
+        gg.center = new Vector3(MapSize.x/2, MapSize.y/2, 0);
+
+        // Updates internal size from the above values
+        gg.SetDimensions(MapSize.x, MapSize.y, nodeSize);
+
+        // Scans all graphs
+        AstarPath.active.Scan();
     }
 
     public void ClearMap()
