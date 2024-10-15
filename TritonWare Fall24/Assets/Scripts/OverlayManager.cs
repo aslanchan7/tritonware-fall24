@@ -31,6 +31,7 @@ public class OverlayManager : MonoBehaviour
 
     private void Update()
     {
+        // Every frame update the indicator's position
         foreach (KeyValuePair<Vector2Int, GameObject> entry in TargetIndicators)
         {
             Vector2Int target = entry.Key;
@@ -41,6 +42,7 @@ public class OverlayManager : MonoBehaviour
 
         if (Targets.Count > 0)
         {
+            // After 3 seconds, destroy the indicator game object
             if (Time.time - Targets.Peek().Item2 > 3f)
             {
                 Vector2Int key = Targets.Dequeue().Item1;
@@ -90,26 +92,12 @@ public class OverlayManager : MonoBehaviour
         HoverOverlay.transform.localScale = Vector2.one;
     }
 
-    public void CreateEnemySpawnIndicator(Vector2Int origin)
-    {
-        // Vector3 originPos = new(origin.x, origin.y, 0);
-        Vector3 originPos = MapManager.Instance.GetWorldPos(origin);
-        var screenPos = cam.ScreenToViewportPoint(originPos);
-        bool isOffScreen = screenPos.x <= 0f || screenPos.x >= 1f || screenPos.y <= 0f || screenPos.y >= 1f;
-        if (isOffScreen) StartCoroutine("CreateSpawnIndicator");
-    }
-
-    private IEnumerator CreateSpawnIndicator()
-    {
-        // GameObject spawnIndicator = Instantiate(enemySpawnIndicatorPrefab);
-        // yield return new WaitForSeconds(3f);
-        // Destroy(spawnIndicator);
-        yield return null;
-    }
-
     public void UpdateTargetIndicator(Vector2Int target, GameObject indicator)
     {
         Vector3 targetPos = MapManager.Instance.GetWorldPos(target);
+
+        // Takes the world pos and converts it into a position relative to camera
+        // Bottom left of the camera is (0,0) and top right is (1,1)
         Vector3 screenPos = cam.WorldToViewportPoint(targetPos);
         bool isOffScreen = screenPos.x <= 0f || screenPos.x >= 1f || screenPos.y <= 0f || screenPos.y >= 1f;
 
