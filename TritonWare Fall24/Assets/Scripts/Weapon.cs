@@ -20,6 +20,7 @@ public class Weapon : MonoBehaviour
     private float targetSearchTime = 0;  // interval to search for new target
     private bool shootingEnabled = false;
     private LayerMask layermask;
+    private BulletTrail bulletTrail;
 
     public BulletTrail TrailPrefab;
 
@@ -35,6 +36,8 @@ public class Weapon : MonoBehaviour
         {
             Debug.LogWarning("Weapon is not attached to an object of type Unit");
         }
+        bulletTrail = GetComponent<BulletTrail>();
+
 
         layermask = LayerMask.GetMask("Units", "Structures"); // anything that may interact with the path of a bullet
         shootingEnabled = true;
@@ -199,22 +202,26 @@ public class Weapon : MonoBehaviour
     // otherwise, shoot a trail to target at specified position
     private void ProjectileHit(Entity target, Vector2 position)
     {
-        Vector2 source = WeaponHolder.Pos.GetTileCenter();
-        Vector2 direction = (position - source).normalized;
-        float distance = Vector2.Distance(source, position);
+        Vector2 origin = WeaponHolder.transform.position + new Vector3(0.5f,0.5f);
+        Vector2 direction = (position - origin).normalized;
+        float distance = Vector2.Distance(origin, position);
+        float trailTravelDistance;
         if (target == null)
         {
-            Instantiate(TrailPrefab, transform).RenderTrail(source, source + direction * (WeaponRange + 1), 0.1f);
-            return;
+            trailTravelDistance = (WeaponRange + 1);
+        }
+        else
+        {
+            trailTravelDistance = distance + 0.5f;
+            if (target is IDamageable dam)
+            {
+                if (!GameManager.OpposingTeams(target.Team, WeaponHolder.Team))
+                    Debug.LogWarning($"undefined weapon behavior - hit {target.name}");
+                dam.Damage(Damage);
+            }
         }
 
-        if (target is IDamageable dam)
-        {
-            if (!GameManager.OpposingTeams(target.Team, WeaponHolder.Team))
-                Debug.LogWarning($"undefined weapon behavior - hit {target.name}");
-            dam.Damage(Damage);
-        }
-        Instantiate(TrailPrefab, transform).RenderTrail(source, source + direction * (distance + 0.5f), 0.1f);
-        // add 0.5 to distance so bullet goes a little past hitbox
+        bulletTrail.RenderProjectile(origin, origin + direction * trailTravelDistance);
+        // Instantiate(TrailPrefab, transform).RenderTrail(origin, origin + direction * trailTravelDistance, 0.05f);
     }
 }

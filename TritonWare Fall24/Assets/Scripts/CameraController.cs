@@ -69,7 +69,7 @@ public class CameraController : MonoBehaviour
 
         
 
-        cameraPos += (Vector3)(camMoveVector.normalized * panSpeed);
+        cameraPos += (Vector3)(camMoveVector.normalized * panSpeed * Time.deltaTime);
 
         // Clamp the camera's position to stay within the specified bounds
         cameraPos.x = Mathf.Clamp(cameraPos.x, minCameraPos.x, maxCameraPos.x);
