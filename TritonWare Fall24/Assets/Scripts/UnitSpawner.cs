@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class UnitSpawner : MonoBehaviour
 {
@@ -44,10 +46,10 @@ public class UnitSpawner : MonoBehaviour
     private void SpawnGroup(Vector2Int origin)
     {
         List<MapTile> positions = MapManager.Instance.GetTilesInRadius(origin, 3);
-        for (int i = 0; i < groupSize + Random.Range(-2,3); i++)
+        for (int i = 0; i < groupSize + Random.Range(-2, 3); i++)
         {
             int index = Random.Range(0, positions.Count);
-            if (positions[index].IsPassable()) 
+            if (positions[index].IsPassable())
             {
                 SpawnUnit(positions[index].Pos, StandardEnemy);
             }
@@ -56,6 +58,10 @@ public class UnitSpawner : MonoBehaviour
                 Debug.LogWarning("invalid spawn location");
             }
         }
+
+        OverlayManager.Instance.Targets.Enqueue(new Tuple<Vector2Int, float>(origin, Time.time));
+        GameObject indicator = Instantiate(OverlayManager.Instance.enemySpawnIndicatorPrefab);
+        OverlayManager.Instance.TargetIndicators.Add(origin, indicator);
     }
 
     private void SpawnUnit(Vector2Int pos, Unit unitTemplate)

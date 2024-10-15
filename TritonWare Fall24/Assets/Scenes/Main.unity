@@ -491,6 +491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HoverOverlay: {fileID: 1726227127}
+  enemySpawnIndicatorPrefab: {fileID: 4811396593099666599, guid: a5dca6d79dc42b44980657f43c50330c, type: 3}
 --- !u!4 &332439986
 Transform:
   m_ObjectHideFlags: 0

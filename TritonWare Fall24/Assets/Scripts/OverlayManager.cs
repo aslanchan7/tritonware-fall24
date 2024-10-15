@@ -1,16 +1,54 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class OverlayManager : MonoBehaviour
 {
     public static OverlayManager Instance;
     public GameObject HoverOverlay;
+
+    // Enemy Spawn Indicators
+    public GameObject enemySpawnIndicatorPrefab;
+    public Queue<Tuple<Vector2Int, float>> Targets = new();
+    public Dictionary<Vector2Int, GameObject> TargetIndicators = new();
+    private Camera cam;
+    private SpriteRenderer indicatorSpriteRenderer;
+    private float indicatorSpriteWidth;
+    private float indicatorSpriteHeight;
+
     private void Awake()
     {
         Instance = this;
         HoverOverlay.SetActive(true);
+
+        cam = Camera.main;
+
+        indicatorSpriteRenderer = enemySpawnIndicatorPrefab.GetComponent<SpriteRenderer>();
+        indicatorSpriteWidth = indicatorSpriteRenderer.bounds.size.x / 2f;
+        indicatorSpriteHeight = indicatorSpriteRenderer.bounds.size.y / 2f;
     }
 
+    private void Update()
+    {
+        foreach (KeyValuePair<Vector2Int, GameObject> entry in TargetIndicators)
+        {
+            Vector2Int target = entry.Key;
+            GameObject indicator = entry.Value;
 
+            UpdateTargetIndicator(target, indicator);
+        }
+
+        if (Targets.Count > 0)
+        {
+            if (Time.time - Targets.Peek().Item2 > 3f)
+            {
+                Vector2Int key = Targets.Dequeue().Item1;
+                Destroy(TargetIndicators.GetValueOrDefault(key));
+                TargetIndicators.Remove(key);
+            }
+        }
+    }
 
     public void HoverTile(Vector2Int pos)
     {
@@ -52,5 +90,44 @@ public class OverlayManager : MonoBehaviour
         HoverOverlay.transform.localScale = Vector2.one;
     }
 
+    public void CreateEnemySpawnIndicator(Vector2Int origin)
+    {
+        // Vector3 originPos = new(origin.x, origin.y, 0);
+        Vector3 originPos = MapManager.Instance.GetWorldPos(origin);
+        var screenPos = cam.ScreenToViewportPoint(originPos);
+        bool isOffScreen = screenPos.x <= 0f || screenPos.x >= 1f || screenPos.y <= 0f || screenPos.y >= 1f;
+        if (isOffScreen) StartCoroutine("CreateSpawnIndicator");
+    }
 
+    private IEnumerator CreateSpawnIndicator()
+    {
+        // GameObject spawnIndicator = Instantiate(enemySpawnIndicatorPrefab);
+        // yield return new WaitForSeconds(3f);
+        // Destroy(spawnIndicator);
+        yield return null;
+    }
+
+    public void UpdateTargetIndicator(Vector2Int target, GameObject indicator)
+    {
+        Vector3 targetPos = MapManager.Instance.GetWorldPos(target);
+        Vector3 screenPos = cam.WorldToViewportPoint(targetPos);
+        bool isOffScreen = screenPos.x <= 0f || screenPos.x >= 1f || screenPos.y <= 0f || screenPos.y >= 1f;
+
+        if (isOffScreen)
+        {
+            indicator.SetActive(true);
+            Vector3 spriteSizeInViewPort = cam.WorldToViewportPoint(new Vector3(indicatorSpriteWidth, indicatorSpriteHeight, 0)) - cam.WorldToViewportPoint(Vector3.zero);
+
+            screenPos.x = Mathf.Clamp(screenPos.x, spriteSizeInViewPort.x, 1 - spriteSizeInViewPort.x);
+            screenPos.y = Mathf.Clamp(screenPos.y, spriteSizeInViewPort.y, 1 - spriteSizeInViewPort.y);
+
+            Vector3 worldPos = cam.ViewportToWorldPoint(screenPos);
+            worldPos.z = 0;
+            indicator.transform.position = worldPos;
+        }
+        else
+        {
+            indicator.SetActive(false);
+        }
+    }
 }
