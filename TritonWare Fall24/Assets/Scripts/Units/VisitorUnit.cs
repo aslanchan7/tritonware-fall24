@@ -7,7 +7,7 @@ public class VisitorUnit : Unit
     private float pathTimer = 0f;
 
 
-    private void Update()
+    protected override void Update()
     {
         if (pathTimer <= 0f)
         {
@@ -24,6 +24,14 @@ public class VisitorUnit : Unit
         else
         {
             pathTimer -= Time.deltaTime;
+        }
+
+        if (targetBed != null)
+        {
+            if (targetBed.DistanceToStructure(Pos) <= 1.5f)
+            {
+                targetBed.InsertPatient(this);
+            }
         }
 
     }

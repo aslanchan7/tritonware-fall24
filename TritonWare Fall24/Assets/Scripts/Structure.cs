@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Structure : Entity
 {
+
     public virtual void Place(Vector2Int targetPos)
     {
         Pos = targetPos;
@@ -23,4 +25,20 @@ public abstract class Structure : Entity
         }
         
     }
+
+
+    public float DistanceToStructure(Vector2Int target)
+    {
+        float minDist = Vector2Int.Distance(Pos, target);
+        foreach (Vector2Int tile in GetOccupiedPositions())
+        {
+            float dist = Vector2Int.Distance(tile, target);
+            if (dist < minDist)
+            {
+                minDist = dist;
+            }
+        }
+        return minDist;
+    }
+
 }
