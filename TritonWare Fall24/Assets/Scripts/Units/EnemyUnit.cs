@@ -130,6 +130,15 @@ public abstract class EnemyUnit : Unit
     protected virtual void LandAttack()
     {
         attackTimer = attackCooldown;
+        if (currentAttackTarget is AlliedUnit unit)
+        {
+            float rand = Random.Range(0f, 1f);
+            // 10% chance of infecting an allied unit every attack
+            if (rand < 0.1f)
+            {
+                unit.GetInfected();
+            }
+        }
         currentAttackTarget.Damage(AttackDamage);
     }
 
