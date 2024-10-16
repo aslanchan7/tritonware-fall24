@@ -177,7 +177,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7754831778761494767}
-  - component: {fileID: 4480112588384115603}
+  - component: {fileID: 6825111272176243439}
   m_Layer: 0
   m_Name: Hospital Bed
   m_TagString: Untagged
@@ -202,7 +202,7 @@ Transform:
   - {fileID: 129159863929838877}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4480112588384115603
+--- !u!114 &6825111272176243439
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2209921332778267667}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9f100e73a4b6014a9947e42266eeb2d, type: 3}
+  m_Script: {fileID: 11500000, guid: f11f36cb85703cf4f9be005a633493de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 5, y: 2}
@@ -220,3 +220,5 @@ MonoBehaviour:
   WorkTileIcon: {fileID: 5246575592898114864}
   WorkstationTaskTemplate: {fileID: 0}
   TaskInProgress: {fileID: 0}
+  Patient: {fileID: 0}
+  ReservedPatient: {fileID: 0}

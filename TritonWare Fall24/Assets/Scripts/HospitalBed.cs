@@ -15,6 +15,10 @@ public class HospitalBed : Workstation
             GameManager.Instance.AvailableBeds.Remove(this);
         }
         Debug.Log($"Inserted unit {unit.name}");
+        unit.UnPlace();
+        unit.transform.SetParent(transform, false);
+        unit.transform.position = MapManager.Instance.GetWorldPos(Pos);
+        unit.transform.localPosition = Vector2.zero;
     }
 
     public void RemovePatient()
@@ -25,7 +29,11 @@ public class HospitalBed : Workstation
 
     public void ReservePatient(Unit unit)
     {
-        ReservedPatient.ClearPath();
+        if (ReservedPatient != null)
+        {
+            ReservedPatient.ClearPath();
+        }
+        
         ReservedPatient = unit;
         if (GameManager.Instance.AvailableBeds.Contains(this))
         {

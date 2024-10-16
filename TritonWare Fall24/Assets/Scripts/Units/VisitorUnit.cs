@@ -1,36 +1,47 @@
 using UnityEngine;
 
+public enum PatientState
+{
+    Idle, PathingToBed, Waiting
+}
+
 public class VisitorUnit : Unit
 {
     public override Team Team => Team.Visitor;
     private HospitalBed targetBed;
     private float pathTimer = 0f;
+    public PatientState CurrentState = PatientState.PathingToBed;
 
 
     protected override void Update()
     {
-        if (pathTimer <= 0f)
+        base.Update();
+        if (CurrentState == PatientState.PathingToBed)
         {
-            pathTimer = 1f;
-            if (CurrentPath == null)
+            if (pathTimer <= 0f)
             {
-                FindBed();
-                if (targetBed == null) 
+                pathTimer = 1f;
+                if (CurrentPath == null)
                 {
-                    Debug.Log("No bed found");
+                    FindBed();
+                    if (targetBed == null)
+                    {
+                        Debug.Log("No bed found");
+                    }
                 }
             }
-        }
-        else
-        {
-            pathTimer -= Time.deltaTime;
-        }
-
-        if (targetBed != null)
-        {
-            if (targetBed.DistanceToStructure(Pos) <= 1.5f)
+            else
             {
-                targetBed.InsertPatient(this);
+                pathTimer -= Time.deltaTime;
+            }
+
+            if (targetBed != null)
+            {
+                if (targetBed.DistanceToStructure(Pos) <= 1.5f)
+                {
+                    targetBed.InsertPatient(this);
+                    CurrentState = PatientState.Idle;
+                }
             }
         }
 

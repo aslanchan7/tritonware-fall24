@@ -44,7 +44,7 @@ public abstract class Unit : Entity, IDamageable
     private bool isReversing = false;
 
 
-    public void Awake()
+    protected virtual void Awake()
     {
         Seeker = GetComponent<Seeker>();
     }
@@ -60,7 +60,18 @@ public abstract class Unit : Entity, IDamageable
         }
         targetTile.ContainedUnit = this;
         ReserveTile(pos, standingPenalty);
-        GameManager.AllUnits.Add(this);
+        if (!GameManager.AllUnits.Contains(this))
+        {
+            GameManager.AllUnits.Add(this);
+        }
+    }
+
+    // effectively removes unit from the map (but not the game)
+    public void UnPlace()
+    {
+        MapTile targetTile = MapManager.Instance.GetTile(Pos);
+        targetTile.ContainedUnit = null;
+        ClearPath(false);
     }
 
 

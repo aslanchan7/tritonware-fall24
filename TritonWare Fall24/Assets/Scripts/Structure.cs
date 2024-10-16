@@ -41,4 +41,17 @@ public abstract class Structure : Entity
         return minDist;
     }
 
+    public List<Vector2Int> GetSurroundingTiles()
+    {
+        List<Vector2Int> result = new();
+        foreach (Vector2Int occupiedPos in GetOccupiedPositions())
+        {
+            foreach (Vector2Int freeNeighbor in MapManager.Instance.GetFreeNeighbors(occupiedPos))
+            {
+                if (!result.Contains(freeNeighbor)) result.Add(freeNeighbor);
+            }
+        }
+        return result;
+    }
+
 }
