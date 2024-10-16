@@ -6,6 +6,11 @@ public class Zombie : EnemyUnit
     // attacks the closest allied or visitor unit
     protected override IDamageable FindAttackTarget()
     {
+        if (CurrentState == EnemyState.Rush)
+        {
+            return GameManager.Instance.DoctorUnit;
+        }
+
         Unit closest = null;
         float closestDist = float.MaxValue;
         foreach (Unit unit in GameManager.GetUnitsOfTeam(Team.Allied))

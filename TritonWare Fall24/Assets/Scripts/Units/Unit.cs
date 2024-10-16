@@ -394,12 +394,12 @@ public abstract class Unit : Entity, IDamageable
         if (!isReversing)
         {
             moveDir = (advanceMoveDestination.GetTileCenter() - unitPosCenter).normalized;
-            velocity = moveDir * Speed * 1.2f;
+            velocity = moveDir * 6f;
         }
         else
         {
             moveDir = (Pos.GetTileCenter() - unitPosCenter).normalized;
-            velocity = moveDir * Speed * 0.3f;
+            velocity = moveDir * 2f;
         }
         transform.localPosition += (Vector3)velocity * Time.deltaTime;
         if (isReversing && transform.localPosition.magnitude <= 0.05f)

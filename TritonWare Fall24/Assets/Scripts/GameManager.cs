@@ -11,11 +11,15 @@ public class GameManager : MonoBehaviour
     private float waveIntervalVariance = 0.3f;  // randomness multiplier
     private float waveTimer;
     private float waveAggroChance = 0.8f;
+    private float rushChance = 0.4f;
+
+    public Doctor DoctorUnit;
 
     private void Awake()
     {
         Instance = this;
         waveTimer = waveInterval;
+        DoctorUnit = FindObjectOfType<Doctor>();
     }
 
     private void Update()
@@ -39,7 +43,11 @@ public class GameManager : MonoBehaviour
             if (unit is EnemyUnit e)
             {
                 if (e.CurrentState == EnemyState.Idle && Random.value < waveAggroChance)
-                    e.ChangeState(EnemyState.AttackClosest);
+                {
+                    if (Random.value < rushChance) e.CurrentState = EnemyState.Rush;
+                    else e.CurrentState = EnemyState.AttackClosest;
+                }
+                    
             }
         }
     }
