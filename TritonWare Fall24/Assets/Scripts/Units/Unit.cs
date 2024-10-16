@@ -243,7 +243,7 @@ public abstract class Unit : Entity, IDamageable
 
     }
 
-    protected void ClearPath(bool stay = true)
+    public void ClearPath(bool stay = true)
     {
         while (reservedTiles.Count > 0)
         {

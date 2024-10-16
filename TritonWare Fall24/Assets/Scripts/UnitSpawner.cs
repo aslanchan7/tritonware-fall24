@@ -6,19 +6,24 @@ using Random = UnityEngine.Random;
 
 public class UnitSpawner : MonoBehaviour
 {
-    public float maxSpawnInterval = 5;
-    public float minSpawnInterval = 1;
+    public float maxZombieSpawnInterval = 5;
+    public float minZombieSpawnInterval = 1;
+    public float minPatientSpawnInterval = 10;
+    public float maxPatientSpawnInterval = 20;
     public float spawnRateRandomness = 0.1f;
     public float spawnPositionRandomness = 0.1f;
-    private float spawnTimer = 0f;
+    private float zombieSpawnTimer = 0f;
+    private float patientSpawnTimer = 0f;
     public int groupSize = 1;
 
     public Unit StandardEnemy;
+    public Unit StandardPatient;
     private List<Vector2Int> spawnablePositions;
 
     private void Awake()
     {
         spawnablePositions = MapManager.Instance.GetMapEdge();
+        patientSpawnTimer = maxPatientSpawnInterval;
 
     }
 
@@ -27,16 +32,20 @@ public class UnitSpawner : MonoBehaviour
     {
         // Using Perlin Noise for random but smooth fluctuation
         float spawnRateNoise = Mathf.PerlinNoise(Time.time * spawnRateRandomness, 0);
-        float currentSpawnInterval = Mathf.Lerp(minSpawnInterval, maxSpawnInterval, spawnRateNoise);  // Interpolate between minRate and maxRate
 
-        if (spawnTimer <= 0f)
+        if (zombieSpawnTimer <= 0f)
         {
-            spawnTimer = currentSpawnInterval;
+            zombieSpawnTimer = Mathf.Lerp(minZombieSpawnInterval, maxZombieSpawnInterval, spawnRateNoise); ;
             SpawnGroup(spawnablePositions[Random.Range(0, spawnablePositions.Count)]);
-
             // todo if spawn position is occupied try again
         }
-        spawnTimer -= Time.deltaTime;
+        if (patientSpawnTimer <= 0f)
+        {
+            patientSpawnTimer = Mathf.Lerp(minPatientSpawnInterval, maxPatientSpawnInterval, spawnRateNoise);
+            SpawnUnit(spawnablePositions[Random.Range(0, spawnablePositions.Count)], StandardPatient);
+        }
+
+        zombieSpawnTimer -= Time.deltaTime;
 
         // Debug.Log($"Current spawn interval: {currentSpawnInterval}");
 

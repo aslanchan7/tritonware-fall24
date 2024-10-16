@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -14,12 +15,14 @@ public class GameManager : MonoBehaviour
     private float rushChance = 0.4f;
 
     public Doctor DoctorUnit;
+    public List<HospitalBed> AvailableBeds;
 
     private void Awake()
     {
         Instance = this;
         waveTimer = waveInterval;
         DoctorUnit = FindObjectOfType<Doctor>();
+        AvailableBeds = FindObjectsOfType<HospitalBed>().ToList();
     }
 
     private void Update()
