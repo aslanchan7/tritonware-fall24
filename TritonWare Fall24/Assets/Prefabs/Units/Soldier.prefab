@@ -506,15 +506,19 @@ MonoBehaviour:
   TaskQueue: []
   SelectIndicator: {fileID: 1181420431281314879}
   UnitDisplay: {fileID: 1150874679603547805}
+  SpriteRenderer: {fileID: 0}
   Seeker: {fileID: 0}
   Destination: {x: 0, y: 0}
   ReachedEndOfPath: 0
   PathSetupFinished: 0
+  enableMovement: 1
   InfectionProgress: 0
   IncrementTimeInterval: 2
   LastIncremented: 0
   infectionText: {fileID: 2500915462215119461}
+  enemyPrefab: {fileID: 6455408948894246716, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
   ForceEnemy: 0
+  Weapon: {fileID: 6521687734314680434}
 --- !u!1 &4267367270508234017
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,6 +867,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce3e847340c03d042824fbc3b95471df, type: 3}
+--- !u!114 &6521687734314680434 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8094601440174018315, guid: ce3e847340c03d042824fbc3b95471df, type: 3}
+  m_PrefabInstance: {fileID: 3086229562701991801}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3081dacc376d57b4f9d173ae3e64515a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8310950008928549544 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6449736928536196561, guid: ce3e847340c03d042824fbc3b95471df, type: 3}

@@ -44,7 +44,6 @@ public class VisitorUnit : Unit
                 }
             }
         }
-
     }
 
     private void FindBed()

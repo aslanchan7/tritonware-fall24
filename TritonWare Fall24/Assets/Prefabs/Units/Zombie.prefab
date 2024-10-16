@@ -624,8 +624,12 @@ MonoBehaviour:
   TaskQueue: []
   SelectIndicator: {fileID: 1751389183041611419}
   UnitDisplay: {fileID: 2830979096487014946}
+  Sprite: {fileID: 7341565751645686659}
   Seeker: {fileID: 4169987428054787796}
   Destination: {x: 0, y: 0}
   ReachedEndOfPath: 0
   PathSetupFinished: 0
+  enableMovement: 1
   AttackDamage: 10
+  CurrentState: 0
+  infectionAttackChance: 0.1

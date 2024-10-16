@@ -25,7 +25,6 @@ public class UnitSpawner : MonoBehaviour
     {
         spawnablePositions = MapManager.Instance.GetMapEdge();
         patientSpawnTimer = maxPatientSpawnInterval;
-
     }
 
 

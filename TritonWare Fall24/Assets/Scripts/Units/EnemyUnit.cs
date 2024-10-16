@@ -12,6 +12,7 @@ public enum EnemyState
 public abstract class EnemyUnit : Unit
 {
     public override Team Team => Team.Enemy;
+
     public int AttackDamage = 10;
 
     private float farTargetDistance = 8f;
@@ -27,11 +28,27 @@ public abstract class EnemyUnit : Unit
 
     private float loiterInterval = 3f;
     private float loiterTimer = 0f;
+    [SerializeField] float infectionAttackChance = 0.1f;
 
 
     protected override void Update()
     {
-        base.Update();
+        // This section is from base.Update() but excludes the infection as enemy units can't get infected
+        /////////////////////////////////////
+        bool reachedDestination = false;
+        if (enableMovement && CurrentPath != null)
+        {
+            reachedDestination = MoveAlongPath();
+        }
+        if (reachedDestination)
+        {
+            CheckWorkableTask();
+        }
+        if (CurrentPath == null && advanceMoveDestination != PathfindingUtils.InvalidPos)
+        {
+            AdvanceMove();
+        }
+        /////////////////////////////////////
 
         if (CurrentState == EnemyState.Idle)
         {
@@ -138,11 +155,11 @@ public abstract class EnemyUnit : Unit
         }
 
 
-        if (currentAttackTarget is AlliedUnit unit)
+        if (currentAttackTarget is Unit unit)
         {
             float rand = Random.Range(0f, 1f);
             // 10% chance of infecting an allied unit every attack
-            if (rand < 0.1f)
+            if (rand < infectionAttackChance)
             {
                 unit.GetInfected();
             }

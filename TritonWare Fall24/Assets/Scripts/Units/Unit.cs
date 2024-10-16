@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 using System.Collections;
+using TMPro;
 
 
 public abstract class Unit : Entity, IDamageable
@@ -30,7 +31,7 @@ public abstract class Unit : Entity, IDamageable
     [HideInInspector] public bool PathSetupFinished;
     private int currentWaypoint = 0;
     // private float nextWaypointDistance = .2f;
-    private bool enableMovement = true;
+    [HideInInspector] public bool enableMovement = true;
     private int routeReservePenalty = 100;
     private int standingPenalty = 10000;
     private int passingPenalty = 1000;
@@ -44,9 +45,19 @@ public abstract class Unit : Entity, IDamageable
     private bool isReversing = false;
     public bool IsActive = false;
 
+    [Header("Infection")]
+    public float InfectionProgress = 0f;
+    public float IncrementTimeInterval = 2f; // every 2 seconds increase InfectionProgress by 1%
+    public float turnIntoEnemyTime = 3f;
+    private float LastIncremented;
+    [SerializeField] TextMeshPro infectionText;
+    [SerializeField] GameObject enemyPrefab;
+
+
     protected virtual void Awake()
     {
         Seeker = GetComponent<Seeker>();
+        LastIncremented = Time.time;
     }
 
     public void Place(Vector2Int pos)
@@ -102,7 +113,7 @@ public abstract class Unit : Entity, IDamageable
         else return null;
     }
 
-    private void CheckWorkableTask()    // on arriving at move destination, see if the enqueued task is workable, and start working if yes
+    protected void CheckWorkableTask()    // on arriving at move destination, see if the enqueued task is workable, and start working if yes
     {
         Task currentTask = GetCurrentTask();
         if (currentTask != null)
@@ -449,6 +460,47 @@ public abstract class Unit : Entity, IDamageable
         }
     }
 
+    public void GetInfected()
+    {
+        // this method gets called when an enemy attacks this unit
+
+        // if not infected yet, then start infection
+        if (InfectionProgress == 0f)
+        {
+            InfectionProgress = 0.01f;
+        }
+        // if already infected, speed it up by increasing infected rate by another 1%
+        else
+        {
+            InfectionProgress += 0.01f;
+        }
+    }
+
+
+    protected virtual IEnumerator TurnIntoEnemy()
+    {
+        // Disable movement
+        enableMovement = false;
+
+        GameObject instantiated = Instantiate(enemyPrefab, transform.parent);
+        EnemyUnit enemy = instantiated.GetComponent<EnemyUnit>();
+
+        enemy.Pos = this.Pos;
+        enemy.transform.localPosition = transform.localPosition;
+        MapManager.Instance.GetTile(this.Pos).ContainedUnit = enemy;
+
+        UnitController.Instance.SelectedUnits.Remove(this);
+
+        enemy.gameObject.SetActive(false);
+
+        // Wait for x amount of time, could be used for transforming anim
+        yield return new WaitForSeconds(turnIntoEnemyTime);
+
+        enemy.gameObject.SetActive(true);
+        Destroy(gameObject);
+    }
+
+
     protected virtual void Update()
     {
         bool reachedDestination = false;
@@ -463,6 +515,23 @@ public abstract class Unit : Entity, IDamageable
         if (CurrentPath == null && advanceMoveDestination != PathfindingUtils.InvalidPos)
         {
             AdvanceMove();
+        }
+
+        // Infection
+        if (InfectionProgress != 0f && !(InfectionProgress >= 1f))
+        {
+            if (Time.time - LastIncremented >= IncrementTimeInterval)
+            {
+                InfectionProgress += 0.01f;
+                LastIncremented = Time.time;
+                infectionText.text = ((double)InfectionProgress).ToString();
+            }
+        }
+
+        if (InfectionProgress >= 1f)
+        {
+            StartCoroutine("TurnIntoEnemy");
+            InfectionProgress = 0f;
         }
     }
 

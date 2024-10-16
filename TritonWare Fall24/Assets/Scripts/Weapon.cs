@@ -21,7 +21,6 @@ public class Weapon : MonoBehaviour
     private bool shootingEnabled = false;
     private LayerMask layermask;
     private BulletTrail bulletTrail;
-
     public BulletTrail TrailPrefab;
 
     private void Awake()
@@ -202,7 +201,7 @@ public class Weapon : MonoBehaviour
     // otherwise, shoot a trail to target at specified position
     private void ProjectileHit(Entity target, Vector2 position)
     {
-        Vector2 origin = WeaponHolder.transform.position + new Vector3(0.5f,0.5f);
+        Vector2 origin = WeaponHolder.transform.position + new Vector3(0.5f, 0.5f);
         Vector2 direction = (position - origin).normalized;
         float distance = Vector2.Distance(origin, position);
         float trailTravelDistance;

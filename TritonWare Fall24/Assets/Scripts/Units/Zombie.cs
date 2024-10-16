@@ -24,7 +24,7 @@ public class Zombie : EnemyUnit
             {
                 closest = unit;
                 closestDist = dist;
-            } 
+            }
         }
         return closest;
     }

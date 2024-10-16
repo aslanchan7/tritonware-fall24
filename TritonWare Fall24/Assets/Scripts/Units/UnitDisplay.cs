@@ -14,7 +14,6 @@ public class UnitDisplay : MonoBehaviour
     private void Awake()
     {
         Unit attachedUnit = GetComponentInParent<Unit>();
-        Debug.Log(attachedUnit);
         if (attachedUnit != null)
         {
             Unit = attachedUnit;

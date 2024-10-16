@@ -333,10 +333,17 @@ MonoBehaviour:
   TaskQueue: []
   SelectIndicator: {fileID: 7648136398837511798}
   UnitDisplay: {fileID: 4072339206043737071}
+  Sprite: {fileID: 7226103055106404241}
   Seeker: {fileID: 0}
   Destination: {x: 0, y: 0}
   ReachedEndOfPath: 0
   PathSetupFinished: 0
+  enableMovement: 1
+  InfectionProgress: 0
+  IncrementTimeInterval: 2
+  LastIncremented: 0
+  infectionText: {fileID: 0}
+  enemyPrefab: {fileID: 0}
   ForceEnemy: 0
 --- !u!1 &4339563582661668854
 GameObject:

@@ -33,7 +33,7 @@ public class HospitalBed : Workstation
         {
             ReservedPatient.ClearPath();
         }
-        
+
         ReservedPatient = unit;
         if (GameManager.Instance.AvailableBeds.Contains(this))
         {
