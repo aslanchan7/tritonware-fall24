@@ -55,7 +55,7 @@ public abstract class EnemyUnit : Unit
             }
             return;
         }
-        
+
         if (currentRetargetTimer > 0)
         {
             currentRetargetTimer -= Time.deltaTime;
@@ -94,7 +94,7 @@ public abstract class EnemyUnit : Unit
                 UpdateTarget();
                 return;
             }
-        }                                        
+        }
     }
 
     public void ChangeState(EnemyState state)
@@ -154,7 +154,7 @@ public abstract class EnemyUnit : Unit
             if (Vector2Int.Distance(Pos, newTarget.Pos) > 1.5)
             {
                 Vector2Int attackPos = FindAttackablePosition(newTarget);
-                
+
                 if (attackPos != PathfindingUtils.InvalidPos)
                 {
                     //Debug.Log($"Position to attack : {attackPos}");
@@ -163,7 +163,7 @@ public abstract class EnemyUnit : Unit
             }
         }
     }
-    
+
     // finds a valid tile to stand to attack the target, prioritizing the closest
     private Vector2Int FindAttackablePosition(IDamageable target)
     {
@@ -179,7 +179,7 @@ public abstract class EnemyUnit : Unit
                     closest = freeNeighbor;
                     closestDist = dist;
                 }
-            } 
+            }
         }
         return closest;
     }
@@ -190,7 +190,7 @@ public abstract class EnemyUnit : Unit
     protected override void FinishPath()
     {
         base.FinishPath();
-        if (CurrentState != EnemyState.Idle) 
+        if (CurrentState != EnemyState.Idle)
             UpdateTarget();
     }
 
