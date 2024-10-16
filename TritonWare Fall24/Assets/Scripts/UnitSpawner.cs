@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 using Random = UnityEngine.Random;
 
 public class UnitSpawner : MonoBehaviour
@@ -42,10 +43,11 @@ public class UnitSpawner : MonoBehaviour
         if (patientSpawnTimer <= 0f)
         {
             patientSpawnTimer = Mathf.Lerp(minPatientSpawnInterval, maxPatientSpawnInterval, spawnRateNoise);
-            SpawnUnit(spawnablePositions[Random.Range(0, spawnablePositions.Count)], StandardPatient);
+            SpawnPatient(spawnablePositions[Random.Range(0, spawnablePositions.Count)]);
         }
 
         zombieSpawnTimer -= Time.deltaTime;
+        patientSpawnTimer -= Time.deltaTime;
 
         // Debug.Log($"Current spawn interval: {currentSpawnInterval}");
 
@@ -68,9 +70,19 @@ public class UnitSpawner : MonoBehaviour
             }
         }
 
+        OverlayManager.Instance.CreateTargetIndicator(origin, TargetIndicator.EnemySpawn);
+
+        /*
         OverlayManager.Instance.Targets.Enqueue(new Tuple<Vector2Int, float>(origin, Time.time));
         GameObject indicator = Instantiate(OverlayManager.Instance.enemySpawnIndicatorPrefab);
         OverlayManager.Instance.TargetIndicators.Add(origin, indicator);
+        */
+    }
+
+    private void SpawnPatient(Vector2Int pos)
+    {
+        SpawnUnit(pos, StandardPatient);
+        OverlayManager.Instance.CreateTargetIndicator(pos, TargetIndicator.PatientSpawn);
     }
 
     private void SpawnUnit(Vector2Int pos, Unit unitTemplate)

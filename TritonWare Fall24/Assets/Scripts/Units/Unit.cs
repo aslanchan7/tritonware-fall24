@@ -42,7 +42,7 @@ public abstract class Unit : Entity, IDamageable
 
     protected Vector2Int advanceMoveDestination = PathfindingUtils.InvalidPos;
     private bool isReversing = false;
-
+    public bool IsActive = false;
 
     protected virtual void Awake()
     {
@@ -64,6 +64,7 @@ public abstract class Unit : Entity, IDamageable
         {
             GameManager.AllUnits.Add(this);
         }
+        IsActive = true;
     }
 
     // effectively removes unit from the map (but not the game)
@@ -72,6 +73,7 @@ public abstract class Unit : Entity, IDamageable
         MapTile targetTile = MapManager.Instance.GetTile(Pos);
         targetTile.ContainedUnit = null;
         ClearPath(false);
+        IsActive = false;
     }
 
 
@@ -196,6 +198,7 @@ public abstract class Unit : Entity, IDamageable
 
     private void TriggerDeath()
     {
+        IsActive = false;
         GameManager.AllUnits.Remove(this);
         MapManager.Instance.GetTile(Pos).ContainedUnit = null;
         ClearPath();

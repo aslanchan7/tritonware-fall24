@@ -13,23 +13,18 @@ public class Zombie : EnemyUnit
 
         Unit closest = null;
         float closestDist = float.MaxValue;
-        foreach (Unit unit in GameManager.GetUnitsOfTeam(Team.Allied))
+        List<Unit> targetPool = GameManager.GetUnitsOfTeam(Team.Allied);
+        targetPool.AddRange(GameManager.GetUnitsOfTeam(Team.Visitor));
+
+        foreach (Unit unit in targetPool)
         {
+            if (!unit.IsActive) continue;   // ignore dead or inactive targets (e.g. in bed)
             float dist = Vector2Int.Distance(unit.Pos, Pos);
             if (closest == null || dist < closestDist)
             {
                 closest = unit;
                 closestDist = dist;
             } 
-        }
-        foreach (Unit unit in GameManager.GetUnitsOfTeam(Team.Visitor))
-        {
-            float dist = Vector2Int.Distance(unit.Pos, Pos);
-            if (closest == null || dist < closestDist)
-            {
-                closest = unit;
-                closestDist = dist;
-            }
         }
         return closest;
     }
@@ -40,7 +35,7 @@ public class Zombie : EnemyUnit
         List<Unit> possible = new();
         foreach (Unit u in GetUnitsInRadius(radius))
         {
-            if (GameManager.OpposingTeams(u.Team, Team)) possible.Add(u);
+            if (u.IsActive && GameManager.OpposingTeams(u.Team, Team)) possible.Add(u);
 
         }
         if (possible.Count > 0) { return possible[Random.Range(0, possible.Count)]; }

@@ -1,7 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static UnityEngine.UI.Image;
+
+public enum TargetIndicator
+{
+    EnemySpawn, PatientSpawn
+}
+
+[Serializable]
+public struct IndicatorSprite
+{
+    public TargetIndicator Indicator;
+    public GameObject IndicatorPrefab;
+
+    public IndicatorSprite(TargetIndicator indicator, GameObject indicatorPrefab)
+    {
+        Indicator = indicator;
+        IndicatorPrefab = indicatorPrefab;
+    }
+}
 
 public class OverlayManager : MonoBehaviour
 {
@@ -17,6 +37,8 @@ public class OverlayManager : MonoBehaviour
     private float indicatorSpriteWidth;
     private float indicatorSpriteHeight;
 
+    public List<IndicatorSprite> IndicatorPrefabs;
+
     private void Awake()
     {
         Instance = this;
@@ -27,6 +49,7 @@ public class OverlayManager : MonoBehaviour
         indicatorSpriteRenderer = enemySpawnIndicatorPrefab.GetComponent<SpriteRenderer>();
         indicatorSpriteWidth = indicatorSpriteRenderer.bounds.size.x / 2f;
         indicatorSpriteHeight = indicatorSpriteRenderer.bounds.size.y / 2f;
+
     }
 
     private void Update()
@@ -90,6 +113,21 @@ public class OverlayManager : MonoBehaviour
     public void ResetHoverOverlay()
     {
         HoverOverlay.transform.localScale = Vector2.one;
+    }
+
+    public void CreateTargetIndicator(Vector2Int pos, TargetIndicator indicator)
+    {
+        Targets.Enqueue(new Tuple<Vector2Int, float>(pos, Time.time));
+        IndicatorSprite targetIndicator = new(TargetIndicator.EnemySpawn, enemySpawnIndicatorPrefab);  // backup
+        foreach (IndicatorSprite kvp in IndicatorPrefabs)
+        {
+            if (kvp.Indicator == indicator)
+            {
+                targetIndicator = kvp;
+                break;
+            }
+        }
+        TargetIndicators.Add(pos, Instantiate(targetIndicator.IndicatorPrefab));
     }
 
     public void UpdateTargetIndicator(Vector2Int target, GameObject indicator)
