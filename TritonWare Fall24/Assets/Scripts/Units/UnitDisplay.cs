@@ -33,16 +33,20 @@ public class UnitDisplay : MonoBehaviour
         int color = (4 - HealthPercent / 20) > 4 ? 4 : (4 - HealthPercent / 20);
         // print(Health + " " + color + " " + colors[color]);
 
+        if (HealthSprite != null)
+        {
 
-        HealthSprite.color = colors[color];
-        if (Unit.Health == Unit.MaxHealth)
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(true);
-            HealthForeground.localScale = new Vector3(HealthPercent / 100f, 1f, 1f);
+
+            HealthSprite.color = colors[color];
+            if (Unit.Health == Unit.MaxHealth)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                gameObject.SetActive(true);
+                HealthForeground.localScale = new Vector3(HealthPercent / 100f, 1f, 1f);
+            }
         }
     }
 

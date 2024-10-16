@@ -67,13 +67,19 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        
+
 
         cameraPos += (Vector3)(camMoveVector.normalized * panSpeed * Time.deltaTime);
 
         // Clamp the camera's position to stay within the specified bounds
-        cameraPos.x = Mathf.Clamp(cameraPos.x, minCameraPos.x, maxCameraPos.x);
-        cameraPos.y = Mathf.Clamp(cameraPos.y, minCameraPos.y, maxCameraPos.y);
+
+        float screenAspect = screenWidth / screenHeight;
+        float cameraHeight = mainCamera.orthographicSize * 2;
+        float cameraWidth = cameraHeight * screenAspect;
+        Vector2 newMinCameraPos = new(minCameraPos.x + cameraWidth / 2f, minCameraPos.y + cameraHeight / 2f);
+        Vector2 newMaxCameraPos = new(maxCameraPos.x - cameraWidth / 2f, maxCameraPos.y - cameraHeight / 2f);
+        cameraPos.x = Mathf.Clamp(cameraPos.x, newMinCameraPos.x, newMaxCameraPos.x);
+        cameraPos.y = Mathf.Clamp(cameraPos.y, newMinCameraPos.y, newMaxCameraPos.y);
 
         // Apply the new camera position
         mainCamera.transform.position = cameraPos;
