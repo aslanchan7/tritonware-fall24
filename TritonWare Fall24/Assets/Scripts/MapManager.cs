@@ -55,6 +55,11 @@ public class MapManager : MonoBehaviour
         return GetTile(pos).ContainedUnit;
     }
 
+    public Resource GetResource(Vector2Int pos)
+    {
+        return GetTile(pos).ContainedResource;
+    }
+
     public List<MapTile> GetTilesInRadius(Vector2Int origin, float radius)
     {
         int roundedRadius = (int)radius + 1;

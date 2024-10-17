@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:TritonWare Fall24/Assets/Prefabs/EnemySpawnIndicator.prefab.meta
 guid: a5dca6d79dc42b44980657f43c50330c
+========
+guid: 7003c6e697c042648b999378f5c4d808
+>>>>>>>> Stashed changes:TritonWare Fall24/Assets/Prefabs/Bullet Projectile.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
