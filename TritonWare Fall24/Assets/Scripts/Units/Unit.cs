@@ -328,7 +328,7 @@ public abstract class Unit : Entity, IDamageable
         }
         if (currentInterrupts >= interruptsUntilRepath)
         {
-            Debug.Log("Retrying -- Finding new path");
+            //Debug.Log("Retrying -- Finding new path");
             currentInterrupts = 0;
             currentRepaths++;
             InterruptMove(-1, true);
