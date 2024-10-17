@@ -41,7 +41,7 @@ public abstract class Structure : Entity
         return minDist;
     }
 
-    public List<Vector2Int> GetSurroundingTiles()
+    public List<Vector2Int> GetFreeSurroundingTiles()
     {
         List<Vector2Int> result = new();
         foreach (Vector2Int occupiedPos in GetOccupiedPositions())

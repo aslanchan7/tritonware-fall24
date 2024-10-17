@@ -1,3 +1,4 @@
+using Unity.Collections;
 using UnityEngine;
 
 public class HospitalBed : Workstation
@@ -23,6 +24,14 @@ public class HospitalBed : Workstation
 
     public void RemovePatient()
     {
+        var positions = GetFreeSurroundingTiles();
+        if (positions.Count == 0)
+        {
+            Debug.LogError("No position to remove patient");
+            return;
+        }
+
+        Patient.Place(positions[0]);
         Patient = null;
         GameManager.Instance.AvailableBeds.Add(this);
     }

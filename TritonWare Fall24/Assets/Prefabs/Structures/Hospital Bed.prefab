@@ -218,7 +218,7 @@ MonoBehaviour:
   workstationSize: {x: 2, y: 1}
   RelativeWorkTilePos: {x: 0, y: -1}
   WorkTileIcon: {fileID: 5246575592898114864}
-  WorkstationTaskTemplate: {fileID: 0}
+  WorkstationTaskTemplate: {fileID: -1843661810600571237, guid: a91d41dcaa1237e4e83a2fdfc93a5052, type: 3}
   TaskInProgress: {fileID: 0}
   Patient: {fileID: 0}
   ReservedPatient: {fileID: 0}

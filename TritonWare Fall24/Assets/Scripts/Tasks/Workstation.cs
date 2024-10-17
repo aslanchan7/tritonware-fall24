@@ -30,7 +30,7 @@ public class Workstation : Structure
     {
         if (TaskInProgress == null)
         {
-            Task task = WorkstationTaskTemplate.CreateTask();
+            Task task = WorkstationTaskTemplate.CreateTask(this);
             TaskInProgress = task;
             task.ValidWorkingPositions.Add(GetWorkPos());
             task.transform.SetParent(transform, false);

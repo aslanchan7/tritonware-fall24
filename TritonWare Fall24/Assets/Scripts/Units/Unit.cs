@@ -524,13 +524,13 @@ public abstract class Unit : Entity, IDamageable
             {
                 InfectionProgress += 0.01f;
                 LastIncremented = Time.time;
-                infectionText.text = ((double)InfectionProgress).ToString();
+                infectionText.text = ((double)InfectionProgress).ToString().Substring(0, 4);
             }
         }
 
         if (InfectionProgress >= 1f)
         {
-            StartCoroutine("TurnIntoEnemy");
+            StartCoroutine(TurnIntoEnemy());
             InfectionProgress = 0f;
         }
     }
