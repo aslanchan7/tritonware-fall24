@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.UI.Image;
 using Random = UnityEngine.Random;
@@ -16,6 +17,9 @@ public class UnitSpawner : MonoBehaviour
     private float zombieSpawnTimer = 0f;
     private float patientSpawnTimer = 0f;
     public int groupSize = 1;
+
+    public float patientMaxInfection = 0.3f;
+
 
     public Unit StandardEnemy;
     public Unit StandardPatient;
@@ -42,7 +46,8 @@ public class UnitSpawner : MonoBehaviour
         if (patientSpawnTimer <= 0f)
         {
             patientSpawnTimer = Mathf.Lerp(minPatientSpawnInterval, maxPatientSpawnInterval, spawnRateNoise);
-            TrySpawn(spawnablePositions, StandardPatient);
+            VisitorUnit newPatient = TrySpawn(spawnablePositions, StandardPatient) as VisitorUnit;
+            if (newPatient != null) newPatient.Infection = new Infection(newPatient, Random.Range(0, patientMaxInfection));
         }
 
         zombieSpawnTimer -= Time.deltaTime;
@@ -71,7 +76,7 @@ public class UnitSpawner : MonoBehaviour
     }
 
     // tries to spawn a unit in a randomly picked position if valid
-    private bool TrySpawn(List<Vector2Int> positions, Unit unitTemplate)
+    private Unit TrySpawn(List<Vector2Int> positions, Unit unitTemplate)
     {
         int spawnAttempts = 0;
         while (spawnAttempts < 10)
@@ -79,8 +84,7 @@ public class UnitSpawner : MonoBehaviour
             int index = Random.Range(0, positions.Count);
             if (MapManager.Instance.GetTile(positions[index]).IsPassable())
             {
-                SpawnUnit(positions[index], unitTemplate);
-                return true;
+                return SpawnUnit(positions[index], unitTemplate);
             }
             else
             {
@@ -88,30 +92,21 @@ public class UnitSpawner : MonoBehaviour
             }
         }
         Debug.Log("Failed to find valid spawn location");
-        return false;
+        return null;
     }
 
-    private bool TrySpawn(List<MapTile> positions, Unit unitTemplate)
+    private Unit TrySpawn(List<MapTile> tiles, Unit unitTemplate)
     {
-        int spawnAttempts = 0;
-        while (spawnAttempts < 10)
+        List<Vector2Int> positions = new();
+
+        foreach (MapTile tile in tiles)
         {
-            int index = Random.Range(0, positions.Count);
-            if (positions[index].IsPassable())
-            {
-                SpawnUnit(positions[index].Pos, StandardEnemy);
-                return true;
-            }
-            else
-            {
-                spawnAttempts++;
-            }
+            positions.Add(tile.Pos);
         }
-        Debug.Log("Failed to find valid spawn location");
-        return false;
+        return TrySpawn(positions, unitTemplate);
     }
 
-    private void SpawnUnit(Vector2Int pos, Unit unitTemplate)
+    private Unit SpawnUnit(Vector2Int pos, Unit unitTemplate)
     {
         Unit newUnit = Instantiate(unitTemplate);
         newUnit.Place(pos);
@@ -119,6 +114,7 @@ public class UnitSpawner : MonoBehaviour
         {
             OverlayManager.Instance.CreateTargetIndicator(pos, TargetIndicator.PatientSpawn);
         }
+        return newUnit;
     }
 
 

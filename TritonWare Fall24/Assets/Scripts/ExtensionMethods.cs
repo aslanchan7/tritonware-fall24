@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public static class ExtensionMethods
 {
@@ -20,6 +21,11 @@ public static class ExtensionMethods
     public static Vector2Int GetGridPos(this Vector3 position)
     {
         return new Vector2Int((int)position.x, (int)position.y);
+    }
+
+    public static T RandomElement<T>(this List<T> list)
+    {
+        return list[Random.Range(0, list.Count)];
     }
 
 }

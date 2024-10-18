@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using UnityEngine;
 using Pathfinding;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 
 
 public abstract class Unit : Entity, IDamageable
@@ -46,12 +46,12 @@ public abstract class Unit : Entity, IDamageable
     public bool IsActive = false;
 
     [Header("Infection")]
-    public float InfectionProgress = 0f;
-    public float IncrementTimeInterval = 2f; // every 2 seconds increase InfectionProgress by 1%
-    public float turnIntoEnemyTime = 3f;
+    private float IncrementTimeInterval = 2f; // every 2 seconds increase InfectionProgress by 1%
+    private float turnIntoEnemyTime = 2f;
     private float LastIncremented;
     [SerializeField] TextMeshPro infectionText;
-    [SerializeField] GameObject enemyPrefab;
+
+    public Infection Infection;
 
 
     protected virtual void Awake()
@@ -85,6 +85,7 @@ public abstract class Unit : Entity, IDamageable
         targetTile.ContainedUnit = null;
         ClearPath(false);
         IsActive = false;
+        UnitController.Instance.SelectedUnits.Remove(this);
     }
 
 
@@ -465,38 +466,44 @@ public abstract class Unit : Entity, IDamageable
         // this method gets called when an enemy attacks this unit
 
         // if not infected yet, then start infection
-        if (InfectionProgress == 0f)
+        if (Infection == null)
         {
-            InfectionProgress = 0.01f;
+            Infection = new Infection(this, 0);
         }
-        // if already infected, speed it up by increasing infected rate by another 1%
+        // if already infected, speed it up by increasing infected rate by another 10%
         else
         {
-            InfectionProgress += 0.01f;
+            Infection.IncreaseInfection(0.1f);
         }
     }
 
-
-    protected virtual IEnumerator TurnIntoEnemy()
+    public virtual void TurnIntoUnit(Unit newUnitPrefab)
     {
+        StartCoroutine(TurnIntoUnitCoroutine(newUnitPrefab, turnIntoEnemyTime));
+    }
+    public virtual void TurnIntoUnit(Unit newUnitPrefab, float time)
+    {
+        StartCoroutine(TurnIntoUnitCoroutine(newUnitPrefab, time));
+    }
+
+    protected virtual IEnumerator TurnIntoUnitCoroutine(Unit newUnitPrefab, float time)         // for zombie turning and recruitment
+    {
+        TryExitBed();
+
         // Disable movement
         enableMovement = false;
+        Unit newUnit = Instantiate(newUnitPrefab, transform.parent);
+        newUnit.transform.localPosition = transform.localPosition;
+        UnPlace();
+        GameManager.AllUnits.Remove(this);
+        newUnit.Place(Pos);
 
-        GameObject instantiated = Instantiate(enemyPrefab, transform.parent);
-        EnemyUnit enemy = instantiated.GetComponent<EnemyUnit>();
-
-        enemy.Pos = this.Pos;
-        enemy.transform.localPosition = transform.localPosition;
-        MapManager.Instance.GetTile(this.Pos).ContainedUnit = enemy;
-
-        UnitController.Instance.SelectedUnits.Remove(this);
-
-        enemy.gameObject.SetActive(false);
+        newUnit.gameObject.SetActive(false);
 
         // Wait for x amount of time, could be used for transforming anim
-        yield return new WaitForSeconds(turnIntoEnemyTime);
+        yield return new WaitForSeconds(time);
 
-        enemy.gameObject.SetActive(true);
+        newUnit.gameObject.SetActive(true);
         Destroy(gameObject);
     }
 
@@ -518,21 +525,19 @@ public abstract class Unit : Entity, IDamageable
         }
 
         // Infection
-        if (InfectionProgress != 0f && !(InfectionProgress >= 1f))
+        if (Infection != null)
         {
             if (Time.time - LastIncremented >= IncrementTimeInterval)
             {
-                InfectionProgress += 0.01f;
+                Infection.IncreaseInfection(0.01f);
                 LastIncremented = Time.time;
-                infectionText.text = ((double)InfectionProgress).ToString().Substring(0, 4);
+                // infectionText.text = Infection.Progress.ToString();
             }
         }
 
-        if (InfectionProgress >= 1f)
-        {
-            StartCoroutine(TurnIntoEnemy());
-            InfectionProgress = 0f;
-        }
+
+        
+
     }
 
     public List<Vector2Int> FreeTilesInRadius(float radius)
@@ -546,4 +551,15 @@ public abstract class Unit : Entity, IDamageable
         }
         return result;
     }
+
+    private void TryExitBed()
+    {
+        HospitalBed bed = MapManager.Instance.GetTile(Pos).ContainedStructure as HospitalBed;
+        if (!IsActive && bed != null)
+        {
+            bed.RemovePatient();
+        }
+    }
+
+
 }

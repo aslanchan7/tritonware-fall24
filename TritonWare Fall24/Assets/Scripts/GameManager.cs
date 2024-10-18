@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 
 
     public static List<Unit> AllUnits = new List<Unit>();
-        public static List<Resource> AllResources = new List<Resource>();
+    public static List<Resource> AllResources = new List<Resource>();
 
     private float waveInterval = 30f;       // average seconds between waves
     private float waveIntervalVariance = 0.3f;  // randomness multiplier
@@ -18,6 +18,13 @@ public class GameManager : MonoBehaviour
 
     public Doctor DoctorUnit;
     public List<HospitalBed> AvailableBeds;
+
+    public EnemyUnit TurnedZombiePrefab;
+    public Soldier SoldierPrefab;
+    public Medic MedicPrefab;
+    public Scientist ScientistPrefab;
+
+    public List<Unit> AllUnitPrefabs() => new() { SoldierPrefab, MedicPrefab, ScientistPrefab };
 
     private void Awake()
     {
@@ -83,4 +90,6 @@ public class GameManager : MonoBehaviour
         }
         return false;
     }
+
+
 }

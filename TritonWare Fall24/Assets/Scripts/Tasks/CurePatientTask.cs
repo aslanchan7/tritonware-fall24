@@ -6,7 +6,7 @@ public class CurePatientTask : Task
     public override bool CancelOnInterrupt => false;
     private HospitalBed bed;
     public float cureProgress;
-    private float cureSpeed = 0.05f;    // progress fraction per second
+    private float cureSpeed = 0.01f;    // progress fraction per second
 
 
     public override void AssignTask(Unit worker)
@@ -39,8 +39,25 @@ public class CurePatientTask : Task
 
     private void CurePatient()
     {
+        Unit patient = bed.Patient;
         cureProgress = 0f;
-        bed.Patient.InfectionProgress = 0;
-        bed.RemovePatient();
+        patient.Infection = null;
+        if (patient is VisitorUnit)
+        {
+            Debug.Log("here");
+            // recruit upon cured (turn into different unit)
+            bed.RemovePatient();
+            patient.TurnIntoUnit(GameManager.Instance.AllUnitPrefabs().RandomElement(), 0.1f);
+        }
+        else
+        {
+            // same unit exit bed
+            bed.Patient.Infection = null;
+            bed.RemovePatient();
+        }
+
+        
     }
+
+    
 }

@@ -3895,13 +3895,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35688c3ca75e5144e889e571e2656e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxZombieSpawnInterval: 10
-  minZombieSpawnInterval: 5
+  maxZombieSpawnInterval: 15
+  minZombieSpawnInterval: 10
   minPatientSpawnInterval: 10
   maxPatientSpawnInterval: 20
   spawnRateRandomness: 0.1
   spawnPositionRandomness: 1
-  groupSize: 6
+  groupSize: 5
+  patientMaxInfection: 0.3
   StandardEnemy: {fileID: 3286144908946100186, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
   StandardPatient: {fileID: 7644660588227303575, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
 --- !u!4 &1115916149
@@ -52526,6 +52527,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DoctorUnit: {fileID: 0}
   AvailableBeds: []
+  TurnedZombiePrefab: {fileID: 0}
+  SoldierPrefab: {fileID: 0}
+  MedicPrefab: {fileID: 0}
+  ScientistPrefab: {fileID: 0}
 --- !u!4 &1837833847
 Transform:
   m_ObjectHideFlags: 0
@@ -53270,6 +53275,10 @@ PrefabInstance:
     - target: {fileID: 5981152362460081664, guid: 327c33c7d609bc24dbaa392ba32a70e8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8966002990520373851, guid: 327c33c7d609bc24dbaa392ba32a70e8, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
