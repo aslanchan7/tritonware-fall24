@@ -36,6 +36,10 @@ public class InputManager : MonoBehaviour
 
             if (Input.GetMouseButtonUp(0))
             {
+                if (startPos == pos)    // single tile
+                {
+                    SelectTile(pos);
+                }
                 List<Unit> foundUnits = MapManager.Instance.FindUnitsInArea(startPos, pos);
                 foreach (var unit in foundUnits)
                 {
@@ -75,6 +79,10 @@ public class InputManager : MonoBehaviour
     void SelectTile(Vector2Int pos)
     {
         UnitController.Instance.SelectUnitAtPos(pos);
+        if (MapManager.Instance.GetTile(pos).ContainedStructure != null)
+        {
+            UnitController.Instance.SelectStructure(MapManager.Instance.GetTile(pos).ContainedStructure);
+        }
     }
 
     // RClick

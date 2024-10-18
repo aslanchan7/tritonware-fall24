@@ -49,9 +49,9 @@ public abstract class Unit : Entity, IDamageable
     private float IncrementTimeInterval = 2f; // every 2 seconds increase InfectionProgress by 1%
     private float turnIntoEnemyTime = 2f;
     private float LastIncremented;
-    [SerializeField] TextMeshPro infectionText;
 
     public Infection Infection;
+    public Structure InsideStructure;
 
 
     protected virtual void Awake()
@@ -87,7 +87,6 @@ public abstract class Unit : Entity, IDamageable
         IsActive = false;
         UnitController.Instance.SelectedUnits.Remove(this);
     }
-
 
     public void EnqueueTask(Task task)          // instantiated (non template) classes only!
     {
@@ -552,12 +551,13 @@ public abstract class Unit : Entity, IDamageable
         return result;
     }
 
-    private void TryExitBed()
+    public void TryExitBed()
     {
-        HospitalBed bed = MapManager.Instance.GetTile(Pos).ContainedStructure as HospitalBed;
+        HospitalBed bed = InsideStructure as HospitalBed;
         if (!IsActive && bed != null)
         {
             bed.RemovePatient();
+            Debug.Log("Removed patient " + name);
         }
     }
 

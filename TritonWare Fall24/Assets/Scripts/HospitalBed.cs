@@ -20,20 +20,24 @@ public class HospitalBed : Workstation
         unit.transform.SetParent(transform, false);
         unit.transform.position = MapManager.Instance.GetWorldPos(Pos);
         unit.transform.localPosition = Vector2.zero;
+        unit.InsideStructure = this;
     }
 
     public void RemovePatient()
     {
-        var positions = GetFreeSurroundingTiles();
+        var positions = GetSurroundingTiles();
         if (positions.Count == 0)
         {
             Debug.LogError("No position to remove patient");
             return;
         }
-
+        Patient.InsideStructure = null;
         Patient.Place(positions[0]);
+        if (Patient is VisitorUnit v) v.TryFindBed();
         Patient = null;
         GameManager.Instance.AvailableBeds.Add(this);
+
+
     }
 
     public void ReservePatient(Unit unit)
@@ -41,6 +45,7 @@ public class HospitalBed : Workstation
         if (ReservedPatient != null)
         {
             ReservedPatient.ClearPath();
+            ReservedPatient.ClearTasks();
         }
 
         ReservedPatient = unit;

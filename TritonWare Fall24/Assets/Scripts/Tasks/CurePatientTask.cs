@@ -12,7 +12,7 @@ public class CurePatientTask : Task
     public override void AssignTask(Unit worker)
     {
         base.AssignTask(worker);
-        bed = Workstation as HospitalBed;
+        bed = Structure as HospitalBed;
         if (bed == null) Debug.LogError("Error matching hospital task to bed");
     }
 
@@ -41,7 +41,7 @@ public class CurePatientTask : Task
     {
         Unit patient = bed.Patient;
         cureProgress = 0f;
-        patient.Infection = null;
+        patient.Infection.RemoveInfection();
         if (patient is VisitorUnit)
         {
             Debug.Log("here");
@@ -52,7 +52,6 @@ public class CurePatientTask : Task
         else
         {
             // same unit exit bed
-            bed.Patient.Infection = null;
             bed.RemovePatient();
         }
 

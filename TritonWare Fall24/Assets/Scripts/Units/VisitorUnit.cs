@@ -59,4 +59,10 @@ public class VisitorUnit : Unit
         StartCoroutine(PathfindCoroutine(targetBed.Pos));
     }
 
+    public void TryFindBed()
+    {
+        targetBed = null;
+        pathTimer = 1f;
+        CurrentState = PatientState.PathingToBed;
+    }
 }

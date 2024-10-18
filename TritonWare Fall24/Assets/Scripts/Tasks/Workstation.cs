@@ -26,7 +26,7 @@ public class Workstation : Structure
         WorkTileIcon.enabled = true;
     }
 
-    public void PrepareTask(Unit worker)   // creates a new task or resumes a previously started task for the assigned unit but do not start it until unit reaches WorkTile
+    public Task PrepareWorkstationTask(Unit worker)   // creates a new task or resumes a previously started task for the assigned unit but do not start it until unit reaches WorkTile
     {
         if (TaskInProgress == null)
         {
@@ -35,11 +35,13 @@ public class Workstation : Structure
             task.ValidWorkingPositions.Add(GetWorkPos());
             task.transform.SetParent(transform, false);
             task.AssignTask(worker);
+            return task;
             
         }
         else
         {
             TaskInProgress.AssignTask(worker);
+            return TaskInProgress;
         }
 
     }

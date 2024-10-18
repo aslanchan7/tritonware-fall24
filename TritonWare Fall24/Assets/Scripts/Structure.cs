@@ -3,7 +3,19 @@ using UnityEngine;
 
 public abstract class Structure : Entity
 {
-
+    public Task StructureTaskTemplate = null;   // task performed by walking up to structure e.g. getting in bed
+    
+    public Task PrepareStructureTask(Unit worker)
+    {
+        if (StructureTaskTemplate == null) return null;
+        if (GetSurroundingTiles(false).Count == 0) return null;
+        Task task = StructureTaskTemplate.CreateTask(this);
+        task.ValidWorkingPositions.AddRange(GetSurroundingTiles(false));
+        task.transform.SetParent(transform, false);
+        task.AssignTask(worker);
+        return task;    
+    }
+    
     public virtual void Place(Vector2Int targetPos)
     {
         Pos = targetPos;
@@ -41,14 +53,27 @@ public abstract class Structure : Entity
         return minDist;
     }
 
-    public List<Vector2Int> GetFreeSurroundingTiles()
+    public List<Vector2Int> GetSurroundingTiles(bool mustBeFree = true)
     {
         List<Vector2Int> result = new();
         foreach (Vector2Int occupiedPos in GetOccupiedPositions())
         {
-            foreach (Vector2Int freeNeighbor in MapManager.Instance.GetFreeNeighbors(occupiedPos))
+            List<Vector2Int> neighbors = MapManager.Instance.GetNeighbors(occupiedPos);
+
+            foreach (Vector2Int neighbor in neighbors)
             {
-                if (!result.Contains(freeNeighbor)) result.Add(freeNeighbor);
+                if (!result.Contains(neighbor)) 
+                {
+                    if (mustBeFree)
+                    {
+                        if (MapManager.Instance.GetTile(neighbor).IsPassable()) result.Add(neighbor);
+                    }
+                    else
+                    {
+                        if (MapManager.Instance.GetTile(neighbor).ContainedStructure == null) result.Add(neighbor);
+                    }
+                }
+                
             }
         }
         return result;

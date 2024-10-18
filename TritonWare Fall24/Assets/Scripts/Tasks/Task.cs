@@ -10,18 +10,18 @@ public abstract class Task : MonoBehaviour
     [HideInInspector] public bool IsWorking = false;
     public abstract bool CancelOnInterrupt { get; }
     public List<Vector2Int> ValidWorkingPositions = new List<Vector2Int>();
-    public Workstation Workstation;
+    public Structure Structure;
 
     private void Update()
     {
         if (IsWorking) WorkTask();
     }
 
-    public Task CreateTask(Workstation ws = null)
+    public Task CreateTask(Structure s = null)
     {
         Task clone = Instantiate(this);
         clone.IsTemplate = false;
-        clone.Workstation = ws;
+        clone.Structure = s;
         return clone;
     }
 

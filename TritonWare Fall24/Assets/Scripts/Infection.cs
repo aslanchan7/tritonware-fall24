@@ -24,4 +24,11 @@ public class Infection
         InfectedUnit.Infection = null;
         InfectedUnit.TurnIntoUnit(GameManager.Instance.TurnedZombiePrefab);
     }
+
+    public void RemoveInfection()
+    {
+        InfectedUnit.UnitDisplay.UpdateDisplay();
+        InfectedUnit.Infection = null;
+        InfectedUnit = null;
+    }
 }

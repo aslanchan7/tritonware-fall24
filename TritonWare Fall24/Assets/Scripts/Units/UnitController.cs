@@ -17,15 +17,28 @@ public class UnitController : MonoBehaviour
         Unit foundUnit = MapManager.Instance.GetUnit(pos);
         if (foundUnit != null)
         {
-            SelectedUnits.Add(foundUnit);
+            if (!SelectedUnits.Contains(foundUnit)) 
+            { 
+                SelectedUnits.Add(foundUnit); 
+            }
+            
             foundUnit.SelectIndicator.enabled = true;
+        }
+    }
+
+    public void SelectStructure(Structure structure)
+    {
+        Debug.Log("Clicked on structure " + structure.name);
+        if (structure is HospitalBed b && b.Patient != null)
+        {
+            SelectedUnits.Add(b.Patient);
         }
     }
 
     public void GiveOrder(Vector2Int pos)
     {
-        if (MapManager.Instance.IsPassable(pos) && SelectedUnits.Count > 0
-            && SelectedUnits[0] is AlliedUnit a)
+        if (SelectedUnits.Count <= 0 || !(SelectedUnits[0] is AlliedUnit a)) return;
+        if (MapManager.Instance.IsPassable(pos))
         {
             foreach (var unit in SelectedUnits)
             {
@@ -33,13 +46,26 @@ public class UnitController : MonoBehaviour
             }
             if (SelectedUnits.Count == 1)   // can only give tasks to one unit at a time (for now)
             {
+                SelectedUnits[0].TryExitBed();
                 Workstation ws = MapManager.Instance.GetTile(pos).ReservingWorkstation;
                 if (ws != null)     // clicked on a work tile
                 {
-                    ws.PrepareTask(SelectedUnits[0]);
+                    ws.PrepareWorkstationTask(SelectedUnits[0]);
                 }
             }
             OrderMove(pos);
+        }
+        else if (SelectedUnits.Count == 1) 
+        {
+            Structure structure = MapManager.Instance.GetTile(pos).ContainedStructure;
+            Debug.Log("Inserting unit to structure 1");
+            if (structure != null && structure.StructureTaskTemplate != null)
+            {
+                Debug.Log("Inserting unit to structure 2");
+                Task task = structure.PrepareStructureTask(SelectedUnits[0]);
+                if (task == null) return;
+                OrderMove(task.ValidWorkingPositions.RandomElement());
+            }
         }
     }
 
@@ -50,6 +76,7 @@ public class UnitController : MonoBehaviour
 
     private IEnumerator OrderMoveCoroutine(Vector2Int pos)
     {
+
         Vector2Int initPos = pos;
         // This is just used to check if selected unit is controllable
         AlliedUnit alliedUnit = (AlliedUnit)SelectedUnits[0];
@@ -64,6 +91,7 @@ public class UnitController : MonoBehaviour
                 alliedUnit = (AlliedUnit)SelectedUnits[i];
                 if (alliedUnit.IsControllable())
                 {
+                    alliedUnit.TryExitBed();
                     pos = (Vector2Int)FindFreeNeighbor(initPos, i);
                     yield return StartCoroutine(SelectedUnits[i].PathfindCoroutine(pos));
                     // this is the new code

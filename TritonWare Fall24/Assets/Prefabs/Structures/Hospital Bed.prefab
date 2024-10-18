@@ -215,6 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 5, y: 2}
+  StructureTaskTemplate: {fileID: 8478996827265858367, guid: d32debe132883ba4bba66bb344c29cba, type: 3}
   workstationSize: {x: 2, y: 1}
   RelativeWorkTilePos: {x: 0, y: -1}
   WorkTileIcon: {fileID: 5246575592898114864}

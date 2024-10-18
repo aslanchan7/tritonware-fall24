@@ -31,7 +31,6 @@ public class UnitDisplay : MonoBehaviour
         int HealthPercent = (int)(Mathf.Clamp01((float)Unit.Health / Unit.MaxHealth) * 100);
         int color = (5 - HealthPercent / 20) > 4 ? 4 : (5 - HealthPercent / 20);
         // print(Health + " " + color + " " + colors[color]);
-        Debug.Log(HealthPercent);
         HealthBar.SetColor(HealthColors[color]);
         if (Unit.Health == Unit.MaxHealth)
         {
