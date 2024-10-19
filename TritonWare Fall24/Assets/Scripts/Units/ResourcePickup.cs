@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Resource : Entity
+public class ResourcePickup : Entity
 {
     public override bool BlocksMovement => false;
     public override bool BlocksVision => false;
     public override Vector2Int Size => new Vector2Int(1, 1);
     public override Team Team => Team.Neutral;
+
+    public ResourceManager ResourceType;
 
     public void Place(Vector2Int pos)
     {
@@ -20,6 +22,14 @@ public class Resource : Entity
         }
         targetTile.ContainedResource = this;
         GameManager.AllResourcesPickups.Add(this);
+        ResourceType = GameManager.Instance.SupplyResource;
+    }
+
+    public void Pickup()
+    {
+        ResourceType.changeResourceLevel(1);
+        GameManager.AllResourcesPickups.Remove(this);
+        Destroy(gameObject);
     }
 
 }

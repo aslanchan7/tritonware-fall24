@@ -6,7 +6,7 @@ public class MapTile : MonoBehaviour
     public Vector2Int Pos;
     public SpriteRenderer SpriteRenderer;
     public Unit ContainedUnit;
-    public Resource ContainedResource;
+    public ResourcePickup ContainedResource;
     public Structure ContainedStructure;
     public Workstation ReservingWorkstation;
 

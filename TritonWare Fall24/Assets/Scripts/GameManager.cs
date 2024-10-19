@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 
 
     public static List<Unit> AllUnits = new List<Unit>();
-    public static List<Resource> AllResourcesPickups = new List<Resource>();
+    public static List<ResourcePickup> AllResourcesPickups = new List<ResourcePickup>();
 
     public ResourceManager SupplyResource;
     public ResourceManager CureResource;
@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
         waveTimer = waveInterval;
         DoctorUnit = FindObjectOfType<Doctor>();
         AvailableBeds = FindObjectsOfType<HospitalBed>().ToList();
+        SupplyResource.Init();
+        CureResource.Init();
     }
 
     private void Update()

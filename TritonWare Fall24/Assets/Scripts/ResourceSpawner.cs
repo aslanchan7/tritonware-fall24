@@ -11,7 +11,7 @@ public class ResourceSpawner : MonoBehaviour
     private float spawnTimer = 0f;
     public int groupSize = 1;
 
-    public Resource ResourceUnit;
+    public ResourcePickup ResourceUnit;
     private List<Vector2Int> spawnablePositions;
 
     private void Awake()
@@ -43,7 +43,7 @@ public class ResourceSpawner : MonoBehaviour
         for (int i = 0; i < groupSize + Random.Range(-2,3); i++)
         {
             int index = Random.Range(0, positions.Count);
-            if (positions[index].IsPassable()) 
+            if (positions[index].IsPassable() && positions[index].ContainedResource == null) 
             {
                 SpawnResource(positions[index].Pos, ResourceUnit);
             }
@@ -54,9 +54,9 @@ public class ResourceSpawner : MonoBehaviour
         }
     }
 
-    private void SpawnResource(Vector2Int pos, Resource unitTemplate)
+    private void SpawnResource(Vector2Int pos, ResourcePickup unitTemplate)
     {
-        Resource newUnit = Instantiate(unitTemplate);
+        ResourcePickup newUnit = Instantiate(unitTemplate);
         newUnit.Place(pos);
     }
 }

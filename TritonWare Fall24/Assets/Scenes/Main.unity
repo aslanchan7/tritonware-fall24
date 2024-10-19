@@ -933,6 +933,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7754831778761494767, guid: b3a4a92c61b9293449f161ba90d4e97e, type: 3}
   m_PrefabInstance: {fileID: 2052734274}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &515185295
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 515185296}
+  - component: {fileID: 515185297}
+  m_Layer: 0
+  m_Name: Supply Resource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &515185296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515185295}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1837833847}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &515185297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515185295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c48af274de44e9b47b3f23eba74f5524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxResourceValue: 20
+  ResourceValue: 5
+  ResourceBar: {fileID: 1615344603}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3675,6 +3722,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658760570}
   m_CullTransparentMesh: 1
+--- !u!1 &811131908
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 811131909}
+  - component: {fileID: 811131910}
+  m_Layer: 0
+  m_Name: Cure Resource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &811131909
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811131908}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1837833847}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &811131910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811131908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c48af274de44e9b47b3f23eba74f5524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxResourceValue: 20
+  ResourceValue: 5
+  ResourceBar: {fileID: 161793771}
 --- !u!1 &858708912
 GameObject:
   m_ObjectHideFlags: 0
@@ -52670,16 +52764,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f508e4c9563bdc49ae4ab88e38b42b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SupplyResource: {fileID: 0}
-  CureResource: {fileID: 0}
+  SupplyResource: {fileID: 515185297}
+  CureResource: {fileID: 811131910}
   DoctorUnit: {fileID: 0}
   AvailableBeds: []
   TurnedZombiePrefab: {fileID: 3286144908946100186, guid: d27d3a5414eb3c54499dd2b17447c382, type: 3}
   SoldierPrefab: {fileID: 499753374824089035, guid: 44ea4a3375447ae449aca31c3dd83257, type: 3}
   MedicPrefab: {fileID: 85016539461489896}
   ScientistPrefab: {fileID: 1466271656816940679}
-  InfectionTurnChance: 0.5
-  infectionWaveInterval: 10
+  InfectionTurnChance: 0
+  infectionWaveInterval: 0
 --- !u!4 &1837833847
 Transform:
   m_ObjectHideFlags: 0
@@ -52692,7 +52786,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 515185296}
+  - {fileID: 811131909}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1909280752

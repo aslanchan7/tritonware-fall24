@@ -12,18 +12,22 @@ public class ResourceManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
-    void changeResourceLevel(int changeBy) {
+    public void changeResourceLevel(int changeBy) {
         ResourceValue += changeBy;
         ResourceValue = Math.Clamp(ResourceValue, 0, maxResourceValue);
         ResourceBar.localScale = new Vector3((float)ResourceValue / maxResourceValue, 1, 1);
     }
 
-    void setResourceLevel(int level) {
+    public void setResourceLevel(int level) {
         ResourceValue = level;
         ResourceValue = Math.Clamp(ResourceValue, 0, maxResourceValue);
+        ResourceBar.localScale = new Vector3((float)ResourceValue / maxResourceValue, 1, 1);
+    }
+
+    public void Init()
+    {
         ResourceBar.localScale = new Vector3((float)ResourceValue / maxResourceValue, 1, 1);
     }
 }

@@ -55,7 +55,7 @@ public class MapManager : MonoBehaviour
         return GetTile(pos).ContainedUnit;
     }
 
-    public Resource GetResource(Vector2Int pos)
+    public ResourcePickup GetResource(Vector2Int pos)
     {
         return GetTile(pos).ContainedResource;
     }

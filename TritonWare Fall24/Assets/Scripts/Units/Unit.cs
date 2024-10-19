@@ -176,6 +176,11 @@ public abstract class Unit : Entity, IDamageable
         currentInterrupts = 0;
         currentRepaths = 0;
         // PathfindingUtils.SetWalkable(Pos, targetTile.IsPassable());
+
+        if (Team == Team.Allied && targetTile.ContainedResource != null)
+        {
+            targetTile.ContainedResource.Pickup();
+        }
     }
 
     public void OnPathComplete(Path p)
