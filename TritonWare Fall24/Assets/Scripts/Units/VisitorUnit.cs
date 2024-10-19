@@ -48,15 +48,19 @@ public class VisitorUnit : Unit
 
     private void FindBed()
     {
-        if (GameManager.Instance.AvailableBeds.Count == 0)
+        HospitalBed bed = targetBed;
+        if (targetBed == null || targetBed.ReservedPatient != this || targetBed.Patient != null)
         {
-            targetBed = null;
-            return;
+            if (GameManager.Instance.AvailableBeds.Count == 0)
+            {
+                targetBed = null;
+                return;
+            }
+            bed = GameManager.Instance.AvailableBeds[0];
+            targetBed = bed;
         }
-        HospitalBed bed = GameManager.Instance.AvailableBeds[0];
-        targetBed = bed;
         bed.ReservePatient(this);
-        StartCoroutine(PathfindCoroutine(targetBed.Pos));
+        StartCoroutine(PathfindCoroutine(targetBed.GetSurroundingTiles(false).GetClosest(Pos)));
     }
 
     public void TryFindBed()

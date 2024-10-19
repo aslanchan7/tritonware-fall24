@@ -36,11 +36,11 @@ public class HospitalBed : Workstation
         Patient.Place(positions[0]);
         if (Patient is VisitorUnit v) v.TryFindBed();
         Patient = null;
-        GameManager.Instance.AvailableBeds.Add(this);
+        if (!GameManager.Instance.AvailableBeds.Contains(this))
+            GameManager.Instance.AvailableBeds.Add(this);
         if (TaskInProgress != null)
         {
             TaskInProgress.ResetTask();
-            Debug.Log("here");
         }
 
     }
@@ -57,6 +57,15 @@ public class HospitalBed : Workstation
         if (GameManager.Instance.AvailableBeds.Contains(this))
         {
             GameManager.Instance.AvailableBeds.Remove(this);
+        }
+    }
+
+    public void UnReservePatient()
+    {
+        ReservedPatient = null;
+        if (Patient == null && !GameManager.Instance.AvailableBeds.Contains(this))
+        {
+            GameManager.Instance.AvailableBeds.Add(this);
         }
     }
 

@@ -28,7 +28,8 @@ public class UnitSpawner : MonoBehaviour
     private void Awake()
     {
         spawnablePositions = MapManager.Instance.GetMapEdge();
-        patientSpawnTimer = maxPatientSpawnInterval;
+        zombieSpawnTimer = minZombieSpawnInterval;
+        patientSpawnTimer = minPatientSpawnInterval;
     }
 
 
@@ -53,8 +54,9 @@ public class UnitSpawner : MonoBehaviour
         if (!GameManager.Instance.isSettingUp)
         {
             zombieSpawnTimer -= Time.deltaTime;
-            patientSpawnTimer -= Time.deltaTime;
+            
         }
+        patientSpawnTimer -= Time.deltaTime;
 
         // Debug.Log($"Current spawn interval: {currentSpawnInterval}");
 

@@ -83,6 +83,7 @@ public abstract class Unit : Entity, IDamageable
     {
         MapTile targetTile = MapManager.Instance.GetTile(Pos);
         targetTile.ContainedUnit = null;
+        ClearTasks();
         ClearPath(false);
         IsActive = false;
         UnitController.Instance.SelectedUnits.Remove(this);

@@ -26,7 +26,7 @@ public abstract class EnemyUnit : Unit
     protected float attackCooldown = 0.5f;
     private float attackTimer = 0f;
 
-    private float aggroRange = 12f;
+    private float aggroRange = 14f;
     private float loiterRange = 8f;
 
     private float loiterInterval = 3f;

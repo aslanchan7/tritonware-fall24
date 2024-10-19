@@ -29,4 +29,21 @@ public static class ExtensionMethods
         return list[Random.Range(0, list.Count)];
     }
 
+    public static Vector2Int GetClosest(this List<Vector2Int> positions, Vector2Int measureFrom)
+    {
+        if (positions.Count == 0) return PathfindingUtils.InvalidPos;
+        Vector2Int closest = positions[0];
+        float closestDist = Vector2Int.Distance(measureFrom, closest);
+        foreach (Vector2Int pos in positions)
+        {
+            float dist = Vector2Int.Distance(pos, measureFrom);
+            if (dist < closestDist)
+            {
+                closest = pos;
+                closestDist = dist;
+            }
+        }
+        return closest;
+    }
+
 }

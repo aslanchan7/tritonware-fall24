@@ -10,7 +10,7 @@ public class ResourcePickup : Entity
     public override Team Team => Team.Neutral;
 
     public ResourceManager ResourceType;
-
+    public int Value;
     public void Place(Vector2Int pos)
     {
         Pos = pos;
@@ -27,7 +27,7 @@ public class ResourcePickup : Entity
 
     public void Pickup()
     {
-        ResourceType.changeResourceLevel(1);
+        ResourceType.changeResourceLevel(Value);
         GameManager.AllResourcesPickups.Remove(this);
         Destroy(gameObject);
     }

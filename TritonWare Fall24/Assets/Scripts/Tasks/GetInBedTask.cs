@@ -25,7 +25,7 @@ public class GetInBedTask : Task
 
     public override void RemoveTask()
     {
-        bed.ReservePatient(null);
+        bed.UnReservePatient();
         if (Worker != null) Worker.ClearPath();
         base.RemoveTask();
     }

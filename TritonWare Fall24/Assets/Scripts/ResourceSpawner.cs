@@ -40,7 +40,7 @@ public class ResourceSpawner : MonoBehaviour
     private void SpawnGroup(Vector2Int origin)
     {
         List<MapTile> positions = MapManager.Instance.GetTilesInRadius(origin, 3);
-        for (int i = 0; i < groupSize + Random.Range(-2,3); i++)
+        for (int i = 0; i < groupSize; i++)
         {
             int index = Random.Range(0, positions.Count);
             if (positions[index].IsPassable() && positions[index].ContainedResource == null) 

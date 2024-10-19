@@ -6,7 +6,7 @@ public class Scientist : AlliedUnit
 {
     public override void SetEfficiencyValues()
     {
-        Efficiency.Add(Tasks.Hospital, 0.5f);
+        Efficiency.Add(Tasks.Hospital, 0.7f);
         Efficiency.Add(Tasks.Lab, 1f);
     }
 }

@@ -6,7 +6,7 @@ public class MakeCureTask : Task
 
 
     private float labProgress = 0f;
-    private float labSpeed = 0.1f;     // fraction of progress per second
+    public float labSpeed = 0.05f;     // fraction of progress per second
     private float attemptStartCooldown = 0f;
     private bool cureInProgress = false;
 

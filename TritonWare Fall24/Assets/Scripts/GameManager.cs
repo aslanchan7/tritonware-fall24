@@ -13,11 +13,11 @@ public class GameManager : MonoBehaviour
     public ResourceManager SupplyResource;
     public ResourceManager CureResource;
 
-    private float waveInterval = 30f;       // average seconds between waves
-    private float waveIntervalVariance = 0.3f;  // randomness multiplier
+    public float waveInterval = 30f;       // average seconds between waves
+    [Range(0f,1f)] public float waveIntervalVariance = 0.3f;  // randomness multiplier
     private float waveTimer;
-    private float waveAggroChance = 0.8f;
-    private float rushChance = 0.4f;
+    [Range(0f, 1f)] public float waveAggroChance = 0.8f;
+    [Range(0f, 1f)] public float rushChance = 0.4f;
 
     public Doctor DoctorUnit;
     public List<HospitalBed> AvailableBeds;
@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     [Range(0f, 1f)] public float InfectionTurnChance;
     [SerializeField] private float infectionWaveInterval;
+    [Range(0f, 1f)] [SerializeField] private float infectionWaveIntervalRandomness = 0.2f;
     private float infectionWaveTimer;
 
     private float startTime;
@@ -73,9 +74,9 @@ public class GameManager : MonoBehaviour
         {
             TriggerInfectionWave();
             Debug.LogWarning("Infection Wave!");
-            infectionWaveTimer = infectionWaveInterval;
+            infectionWaveTimer = infectionWaveInterval * Random.Range(1 - infectionWaveIntervalRandomness, 1 + infectionWaveIntervalRandomness);
         }
-        else
+        else if (!isSettingUp)
         {
             infectionWaveTimer -= Time.deltaTime;
         }

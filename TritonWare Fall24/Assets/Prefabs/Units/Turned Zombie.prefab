@@ -281,9 +281,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 20, y: 0}
-  Health: 150
-  MaxHealth: 150
-  Speed: 6
+  Health: 100
+  MaxHealth: 100
+  Speed: 7
   TaskQueue: []
   SelectIndicator: {fileID: 1751389183041611419}
   UnitDisplay: {fileID: 6498875565912834006}
@@ -293,7 +293,7 @@ MonoBehaviour:
   PathSetupFinished: 0
   enableMovement: 1
   IsActive: 0
-  infectionText: {fileID: 0}
+  InsideStructure: {fileID: 0}
   AttackDamage: 15
   CurrentState: 0
   infectionAttackChance: 0.1
