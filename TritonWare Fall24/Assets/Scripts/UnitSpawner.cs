@@ -50,8 +50,11 @@ public class UnitSpawner : MonoBehaviour
             if (newPatient != null) newPatient.Infection = new Infection(newPatient, Random.Range(0, patientMaxInfection));
         }
 
-        zombieSpawnTimer -= Time.deltaTime;
-        patientSpawnTimer -= Time.deltaTime;
+        if (!GameManager.Instance.isSettingUp)
+        {
+            zombieSpawnTimer -= Time.deltaTime;
+            patientSpawnTimer -= Time.deltaTime;
+        }
 
         // Debug.Log($"Current spawn interval: {currentSpawnInterval}");
 

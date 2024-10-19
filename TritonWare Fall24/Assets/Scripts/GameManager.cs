@@ -31,21 +31,34 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float infectionWaveInterval;
     private float infectionWaveTimer;
 
+    private float startTime;
+    [SerializeField] private float setupTime;
+    public bool isSettingUp;
+
     public List<Unit> AllUnitPrefabs() => new() { SoldierPrefab, MedicPrefab, ScientistPrefab };
 
     private void Awake()
     {
         Instance = this;
         waveTimer = waveInterval;
+        infectionWaveTimer = infectionWaveInterval;
         DoctorUnit = FindObjectOfType<Doctor>();
         AvailableBeds = FindObjectsOfType<HospitalBed>().ToList();
         SupplyResource.Init();
         CureResource.Init();
+
+        startTime = Time.time;
+        isSettingUp = true;
     }
 
     private void Update()
     {
-        if (waveTimer < 0)
+        if (Time.time - startTime > setupTime)
+        {
+            isSettingUp = false;
+        }
+
+        if (waveTimer < 0 && !isSettingUp)
         {
             TriggerWave();
             Debug.LogWarning("Wave Incoming!");
@@ -56,11 +69,11 @@ public class GameManager : MonoBehaviour
             waveTimer -= Time.deltaTime;
         }
 
-        if (infectionWaveTimer < 0f)
+        if (infectionWaveTimer < 0f && !isSettingUp)
         {
             TriggerInfectionWave();
-            infectionWaveTimer = infectionWaveInterval;
             Debug.LogWarning("Infection Wave!");
+            infectionWaveTimer = infectionWaveInterval;
         }
         else
         {
@@ -79,7 +92,6 @@ public class GameManager : MonoBehaviour
                     if (Random.value < rushChance) e.CurrentState = EnemyState.Rush;
                     else e.CurrentState = EnemyState.AttackClosest;
                 }
-
             }
         }
     }
