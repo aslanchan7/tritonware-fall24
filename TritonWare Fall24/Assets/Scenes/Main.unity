@@ -4826,8 +4826,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxZombieSpawnInterval: 25
   minZombieSpawnInterval: 10
-  minPatientSpawnInterval: 4
-  maxPatientSpawnInterval: 6
+  minPatientSpawnInterval: 30
+  maxPatientSpawnInterval: 45
   spawnRateRandomness: 0.1
   spawnPositionRandomness: 1
   groupSize: 5
