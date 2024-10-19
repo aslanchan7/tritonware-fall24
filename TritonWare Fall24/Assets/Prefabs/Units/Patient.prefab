@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8363232444821491787}
   - component: {fileID: 9110870361944811131}
   - component: {fileID: 7644660588227303575}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Patient
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ MonoBehaviour:
   PathSetupFinished: 0
   enableMovement: 1
   IsActive: 0
-  infectionText: {fileID: 0}
+  InsideStructure: {fileID: 0}
   CurrentState: 1
 --- !u!1 &3232462707821083613
 GameObject:

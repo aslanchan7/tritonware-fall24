@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 0, y: 0}
+  StructureTaskTemplate: {fileID: 0}
 --- !u!61 &8793035972111392455
 BoxCollider2D:
   m_ObjectHideFlags: 0

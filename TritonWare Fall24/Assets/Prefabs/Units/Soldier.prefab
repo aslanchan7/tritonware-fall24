@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3111492526350613398}
   - component: {fileID: 8391152054570329319}
   - component: {fileID: 499753374824089035}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Soldier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,7 +210,7 @@ MonoBehaviour:
   PathSetupFinished: 0
   enableMovement: 1
   IsActive: 0
-  infectionText: {fileID: 0}
+  InsideStructure: {fileID: 0}
   ForceEnemy: 0
 --- !u!1 &4267367270508234017
 GameObject:

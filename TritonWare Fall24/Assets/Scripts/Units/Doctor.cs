@@ -30,7 +30,5 @@ public class Doctor : AlliedUnit
             AdvanceMove();
         }
         /////////////////////////////////////
-
-        fieldOfView.SetOrigin(transform.position);
     }
 }
