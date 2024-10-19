@@ -4042,7 +4042,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1115916148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52775,6 +52775,7 @@ MonoBehaviour:
   InfectionTurnChance: 0.5
   infectionWaveInterval: 30
   setupTime: 60
+  isSettingUp: 0
 --- !u!4 &1837833847
 Transform:
   m_ObjectHideFlags: 0
