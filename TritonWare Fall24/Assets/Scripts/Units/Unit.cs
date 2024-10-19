@@ -146,7 +146,9 @@ public abstract class Unit : Entity, IDamageable
         // Wait for a small amount of time for A* algo to do its thing
         // Usually A* takes 3-4ms to calculate the first time then the rest are almost instant (0.0ms)
         // Note: this is a lil janky/hacky but works quite well
-        // yield return new WaitForSeconds(0.05f);
+
+        // still wait a little to prevent race conditions
+        yield return new WaitForSeconds(0.05f);
         yield return null;
     }
 
@@ -178,6 +180,8 @@ public abstract class Unit : Entity, IDamageable
 
     public void OnPathComplete(Path p)
     {
+
+        if (!IsActive) return;
         ClearPath(false);
         if (!p.error)
         {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceFunctions : MonoBehaviour
+public class ResourceManager : MonoBehaviour
 {
     public int maxResourceValue = 20;
     public int ResourceValue;
@@ -12,7 +12,7 @@ public class ResourceFunctions : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        setResourceLevel(maxResourceValue);
+
     }
 
     void changeResourceLevel(int changeBy) {

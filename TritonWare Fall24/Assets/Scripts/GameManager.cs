@@ -8,7 +8,10 @@ public class GameManager : MonoBehaviour
 
 
     public static List<Unit> AllUnits = new List<Unit>();
-    public static List<Resource> AllResources = new List<Resource>();
+    public static List<Resource> AllResourcesPickups = new List<Resource>();
+
+    public ResourceManager SupplyResource;
+    public ResourceManager CureResource;
 
     private float waveInterval = 30f;       // average seconds between waves
     private float waveIntervalVariance = 0.3f;  // randomness multiplier

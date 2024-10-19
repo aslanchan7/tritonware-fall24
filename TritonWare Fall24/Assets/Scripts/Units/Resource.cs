@@ -19,7 +19,7 @@ public class Resource : Entity
             Debug.LogError("Tried to spawn into tile occupied by unit");
         }
         targetTile.ContainedResource = this;
-        GameManager.AllResources.Add(this);
+        GameManager.AllResourcesPickups.Add(this);
     }
 
 }
