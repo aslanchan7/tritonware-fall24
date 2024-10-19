@@ -27,6 +27,10 @@ public class GameManager : MonoBehaviour
     public Medic MedicPrefab;
     public Scientist ScientistPrefab;
 
+    [Range(0f, 1f)] public float InfectionTurnChance;
+    [SerializeField] private float infectionWaveInterval;
+    private float infectionWaveTimer;
+
     public List<Unit> AllUnitPrefabs() => new() { SoldierPrefab, MedicPrefab, ScientistPrefab };
 
     private void Awake()
@@ -49,6 +53,17 @@ public class GameManager : MonoBehaviour
         {
             waveTimer -= Time.deltaTime;
         }
+
+        if (infectionWaveTimer < 0f)
+        {
+            TriggerInfectionWave();
+            infectionWaveTimer = infectionWaveInterval;
+            Debug.LogWarning("Infection Wave!");
+        }
+        else
+        {
+            infectionWaveTimer -= Time.deltaTime;
+        }
     }
 
     private void TriggerWave()
@@ -62,8 +77,18 @@ public class GameManager : MonoBehaviour
                     if (Random.value < rushChance) e.CurrentState = EnemyState.Rush;
                     else e.CurrentState = EnemyState.AttackClosest;
                 }
-                    
+
             }
+        }
+    }
+
+    private void TriggerInfectionWave()
+    {
+        List<Unit> units = GetUnitsOfTeam(Team.Allied);
+        units.AddRange(GetUnitsOfTeam(Team.Visitor));
+        foreach (Unit unit in units)
+        {
+            unit.Infection?.TryTriggerTurn();
         }
     }
 

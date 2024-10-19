@@ -52678,6 +52678,8 @@ MonoBehaviour:
   SoldierPrefab: {fileID: 499753374824089035, guid: 44ea4a3375447ae449aca31c3dd83257, type: 3}
   MedicPrefab: {fileID: 85016539461489896}
   ScientistPrefab: {fileID: 1466271656816940679}
+  InfectionTurnChance: 0.5
+  infectionWaveInterval: 10
 --- !u!4 &1837833847
 Transform:
   m_ObjectHideFlags: 0

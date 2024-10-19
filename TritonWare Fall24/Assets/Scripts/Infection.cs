@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Infection
 {
@@ -30,5 +31,16 @@ public class Infection
         InfectedUnit.UnitDisplay.UpdateDisplay();
         InfectedUnit.Infection = null;
         InfectedUnit = null;
+    }
+
+    public void TryTriggerTurn()
+    {
+        float rand = Random.Range(0f, 1f);
+        float chanceToTurn = GameManager.Instance.InfectionTurnChance * Progress;
+
+        if (rand < chanceToTurn)
+        {
+            TriggerTurn();
+        }
     }
 }

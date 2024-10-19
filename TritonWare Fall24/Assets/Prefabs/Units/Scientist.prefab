@@ -118,14 +118,14 @@ MonoBehaviour:
   Speed: 5
   TaskQueue: []
   SelectIndicator: {fileID: 6043407117624333952}
-  UnitDisplay: {fileID: 0}
+  UnitDisplay: {fileID: 5979482480007944719}
   Seeker: {fileID: 0}
   Destination: {x: 0, y: 0}
   ReachedEndOfPath: 0
   PathSetupFinished: 0
   enableMovement: 1
   IsActive: 0
-  infectionText: {fileID: 0}
+  InsideStructure: {fileID: 0}
   ForceEnemy: 0
 --- !u!1 &3701484070381484256
 GameObject:
@@ -392,6 +392,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6af76a0379f27754db21cd4e8462c94a, type: 3}
+--- !u!114 &5979482480007944719 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5373156256505635969, guid: 6af76a0379f27754db21cd4e8462c94a, type: 3}
+  m_PrefabInstance: {fileID: 1759265364524678798}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2af2942d0cb208946bea9674720a8af5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6837929822296444670 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5084316000357429360, guid: 6af76a0379f27754db21cd4e8462c94a, type: 3}
