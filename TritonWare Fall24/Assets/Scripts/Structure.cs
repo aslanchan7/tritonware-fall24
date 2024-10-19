@@ -53,6 +53,7 @@ public abstract class Structure : Entity
         return minDist;
     }
 
+
     public List<Vector2Int> GetSurroundingTiles(bool mustBeFree = true)
     {
         List<Vector2Int> result = new();
@@ -77,6 +78,11 @@ public abstract class Structure : Entity
             }
         }
         return result;
+    }
+
+    public Vector3 GetRelativeWorldCenter()
+    {
+        return (Vector3)(Vector2)Size * 0.5f;
     }
 
 }

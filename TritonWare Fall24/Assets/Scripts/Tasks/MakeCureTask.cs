@@ -6,14 +6,13 @@ public class MakeCureTask : Task
 
 
     private float labProgress = 0f;
-    private float labSpeed = 0.01f;     // fraction of progress per second
+    private float labSpeed = 0.1f;     // fraction of progress per second
     private float attemptStartCooldown = 0f;
     private bool cureInProgress = false;
 
     public override void StartTask()
     {
         base.StartTask();
-        labProgress = 0f;
     }
 
     public override void WorkTask()
@@ -23,14 +22,14 @@ public class MakeCureTask : Task
 
         if (cureInProgress)
         {
-            labProgress += labSpeed * ((AlliedUnit)Worker).Efficiency[Tasks.Lab];
+            labProgress += labSpeed * ((AlliedUnit)Worker).Efficiency[Tasks.Lab] * Time.deltaTime;
             if (labProgress >= 1)
             {
                 FinishCure();
             }
         }
 
-        if (attemptStartCooldown <= 0f)
+        else if (attemptStartCooldown <= 0f)
         {
             if (supplies.ResourceValue >= 1)
             {
@@ -38,7 +37,7 @@ public class MakeCureTask : Task
             }
             else
             {
-                attemptStartCooldown = 1f;
+                attemptStartCooldown = 0.5f;
             }
         }
         else
@@ -59,7 +58,12 @@ public class MakeCureTask : Task
         cureInProgress = false;
         labProgress = 0;
         GameManager.Instance.CureResource.changeResourceLevel(1);
-        attemptStartCooldown = 1f;
+        attemptStartCooldown = 0.5f;
+    }
+
+    public override float GetVisualProgress()
+    {
+        return labProgress;
     }
 
 }

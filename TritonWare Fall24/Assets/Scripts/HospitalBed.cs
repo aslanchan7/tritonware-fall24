@@ -25,6 +25,7 @@ public class HospitalBed : Workstation
 
     public void RemovePatient()
     {
+        Debug.Log("successfuly removed");
         var positions = GetSurroundingTiles();
         if (positions.Count == 0)
         {
@@ -36,7 +37,11 @@ public class HospitalBed : Workstation
         if (Patient is VisitorUnit v) v.TryFindBed();
         Patient = null;
         GameManager.Instance.AvailableBeds.Add(this);
-
+        if (TaskInProgress != null)
+        {
+            TaskInProgress.ResetTask();
+            Debug.Log("here");
+        }
 
     }
 

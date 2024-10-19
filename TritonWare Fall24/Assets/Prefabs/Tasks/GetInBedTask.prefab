@@ -50,3 +50,4 @@ MonoBehaviour:
   IsWorking: 0
   ValidWorkingPositions: []
   Structure: {fileID: 0}
+  ProgressBar: {fileID: 0}

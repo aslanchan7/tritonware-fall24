@@ -221,6 +221,7 @@ public abstract class Unit : Entity, IDamageable
         IsActive = false;
         GameManager.AllUnits.Remove(this);
         MapManager.Instance.GetTile(Pos).ContainedUnit = null;
+        ClearTasks();
         ClearPath();
         UnitController.Instance.SelectedUnits.Remove(this);
         Destroy(this.gameObject);
@@ -563,7 +564,7 @@ public abstract class Unit : Entity, IDamageable
     public void TryExitBed()
     {
         HospitalBed bed = InsideStructure as HospitalBed;
-        if (!IsActive && bed != null)
+        if (bed != null)
         {
             bed.RemovePatient();
             Debug.Log("Removed patient " + name);

@@ -26,6 +26,9 @@ public abstract class EnemyUnit : Unit
     protected float attackCooldown = 0.5f;
     private float attackTimer = 0f;
 
+    private float aggroRange = 12f;
+    private float loiterRange = 8f;
+
     private float loiterInterval = 3f;
     private float loiterTimer = 0f;
     [SerializeField] float infectionAttackChance = 0.1f;
@@ -52,7 +55,7 @@ public abstract class EnemyUnit : Unit
 
         if (CurrentState == EnemyState.Idle)
         {
-            if (GetAttackableTarget(12f) != null)
+            if (GetAttackableTarget(aggroRange) != null)
             {
                 ChangeState(EnemyState.AttackClosest);
                 return;
@@ -61,7 +64,7 @@ public abstract class EnemyUnit : Unit
             if (CurrentPath == null && loiterTimer > 0f) loiterTimer -= Time.deltaTime;
             else
             {
-                var freeTiles = FreeTilesInRadius(8f);
+                var freeTiles = FreeTilesInRadius(loiterRange);
                 if (freeTiles.Count == 0) return;
                 Vector2Int loiterDest = freeTiles[Random.Range(0, freeTiles.Count)];
                 if (CurrentPath == null)

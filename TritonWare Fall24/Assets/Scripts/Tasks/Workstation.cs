@@ -11,8 +11,9 @@ public class Workstation : Structure
     public Vector2Int RelativeWorkTilePos = new Vector2Int(0, -1); // position where a unit stands to work relative to bottom left tile
     public SpriteRenderer WorkTileIcon;
     public Task WorkstationTaskTemplate;
-    public Task TaskInProgress;
+    private Task taskInProgress;
 
+    public Task TaskInProgress { get => taskInProgress; set { taskInProgress = value; Debug.Log("TaskInProgress changed to " + value); } }
     public Vector2Int GetWorkPos()
     {
         return Pos + RelativeWorkTilePos;

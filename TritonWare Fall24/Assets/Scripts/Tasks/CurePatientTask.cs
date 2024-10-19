@@ -19,7 +19,6 @@ public class CurePatientTask : Task
     public override void StartTask()
     {
         base.StartTask();
-        cureProgress = 0f;
     }
 
     public override void WorkTask()
@@ -27,7 +26,6 @@ public class CurePatientTask : Task
         base.WorkTask();
         if (bed.Patient != null && Worker is AlliedUnit ally)
         {
-            Debug.Log(cureProgress);
             cureProgress += cureSpeed * ally.Efficiency[Tasks.Hospital] * Time.deltaTime;
             if (cureProgress >= 1f)
             {
@@ -54,9 +52,23 @@ public class CurePatientTask : Task
             // same unit exit bed
             bed.RemovePatient();
         }
-
-        
     }
 
-    
+    public override void RemoveTask()
+    {
+        cureProgress = 0f;
+        base.RemoveTask();
+    }
+
+    public override void ResetTask()
+    {
+        base.ResetTask();
+        cureProgress = 0f;
+    }
+
+    public override float GetVisualProgress()
+    {
+        return cureProgress;
+    }
+
 }

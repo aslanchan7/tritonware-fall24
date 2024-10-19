@@ -11,10 +11,22 @@ public abstract class Task : MonoBehaviour
     public abstract bool CancelOnInterrupt { get; }
     public List<Vector2Int> ValidWorkingPositions = new List<Vector2Int>();
     public Structure Structure;
+    public ProgressBar ProgressBar = null;
+
+    private void Awake()
+    {
+
+    }
+
+
 
     private void Update()
     {
         if (IsWorking) WorkTask();
+        if (ProgressBar != null && GetVisualProgress() >= 0f)
+        {
+            ProgressBar.SetProgress(GetVisualProgress());
+        }
     }
 
     public Task CreateTask(Structure s = null)
@@ -22,6 +34,11 @@ public abstract class Task : MonoBehaviour
         Task clone = Instantiate(this);
         clone.IsTemplate = false;
         clone.Structure = s;
+        
+        if (clone.ProgressBar != null && clone.Structure != null)
+        {
+            clone.ProgressBar.transform.localPosition = clone.Structure.GetRelativeWorldCenter() + new Vector3(0, 0.7f, 0);
+        }
         return clone;
     }
 
@@ -60,11 +77,17 @@ public abstract class Task : MonoBehaviour
 
     public virtual void RemoveTask()       // destroys an ongoing or finished task
     {
+        Debug.Log("remove task " + name);
         if (Worker != null) Worker.TaskQueue.Remove(this);
+        if (Structure is Workstation w && w.TaskInProgress == this) w.TaskInProgress = null;
         Destroy(gameObject);
     }
 
+    public virtual float GetVisualProgress() 
+    {
+        return -1f;
+    }
 
-
+    public virtual void ResetTask() { }
 
 }
