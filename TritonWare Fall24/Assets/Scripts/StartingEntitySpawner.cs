@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,15 +32,46 @@ public class StartingEntitySpawner : MonoBehaviour
         }
     }
 
-    public void PreviewWorldPostiions()
+    public List<Entity> PreviewWorldPostiions()
     {
+        List<Entity> changed = new List<Entity>();
         foreach (Unit unit in UnitList.GetComponentsInChildren<Unit>())
         {
             unit.transform.position = (Vector3)(Vector2)unit.Pos;
+            changed.Add(unit);
         }
         foreach (Structure structure in StructureList.GetComponentsInChildren<Structure>())
         {
             structure.transform.position = (Vector3)(Vector2)structure.Pos;
+            changed.Add(structure);
         }
+        return changed;
+    }
+
+    public List<Entity> SetGridPosFromWorldPos()
+    {
+        foreach (Unit unit in UnitList.GetComponentsInChildren<Unit>())
+        {
+            unit.Pos = new Vector2Int(Mathf.RoundToInt(unit.transform.position.x), Mathf.RoundToInt(unit.transform.position.y));
+        }
+        foreach (Structure structure in StructureList.GetComponentsInChildren<Structure>())
+        {
+            structure.Pos = new Vector2Int(Mathf.RoundToInt(structure.transform.position.x), Mathf.RoundToInt(structure.transform.position.y));
+        }
+        return PreviewWorldPostiions();
+    }
+
+    public List<Entity> AllEntities()
+    {
+        List<Entity> changed = new List<Entity>();
+        foreach (Unit unit in UnitList.GetComponentsInChildren<Unit>())
+        {
+            changed.Add(unit);
+        }
+        foreach (Structure structure in StructureList.GetComponentsInChildren<Structure>())
+        {
+            changed.Add(structure);
+        }
+        return changed;
     }
 }

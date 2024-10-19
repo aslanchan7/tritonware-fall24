@@ -1,5 +1,6 @@
 using UnityEngine;
-using UnityEditor;  // Import Editor tools
+using UnityEditor;
+using System.Collections.Generic;  // Import Editor tools
 
 [CustomEditor(typeof(StartingEntitySpawner))]
 public class EntitySpawnerEditor : Editor
@@ -10,14 +11,35 @@ public class EntitySpawnerEditor : Editor
 
         StartingEntitySpawner myScript = (StartingEntitySpawner)target;
 
-
-
         // Add a button to the editor inspector
         if (GUILayout.Button("Preview World Positions in Editor View"))
         {
-            myScript.PreviewWorldPostiions();
+            // Record the object for undo support and mark as dirty
+            foreach (var g in myScript.AllEntities())
+            {
+                Undo.RecordObject(g, "Preview World Positions");
+            }
+
+            List<Entity> changed = myScript.PreviewWorldPostiions();
+            foreach (var gameObject in changed)
+            {
+                EditorUtility.SetDirty(gameObject);
+            }
         }
 
+        if (GUILayout.Button("Interpret Grid Positions from World Positions"))
+        {
+            // Record the object for undo support and mark as dirty
+            foreach (var g in myScript.AllEntities())
+            {
+                Undo.RecordObject(g, "Preview World Positions");
+            }
 
+            List<Entity> changed = myScript.SetGridPosFromWorldPos();
+            foreach (var gameObject in changed)
+            {
+                EditorUtility.SetDirty(gameObject);
+            }
+        }
     }
 }

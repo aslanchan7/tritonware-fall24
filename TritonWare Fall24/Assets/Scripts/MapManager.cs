@@ -149,7 +149,7 @@ public class MapManager : MonoBehaviour
         // Setup a grid graph with some values
         float nodeSize = 1;
 
-        gg.center = new Vector3(MapSize.x/2, MapSize.y/2, 0);
+        gg.center = new Vector3(MapSize.x/2f, MapSize.y/2f, 0);
 
         // Updates internal size from the above values
         gg.SetDimensions(MapSize.x, MapSize.y, nodeSize);
