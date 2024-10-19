@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Doctor : AlliedUnit
 {
+    public FieldOfView fieldOfView;
     public override void SetEfficiencyValues()
     {
         // Doctor can do everything slightly faster
@@ -29,5 +30,7 @@ public class Doctor : AlliedUnit
             AdvanceMove();
         }
         /////////////////////////////////////
+
+        fieldOfView.SetOrigin(transform.position);
     }
 }
