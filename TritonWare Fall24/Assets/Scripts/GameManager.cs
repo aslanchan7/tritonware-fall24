@@ -103,13 +103,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void TriggerInfectionWave()
+    public void TriggerInfectionWave(float multiplier = 1f)
     {
         List<Unit> units = GetUnitsOfTeam(Team.Allied);
         units.AddRange(GetUnitsOfTeam(Team.Visitor));
         foreach (Unit unit in units)
         {
-            unit.Infection?.TryTriggerTurn();
+            unit.Infection?.TryTriggerTurn(multiplier);
         }
     }
 

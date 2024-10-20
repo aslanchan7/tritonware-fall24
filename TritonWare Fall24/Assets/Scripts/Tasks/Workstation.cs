@@ -14,6 +14,8 @@ public class Workstation : Structure
     private Task taskInProgress;
 
     public Task TaskInProgress { get => taskInProgress; set { taskInProgress = value; Debug.Log("TaskInProgress changed to " + value); } }
+
+    public bool IsEnabled = true;
     public Vector2Int GetWorkPos()
     {
         return Pos + RelativeWorkTilePos;
@@ -22,9 +24,8 @@ public class Workstation : Structure
     public override void Place(Vector2Int targetPos)
     {
         base.Place(targetPos);
-        MapManager.Instance.GetTile(GetWorkPos()).ReservingWorkstation = this;
         WorkTileIcon.transform.position = MapManager.GetTileCenter(GetWorkPos());
-        WorkTileIcon.enabled = true;
+        ToggleEnabled(IsEnabled);
     }
 
     public Task PrepareWorkstationTask(Unit worker)   // creates a new task or resumes a previously started task for the assigned unit but do not start it until unit reaches WorkTile
@@ -47,6 +48,22 @@ public class Workstation : Structure
 
     }
 
+    public void ToggleEnabled(bool enabled, bool external = true)
+    {
+        IsEnabled = enabled;
+        if (enabled)
+        {
+            MapManager.Instance.GetTile(GetWorkPos()).ReservingWorkstation = this;
+            WorkTileIcon.enabled = true;
+        }
+        else
+        {
+            // external should be false if ToggleEnabled is triggered by the task itself to avoid recursion
+            if (external && TaskInProgress != null) TaskInProgress.RemoveTask();
+            MapManager.Instance.GetTile(GetWorkPos()).ReservingWorkstation = null;
+            WorkTileIcon.enabled = false;
+        }
+    }
 
 
 }

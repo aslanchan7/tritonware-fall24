@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class VisionController : MonoBehaviour
@@ -10,11 +11,12 @@ public class VisionController : MonoBehaviour
     
     public static VisionController Instance;
     public bool VisionEnabled = false;
+    public float FogAlpha = 0.95f;
 
     private void Awake()
     {
         Instance = this;
-        
+        fog.sharedMaterial.color = Color.black.WithAlpha(FogAlpha);
     }
 
     private void Update()

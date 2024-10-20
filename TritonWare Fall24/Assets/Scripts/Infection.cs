@@ -34,10 +34,10 @@ public class Infection
 
     }
 
-    public void TryTriggerTurn()
+    public void TryTriggerTurn(float multiplier = 1f)
     {
         float rand = Random.Range(0f, 1f);
-        float chanceToTurn = GameManager.Instance.InfectionTurnChance * Progress;
+        float chanceToTurn = GameManager.Instance.InfectionTurnChance * Progress * multiplier;
 
         if (rand < chanceToTurn)
         {
