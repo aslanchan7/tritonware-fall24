@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ResourceSpawner : MonoBehaviour
@@ -33,7 +34,10 @@ public class ResourceSpawner : MonoBehaviour
 
             // todo if spawn position is occupied try again
         }
-        spawnTimer -= Time.deltaTime;
+        if (GameManager.AllResourcesPickups.Count <= 6)
+        {
+            spawnTimer -= Time.deltaTime;   // stop spawning when there is already a lot of resources
+        }
     }
 
 

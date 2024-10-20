@@ -219,6 +219,12 @@ public abstract class Unit : Entity, IDamageable
         if (Health <= 0) TriggerDeath();
     }
 
+    public void Heal(int value)
+    {
+        Health = Mathf.Clamp(Health + value, 0, MaxHealth);
+        UnitDisplay.UpdateDisplay();
+    }
+
     private void TriggerDeath()
     {
         IsActive = false;
