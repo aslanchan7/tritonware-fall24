@@ -55,7 +55,16 @@ public abstract class Unit : Entity, IDamageable
 
     public Weapon Weapon;
 
-    public Transform GetTransform() => transform;
+    public GameObject GetGameObject() 
+    {
+        if (this == null || gameObject == null)
+        {
+            return null;
+        }
+
+        return gameObject;
+    }
+
 
     protected virtual void Awake()
     {
@@ -101,9 +110,15 @@ public abstract class Unit : Entity, IDamageable
 
     public void ClearTasks()                    // pauses all ongoing tasks and remove from queue
     {
-        while (TaskQueue.Count > 0)
+        int i = 0;
+        while (TaskQueue.Count > 0 && i < 10)
         {
             TaskQueue[0].PauseTask();
+            i++;
+        }
+        if (TaskQueue.Count > 0)
+        {
+            Debug.LogError("Failed to clear tasks");
         }
     }
 
@@ -283,7 +298,7 @@ public abstract class Unit : Entity, IDamageable
         }
         else
         {
-            StopCoroutine("PauseMove");
+            StopCoroutine(nameof(PauseMove));
             StartCoroutine(PauseMove(time));
         }
 
@@ -545,7 +560,7 @@ public abstract class Unit : Entity, IDamageable
         }
 
         // Infection
-        if (!(this is Doctor) && Infection != null)
+        if (this is not Doctor && Infection != null)
         {
             if (Time.time - LastIncremented >= IncrementTimeInterval)
             {

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;  // Import Editor tools
@@ -43,3 +44,4 @@ public class EntitySpawnerEditor : Editor
         }
     }
 }
+#endif

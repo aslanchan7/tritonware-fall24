@@ -60,8 +60,15 @@ public class UnitController : MonoBehaviour
             if (SelectedUnits.Count == 1)   // can only give tasks to one unit at a time (for now)
             {
                 Workstation ws = MapManager.Instance.GetTile(pos).ReservingWorkstation;
+
                 if (ws != null)     // clicked on a work tile
                 {
+                    if (ws.TaskInProgress != null && ws.TaskInProgress.Worker != null && ws.TaskInProgress.Worker != SelectedUnits[0])
+                    {
+                        // someone else is going to work there
+                        ws.TaskInProgress.Worker.ClearPath();
+                        ws.TaskInProgress.PauseTask();
+                    }
                     ws.PrepareWorkstationTask(SelectedUnits[0]);
                 }
             }

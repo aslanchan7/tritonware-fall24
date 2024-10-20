@@ -1,8 +1,6 @@
-using JetBrains.Annotations;
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 // Looks for entities in its children, then moves them to their correct positions at game startup
 public class StartingEntitySpawner : MonoBehaviour

@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
-    public static FieldOfView Instance;
 
     public float viewRadius;
     [Range(0, 360)]
@@ -24,10 +23,6 @@ public class FieldOfView : MonoBehaviour
 
     private Vector2 origin;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
 
     void Start()
     {

@@ -10,7 +10,8 @@ public class ManageBaseTask : Task
     public override void StartTask()
     {
         base.StartTask();
-        VisionController.Instance.ToggleVision(true);
+        if (Worker is Doctor)
+            VisionController.Instance.ToggleVision(true);
     }
     public override void RemoveTask()
     {

@@ -7,5 +7,5 @@ public interface IDamageable
     public void Damage(int value);
     public void Heal(int value);
 
-    public Transform GetTransform();
+    public GameObject GetGameObject();
 }

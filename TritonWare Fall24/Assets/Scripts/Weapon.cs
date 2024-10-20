@@ -94,7 +94,7 @@ public class Weapon : MonoBehaviour
                 // immediately reject teammates as potential target
                 continue;
             }
-            Vector2 direction = target.GetTransform().position.GetTileCenter() - WeaponHolder.transform.position.GetTileCenter();
+            Vector2 direction = target.GetGameObject().transform.position.GetTileCenter() - WeaponHolder.transform.position.GetTileCenter();
             /*
             Instantiate(TrailPrefab, transform).RenderTrail
                 (source, source + direction, 0.1f);
@@ -163,7 +163,8 @@ public class Weapon : MonoBehaviour
     // Can only shoot at anything damageable
     private void FireAt(IDamageable target)
     {
-        Vector2 direction = target.GetTransform().position.GetTileCenter() - WeaponHolder.transform.position.GetTileCenter();
+        if (target == null || target.GetGameObject() == null) return;
+        Vector2 direction = target.GetGameObject().transform.position.GetTileCenter() - WeaponHolder.transform.position.GetTileCenter();
         // Weapon Range +1 to account for target moving just out of range when firing
         float angleDeviation = UnityEngine.Random.Range(-Spread, Spread);   // inaccuracy
         direction = direction.Rotate(angleDeviation);
