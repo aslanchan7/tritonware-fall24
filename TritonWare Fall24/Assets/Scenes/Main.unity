@@ -4820,13 +4820,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35688c3ca75e5144e889e571e2656e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxZombieSpawnInterval: 18
-  minZombieSpawnInterval: 7
+  maxZombieSpawnInterval: 14
+  minZombieSpawnInterval: 5
   minPatientSpawnInterval: 30
   maxPatientSpawnInterval: 90
   spawnRateRandomness: 0.05
   spawnPositionRandomness: 1
-  groupSize: 5
+  groupSize: 4
   patientMaxInfection: 0.3
   StandardEnemy: {fileID: 3286144908946100186, guid: 0382512f768be7147810d0205d6d8ff2, type: 3}
   StandardPatient: {fileID: 7644660588227303575, guid: 9376283f8f4a8564b87543304cddaea6, type: 3}
@@ -87480,7 +87480,8 @@ MonoBehaviour:
   SoldierPrefab: {fileID: 499753374824089035, guid: 44ea4a3375447ae449aca31c3dd83257, type: 3}
   MedicPrefab: {fileID: 8489336810557641098, guid: b1d464c742ef5a34182dd737f983dadf, type: 3}
   ScientistPrefab: {fileID: 6759885552694440125, guid: 1c9d460ad7b7fed47b58ce624febce98, type: 3}
-  InfectionTurnChance: 0.5
+  InfectionProgressSpeed: 0.01
+  InfectionTurnChance: 0.75
   infectionWaveInterval: 30
   infectionWaveIntervalRandomness: 0
   setupTime: 5

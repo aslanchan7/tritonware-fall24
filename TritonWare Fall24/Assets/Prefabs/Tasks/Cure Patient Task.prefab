@@ -53,7 +53,7 @@ MonoBehaviour:
   Structure: {fileID: 0}
   ProgressBar: {fileID: 4630872733638749576}
   cureProgress: 0
-  cureSpeed: 0.08
+  cureSpeed: 0.04
 --- !u!1001 &288762662578458959
 PrefabInstance:
   m_ObjectHideFlags: 0

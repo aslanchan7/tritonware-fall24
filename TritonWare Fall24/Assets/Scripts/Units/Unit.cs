@@ -46,7 +46,7 @@ public abstract class Unit : Entity, IDamageable
     public bool IsActive = false;
 
     [Header("Infection")]
-    private float IncrementTimeInterval = 2f; // every 2 seconds increase InfectionProgress by 1%
+    private float IncrementTimeInterval = 1f; // every 1 second increase InfectionProgress by amount specified in GameManager
     private float turnIntoEnemyTime = 2f;
     private float LastIncremented;
 
@@ -485,7 +485,7 @@ public abstract class Unit : Entity, IDamageable
         // if already infected, speed it up by increasing infected rate by another 10%
         else
         {
-            Infection.IncreaseInfection(0.1f);
+            Infection.IncreaseInfection(0.2f);
         }
     }
 
@@ -541,7 +541,7 @@ public abstract class Unit : Entity, IDamageable
         {
             if (Time.time - LastIncremented >= IncrementTimeInterval)
             {
-                Infection.IncreaseInfection(0.01f);
+                Infection.IncreaseInfection(GameManager.Instance.InfectionProgressSpeed);
                 LastIncremented = Time.time;
                 // infectionText.text = Infection.Progress.ToString();
             }

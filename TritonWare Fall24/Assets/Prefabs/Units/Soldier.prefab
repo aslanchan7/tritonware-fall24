@@ -198,8 +198,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 0, y: 0}
-  Health: 80
-  MaxHealth: 80
+  Health: 100
+  MaxHealth: 100
   Speed: 5
   TaskQueue: []
   SelectIndicator: {fileID: 1181420431281314879}

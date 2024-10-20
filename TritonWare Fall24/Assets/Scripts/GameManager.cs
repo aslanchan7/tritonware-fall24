@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public Medic MedicPrefab;
     public Scientist ScientistPrefab;
 
+    public float InfectionProgressSpeed = 0.015f;
     [Range(0f, 1f)] public float InfectionTurnChance;
     [SerializeField] private float infectionWaveInterval;
     [Range(0f, 1f)] [SerializeField] private float infectionWaveIntervalRandomness = 0.2f;
@@ -36,6 +37,8 @@ public class GameManager : MonoBehaviour
     private float startTime;
     [SerializeField] private float setupTime;
     public bool isSettingUp;
+
+
 
     public List<Unit> AllUnitPrefabs() => new() { SoldierPrefab, MedicPrefab, ScientistPrefab };
 
