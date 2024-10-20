@@ -13,21 +13,6 @@ public class Doctor : AlliedUnit
 
     protected override void Update()
     {
-        // This section is from base.Update() but excludes the infection as the Doctor can't get infected
-        /////////////////////////////////////
-        bool reachedDestination = false;
-        if (enableMovement && CurrentPath != null)
-        {
-            reachedDestination = MoveAlongPath();
-        }
-        if (reachedDestination)
-        {
-            CheckWorkableTask();
-        }
-        if (CurrentPath == null && advanceMoveDestination != PathfindingUtils.InvalidPos)
-        {
-            AdvanceMove();
-        }
-        /////////////////////////////////////
+        base.Update();
     }
 }

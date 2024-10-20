@@ -53,10 +53,12 @@ public abstract class Unit : Entity, IDamageable
     public Infection Infection;
     public Structure InsideStructure;
 
+    public Weapon Weapon;
 
     protected virtual void Awake()
     {
         Seeker = GetComponent<Seeker>();
+        Weapon = GetComponentInChildren<Weapon>();
         LastIncremented = Time.time;
     }
 
@@ -535,7 +537,7 @@ public abstract class Unit : Entity, IDamageable
         }
 
         // Infection
-        if (Infection != null)
+        if (!(this is Doctor) && Infection != null)
         {
             if (Time.time - LastIncremented >= IncrementTimeInterval)
             {
@@ -545,6 +547,15 @@ public abstract class Unit : Entity, IDamageable
             }
         }
 
+        if (Weapon != null)
+        {
+            if ((TaskQueue.Count > 0 && TaskQueue[0].IsWorking) ||
+                InsideStructure)
+            {
+                Weapon.ToggleShooting(false);
+            }
+            else Weapon.ToggleShooting(true);
+        }
 
         
 
