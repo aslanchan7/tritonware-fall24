@@ -40,13 +40,14 @@ public class UnitController : MonoBehaviour
         if (SelectedUnits.Count <= 0 || !(SelectedUnits[0] is AlliedUnit a)) return;
         if (MapManager.Instance.IsPassable(pos))
         {
+            // valid move starts here
             foreach (var unit in SelectedUnits)
             {
                 unit.ClearTasks();
+                unit.TryExitBed();
             }
             if (SelectedUnits.Count == 1)   // can only give tasks to one unit at a time (for now)
             {
-                SelectedUnits[0].TryExitBed();
                 Workstation ws = MapManager.Instance.GetTile(pos).ReservingWorkstation;
                 if (ws != null)     // clicked on a work tile
                 {
@@ -58,13 +59,21 @@ public class UnitController : MonoBehaviour
         else if (SelectedUnits.Count == 1) 
         {
             Structure structure = MapManager.Instance.GetTile(pos).ContainedStructure;
-            Debug.Log("Inserting unit to structure 1");
             if (structure != null && structure.StructureTaskTemplate != null)
             {
-                Debug.Log("Inserting unit to structure 2");
+                // valid move starts here
+                foreach (var unit in SelectedUnits)
+                {
+                    unit.ClearTasks();
+                    unit.TryExitBed();
+                }
                 Task task = structure.PrepareStructureTask(SelectedUnits[0]);
-                if (task == null) return;
-                OrderMove(task.ValidWorkingPositions.RandomElement());
+                if (task == null) 
+                {
+                    Debug.LogWarning("Structure returned null task");
+                    return;
+                }
+                OrderMove(task.ValidWorkingPositions.GetClosest(SelectedUnits[0].Pos));
             }
         }
     }

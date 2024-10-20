@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GetInBedTask : Task
 {
-    public override bool CancelOnInterrupt => false;
+    public override bool CancelOnInterrupt => true;
     private HospitalBed bed;
 
     public override void AssignTask(Unit worker)

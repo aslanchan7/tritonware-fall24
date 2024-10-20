@@ -4501,7 +4501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &702078647
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4820,11 +4820,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35688c3ca75e5144e889e571e2656e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxZombieSpawnInterval: 25
-  minZombieSpawnInterval: 10
+  maxZombieSpawnInterval: 18
+  minZombieSpawnInterval: 7
   minPatientSpawnInterval: 30
-  maxPatientSpawnInterval: 45
-  spawnRateRandomness: 0.1
+  maxPatientSpawnInterval: 90
+  spawnRateRandomness: 0.05
   spawnPositionRandomness: 1
   groupSize: 5
   patientMaxInfection: 0.3
@@ -87483,7 +87483,7 @@ MonoBehaviour:
   InfectionTurnChance: 0.5
   infectionWaveInterval: 30
   infectionWaveIntervalRandomness: 0
-  setupTime: 30
+  setupTime: 5
   isSettingUp: 0
 --- !u!4 &1837833847
 Transform:

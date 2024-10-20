@@ -58,7 +58,7 @@ public class UnitSpawner : MonoBehaviour
         }
         patientSpawnTimer -= Time.deltaTime;
 
-        // Debug.Log($"Current spawn interval: {currentSpawnInterval}");
+        // Debug.Log($"Current spawn interval: {spawnRateNoise}");
 
     }
 

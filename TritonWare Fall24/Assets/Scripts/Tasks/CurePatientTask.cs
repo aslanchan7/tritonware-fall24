@@ -48,9 +48,9 @@ public class CurePatientTask : Task
         Unit patient = bed.Patient;
         cureProgress = 0f;
         patient.Infection.RemoveInfection();
+        Debug.Log("cured " + bed.Patient.name);
         if (patient is VisitorUnit)
         {
-            Debug.Log("here");
             // recruit upon cured (turn into different unit)
             bed.RemovePatient();
             patient.TurnIntoUnit(GameManager.Instance.AllUnitPrefabs().RandomElement(), 0.1f);
@@ -70,8 +70,11 @@ public class CurePatientTask : Task
 
     public override void ResetTask()
     {
-        base.ResetTask();
         cureProgress = 0f;
+        consumedCure = false;
+        base.ResetTask();
+
+
     }
 
     public override float GetVisualProgress()

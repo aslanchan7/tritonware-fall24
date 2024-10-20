@@ -28,9 +28,10 @@ public class Infection
 
     public void RemoveInfection()
     {
-        InfectedUnit.UnitDisplay.UpdateDisplay();
         InfectedUnit.Infection = null;
+        InfectedUnit.UnitDisplay.UpdateDisplay();
         InfectedUnit = null;
+
     }
 
     public void TryTriggerTurn()

@@ -113,8 +113,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 18, y: 18}
-  Health: 80
-  MaxHealth: 80
+  Health: 60
+  MaxHealth: 60
   Speed: 5
   TaskQueue: []
   SelectIndicator: {fileID: 6043407117624333952}
@@ -126,6 +126,7 @@ MonoBehaviour:
   enableMovement: 1
   IsActive: 0
   InsideStructure: {fileID: 0}
+  Weapon: {fileID: 0}
   ForceEnemy: 0
 --- !u!1 &3701484070381484256
 GameObject:

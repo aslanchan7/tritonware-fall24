@@ -294,9 +294,10 @@ MonoBehaviour:
   enableMovement: 1
   IsActive: 0
   InsideStructure: {fileID: 0}
+  Weapon: {fileID: 0}
   AttackDamage: 10
   CurrentState: 0
-  infectionAttackChance: 0.1
+  infectionAttackChance: 0.2
 --- !u!1001 &5800402523409867736
 PrefabInstance:
   m_ObjectHideFlags: 0
