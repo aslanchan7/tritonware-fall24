@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
             infectionWaveTimer -= Time.deltaTime;
         }
 
-        Debug.Log($"All active tasks : \n{FindObjectsOfType<Task>().ToCommaSeparatedString()}");
+        // Debug.Log($"All active tasks : \n{FindObjectsOfType<Task>().ToCommaSeparatedString()}");
     }
 
     private void TriggerWave()
