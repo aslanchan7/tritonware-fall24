@@ -15,9 +15,11 @@ public class ResourceSpawner : MonoBehaviour
     public ResourcePickup ResourceUnit;
     private List<Vector2Int> spawnablePositions;
 
-    private void Awake()
+    private void Start()
     {
         spawnablePositions = MapManager.Instance.GetMapEdge();
+        SpawnGroup(spawnablePositions[Random.Range(0, spawnablePositions.Count)]);
+        SpawnGroup(spawnablePositions[Random.Range(0, spawnablePositions.Count)]);
     }
 
 

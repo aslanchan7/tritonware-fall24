@@ -19,10 +19,9 @@ public class UnitController : MonoBehaviour
         {
             if (!SelectedUnits.Contains(foundUnit)) 
             { 
-                SelectedUnits.Add(foundUnit); 
+                SelectUnit(foundUnit);
             }
             
-            foundUnit.SelectIndicator.enabled = true;
         }
     }
 
@@ -31,8 +30,20 @@ public class UnitController : MonoBehaviour
         Debug.Log("Clicked on structure " + structure.name);
         if (structure is HospitalBed b && b.Patient != null)
         {
-            SelectedUnits.Add(b.Patient);
+            SelectUnit(b.Patient);
         }
+    }
+
+
+    public void SelectUnit(Unit unit)
+    {
+        SelectedUnits.Add(unit);
+        unit.SelectIndicator.enabled = true;
+    }
+    public void DeselectUnit(Unit unit)
+    {
+        SelectedUnits.Remove(unit);
+        unit.SelectIndicator.enabled = false;
     }
 
     public void GiveOrder(Vector2Int pos)

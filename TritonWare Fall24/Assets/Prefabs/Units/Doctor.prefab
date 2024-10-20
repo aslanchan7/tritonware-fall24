@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f20a2513cf3027648afdf10ba9a1cfc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pos: {x: 20, y: 15}
+  pos: {x: 50, y: 40}
   Health: 150
   MaxHealth: 150
   Speed: 5
@@ -129,6 +129,7 @@ MonoBehaviour:
   enableMovement: 1
   IsActive: 0
   InsideStructure: {fileID: 0}
+  Weapon: {fileID: 0}
   ForceEnemy: 0
 --- !u!114 &6113903554634012472
 MonoBehaviour:
@@ -142,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2928537d70798740ab2600d64c8707b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 5
+  viewRadius: 10
   viewAngle: 360
   targetMask:
     serializedVersion: 2

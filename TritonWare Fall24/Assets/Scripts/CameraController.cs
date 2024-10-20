@@ -13,6 +13,10 @@ public class CameraController : MonoBehaviour
 
     public bool mouseControlsEnabled = true;
 
+    private void Awake()
+    {
+        transform.position = new Vector3(MapManager.Instance.MapSize.x / 2f, MapManager.Instance.MapSize.y / 2f, transform.position.z);
+    }
     void Update()
     {
         Vector3 mousePos = Input.mousePosition;

@@ -8,6 +8,14 @@ public static class ExtensionMethods
     {
         return new Vector2(pos.x + MapManager.TileSize / 2, pos.y + MapManager.TileSize / 2);
     }
+    public static Vector2 GetTileCenter(this Vector2 pos)
+    {
+        return new Vector2(pos.x + MapManager.TileSize / 2f, pos.y + MapManager.TileSize / 2f);
+    }
+    public static Vector2 GetTileCenter(this Vector3 pos)
+    {
+        return new Vector2(pos.x + MapManager.TileSize / 2f, pos.y + MapManager.TileSize / 2f);
+    }
 
     public static Vector2 Rotate(this Vector2 v, float degrees)
     {

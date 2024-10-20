@@ -295,7 +295,7 @@ MonoBehaviour:
   IsActive: 0
   InsideStructure: {fileID: 0}
   Weapon: {fileID: 0}
-  AttackDamage: 15
+  AttackDamage: 10
   CurrentState: 0
   infectionAttackChance: 0.3
 --- !u!1001 &1198500387667876695

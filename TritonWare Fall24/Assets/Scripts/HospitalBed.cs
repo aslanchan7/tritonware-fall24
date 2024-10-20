@@ -5,7 +5,7 @@ public class HospitalBed : Workstation
 {
     public Unit Patient;
     public Unit ReservedPatient;
-
+    public Transform UnitSlot;
 
     public void InsertPatient(Unit unit)
     {
@@ -17,8 +17,7 @@ public class HospitalBed : Workstation
         }
         Debug.Log($"Inserted unit {unit.name}");
         unit.UnPlace();
-        unit.transform.SetParent(transform, false);
-        unit.transform.position = MapManager.Instance.GetWorldPos(Pos);
+        unit.transform.SetParent(UnitSlot, false);
         unit.transform.localPosition = Vector2.zero;
         unit.InsideStructure = this;
     }

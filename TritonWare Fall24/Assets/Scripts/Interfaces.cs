@@ -6,4 +6,6 @@ public interface IDamageable
     public Vector2Int Pos { get; set; }
     public void Damage(int value);
     public void Heal(int value);
+
+    public Transform GetTransform();
 }

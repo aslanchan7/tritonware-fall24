@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
+    public static FieldOfView Instance;
+
     public float viewRadius;
     [Range(0, 360)]
     public float viewAngle;
@@ -19,7 +21,13 @@ public class FieldOfView : MonoBehaviour
     public MeshFilter viewMeshFilter;
     private Mesh viewMesh;
 
+
     private Vector2 origin;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {

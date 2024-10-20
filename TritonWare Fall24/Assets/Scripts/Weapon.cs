@@ -86,7 +86,7 @@ public class Weapon : MonoBehaviour
         List<IDamageable> targets = WeaponHolder.GetUnitsInRadius(WeaponRange).Cast<IDamageable>().ToList();
         // TODO: find other damageables (if any)
         List<IDamageable> result = new List<IDamageable>();
-        Vector2 source = WeaponHolder.Pos.GetTileCenter();
+        Vector2 source = WeaponHolder.transform.position.GetTileCenter();
         foreach (IDamageable target in targets)
         {
             if (!GameManager.OpposingTeams(WeaponHolder.Team, target.Team))
@@ -94,7 +94,7 @@ public class Weapon : MonoBehaviour
                 // immediately reject teammates as potential target
                 continue;
             }
-            Vector2 direction = target.Pos - WeaponHolder.Pos;
+            Vector2 direction = target.GetTransform().position.GetTileCenter() - WeaponHolder.transform.position.GetTileCenter();
             /*
             Instantiate(TrailPrefab, transform).RenderTrail
                 (source, source + direction, 0.1f);
@@ -107,6 +107,7 @@ public class Weapon : MonoBehaviour
                 if (hitEntity is IDamageable d && target == d)
                 {
                     // found valid path to target
+                    // Debug.DrawLine(source, hit.point, Color.white, 0.5f);
                     result.Add(target);
                     break;
                 }
@@ -162,11 +163,11 @@ public class Weapon : MonoBehaviour
     // Can only shoot at anything damageable
     private void FireAt(IDamageable target)
     {
-        Vector2 direction = target.Pos - WeaponHolder.Pos;
+        Vector2 direction = target.GetTransform().position.GetTileCenter() - WeaponHolder.transform.position.GetTileCenter();
         // Weapon Range +1 to account for target moving just out of range when firing
         float angleDeviation = UnityEngine.Random.Range(-Spread, Spread);   // inaccuracy
         direction = direction.Rotate(angleDeviation);
-        RaycastHit2D[] hits = Physics2D.RaycastAll(WeaponHolder.Pos.GetTileCenter(), direction, WeaponRange + 1, layermask);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(WeaponHolder.transform.position.GetTileCenter(), direction, WeaponRange + 1, layermask);
         foreach (RaycastHit2D hit in hits)
         {
             Entity hitEntity = hit.collider.GetComponent<Entity>();
@@ -194,14 +195,14 @@ public class Weapon : MonoBehaviour
             }
         }
         // didn't hit anything
-        ProjectileHit(null, WeaponHolder.Pos.GetTileCenter() + direction);
+        ProjectileHit(null, WeaponHolder.transform.position.GetTileCenter() + direction);
     }
 
     // if target is null, shoot a trail to max range towards position
     // otherwise, shoot a trail to target at specified position
     private void ProjectileHit(Entity target, Vector2 position)
     {
-        Vector2 origin = WeaponHolder.transform.position + new Vector3(0.5f, 0.5f);
+        Vector2 origin = WeaponHolder.transform.position.GetTileCenter();
         Vector2 direction = (position - origin).normalized;
         float distance = Vector2.Distance(origin, position);
         float trailTravelDistance;
@@ -221,6 +222,6 @@ public class Weapon : MonoBehaviour
         }
 
         bulletTrail.RenderProjectile(origin, origin + direction * trailTravelDistance);
-        // Instantiate(TrailPrefab, transform).RenderTrail(origin, origin + direction * trailTravelDistance, 0.05f);
+        //Instantiate(TrailPrefab, transform).RenderTrail(origin, origin + direction * trailTravelDistance, 0.05f);
     }
 }

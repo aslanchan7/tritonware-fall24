@@ -55,6 +55,8 @@ public abstract class Unit : Entity, IDamageable
 
     public Weapon Weapon;
 
+    public Transform GetTransform() => transform;
+
     protected virtual void Awake()
     {
         Seeker = GetComponent<Seeker>();
@@ -88,7 +90,7 @@ public abstract class Unit : Entity, IDamageable
         ClearTasks();
         ClearPath(false);
         IsActive = false;
-        UnitController.Instance.SelectedUnits.Remove(this);
+        UnitController.Instance.DeselectUnit(this);
     }
 
     public void EnqueueTask(Task task)          // instantiated (non template) classes only!
@@ -232,7 +234,7 @@ public abstract class Unit : Entity, IDamageable
         MapManager.Instance.GetTile(Pos).ContainedUnit = null;
         ClearTasks();
         ClearPath();
-        UnitController.Instance.SelectedUnits.Remove(this);
+        UnitController.Instance.DeselectUnit(this);
         Destroy(this.gameObject);
 
     }

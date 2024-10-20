@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 466095172789118238}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalPosition: {x: 1.5, y: 0.5, z: 0}
+  m_LocalScale: {x: 3, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7754831778761494767}
@@ -177,9 +177,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7754831778761494767}
-  - component: {fileID: 6825111272176243439}
+  - component: {fileID: 4480112588384115603}
   m_Layer: 0
-  m_Name: Hospital Bed
+  m_Name: Control Station
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,16 +194,15 @@ Transform:
   m_GameObject: {fileID: 2209921332778267667}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 5, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5700775111194122801}
   - {fileID: 129159863929838877}
-  - {fileID: 5195065788800255661}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6825111272176243439
+--- !u!114 &4480112588384115603
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,46 +211,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2209921332778267667}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f11f36cb85703cf4f9be005a633493de, type: 3}
+  m_Script: {fileID: 11500000, guid: d9f100e73a4b6014a9947e42266eeb2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 5, y: 2}
-  StructureTaskTemplate: {fileID: 8478996827265858367, guid: d32debe132883ba4bba66bb344c29cba, type: 3}
-  workstationSize: {x: 1, y: 2}
-  RelativeWorkTilePos: {x: 0, y: -1}
+  StructureTaskTemplate: {fileID: 0}
+  workstationSize: {x: 3, y: 1}
+  RelativeWorkTilePos: {x: 1, y: -1}
   WorkTileIcon: {fileID: 5246575592898114864}
-  WorkstationTaskTemplate: {fileID: -1843661810600571237, guid: a91d41dcaa1237e4e83a2fdfc93a5052, type: 3}
-  Patient: {fileID: 0}
-  ReservedPatient: {fileID: 0}
-  UnitSlot: {fileID: 5195065788800255661}
---- !u!1 &7454892877442733095
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5195065788800255661}
-  m_Layer: 0
-  m_Name: Unit Slot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5195065788800255661
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7454892877442733095}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7754831778761494767}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  WorkstationTaskTemplate: {fileID: 602181062148663705, guid: e352d8ced30dfe340b83159f612f2338, type: 3}

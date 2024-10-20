@@ -52,7 +52,7 @@ MonoBehaviour:
   ValidWorkingPositions: []
   Structure: {fileID: 0}
   ProgressBar: {fileID: 1002353502731163905}
-  labSpeed: 0.02
+  labSpeed: 0.015
 --- !u!1001 &5308861159709746630
 PrefabInstance:
   m_ObjectHideFlags: 0
