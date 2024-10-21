@@ -42,7 +42,6 @@ public class UnitSpawner : MonoBehaviour
     {
         // Using Perlin Noise for random but smooth fluctuation
         float spawnRateNoise = Mathf.PerlinNoise(initialState + Time.time * spawnRateRandomness, 0);
-        Debug.Log($"{Time.time}  {spawnRateNoise}");
         if (zombieSpawnTimer <= 0f)
         {
             zombieSpawnTimer = Mathf.Lerp(minZombieSpawnInterval, maxZombieSpawnInterval, spawnRateNoise) / GameManager.DifficultyScaling; 

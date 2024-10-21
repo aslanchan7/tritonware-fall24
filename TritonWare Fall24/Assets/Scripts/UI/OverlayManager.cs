@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.UI.Image;
@@ -16,6 +17,8 @@ public class IndicatorSprite
 {
     public TargetIndicatorType IndicatorType;
     public Indicator IndicatorPrefab;
+
+
 
     public IndicatorSprite(TargetIndicatorType indicator, Indicator indicatorPrefab)
     {
@@ -39,6 +42,11 @@ public class OverlayManager : MonoBehaviour
     private float indicatorSpriteHeight;
 
     public List<IndicatorSprite> IndicatorPrefabs;
+
+    public Transform IndicatorContainer;
+    public List<GameObject> UIObjects;
+    public GameObject GameOverScreen;
+    public TMP_Text scoreText, timeText, curesText;
 
     private void Awake()
     {
@@ -128,7 +136,9 @@ public class OverlayManager : MonoBehaviour
                 break;
             }
         }
-        TargetIndicators.Add(pos, Instantiate(targetIndicator.IndicatorPrefab));
+        Indicator indicatorObject = Instantiate(targetIndicator.IndicatorPrefab);
+        indicatorObject.transform.SetParent(IndicatorContainer);
+        TargetIndicators.Add(pos, indicatorObject);
     }
 
     public void UpdateTargetIndicator(Vector2Int target, Indicator indicator)
@@ -171,5 +181,36 @@ public class OverlayManager : MonoBehaviour
         {
             indicator.gameObject.SetActive(false);
         }
+    }
+
+    public void ShowGameOverScreen(int score, float time, int cures)
+    {
+        foreach (var obj in UIObjects)
+        {
+            obj.SetActive(false);
+        }
+        CameraController.Instance.mouseControlsEnabled = false;
+
+        GameOverScreen.SetActive(true);
+        scoreText.SetText(score.ToString());
+        timeText.SetText(FormatTime(time));
+        curesText.SetText(cures.ToString());
+
+    }
+
+    public string FormatTime(float timeInSeconds)
+    {
+        // Convert timeInSeconds into minutes and seconds
+        int minutes = Mathf.FloorToInt(timeInSeconds / 60);
+        int seconds = Mathf.FloorToInt(timeInSeconds % 60);
+
+        // Format time as "minutes:seconds"
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    public void ReturnToMenu()
+    {
+        Time.timeScale = 1.0f;
+        SceneController.Instance.ReturnToMenu();
     }
 }

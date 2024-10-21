@@ -48,6 +48,12 @@ public class Doctor : AlliedUnit
         }
     }
 
+    protected override void TriggerDeath()
+    {
+        GameManager.Instance.GameOver();
+        base.TriggerDeath();
+    }
+
     public bool CanSee(Unit unit)
     {
         if (unit == this) return true;

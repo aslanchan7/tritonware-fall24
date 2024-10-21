@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-
+    public static CameraController Instance;
     public Camera mainCamera;        // Reference to the camera
     public float panSpeed = 20f;     // Speed at which the camera will pan
     public float edgeThreshold = 10f; // Distance from the screen edge to trigger panning
@@ -20,6 +20,7 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         transform.position = new Vector3(MapManager.Instance.MapSize.x / 2f, MapManager.Instance.MapSize.y / 2f, transform.position.z);
         zoomTargetOrthographicSize = mainCamera.orthographicSize;   
         cameraTargetLocation = mainCamera.transform.position;

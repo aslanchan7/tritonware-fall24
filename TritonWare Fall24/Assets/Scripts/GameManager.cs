@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
 
     public List<Unit> AllUnitPrefabs() => new() { SoldierPrefab, MedicPrefab, ScientistPrefab };
 
+    public int PatientsCured = 0;
+
     private void Awake()
     {
         Instance = this;
@@ -154,5 +156,15 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
+    private int CalculateScore()
+    {
+        return (int)((Time.timeSinceLevelLoad + PatientsCured * 40) * InitialDifficultyScaling);
+    }
+
+    public void GameOver()
+    {
+        OverlayManager.Instance.ShowGameOverScreen(CalculateScore(), Time.timeSinceLevelLoad, PatientsCured);
+        Time.timeScale = 0;
+    }
 
 }

@@ -54,6 +54,7 @@ public class CurePatientTask : Task
             // recruit upon cured (turn into different unit)
             bed.RemovePatient();
             patient.TurnIntoUnit(GameManager.Instance.AllUnitPrefabs().RandomElement(), 0.1f);
+            GameManager.Instance.PatientsCured++;
         }
         else
         {
