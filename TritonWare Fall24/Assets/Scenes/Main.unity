@@ -4611,7 +4611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxResourceValue: 20
-  ResourceValue: 0
+  ResourceValue: 2
   ResourceBar: {fileID: 161793771}
 --- !u!1 &858708912
 GameObject:
@@ -4936,8 +4936,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35688c3ca75e5144e889e571e2656e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxZombieSpawnInterval: 16
-  minZombieSpawnInterval: 6
+  maxZombieSpawnInterval: 9
+  minZombieSpawnInterval: 3
   minPatientSpawnInterval: 30
   maxPatientSpawnInterval: 50
   spawnRateRandomness: 0.05
@@ -88139,7 +88139,7 @@ MonoBehaviour:
   MinInfectionToTurn: 0.3
   infectionWaveInterval: 55
   infectionWaveIntervalRandomness: 0.25
-  setupTime: 10
+  setupTime: 0
   isSettingUp: 0
   InitialDifficultyScaling: 1
   TimeToMaxDifficuly: 600

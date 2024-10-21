@@ -46,10 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponHolder: {fileID: 0}
-  Damage: 6
-  Firerate: 5
+  Damage: 8
+  Firerate: 6
   WeaponRange: 12
-  Spread: 5
+  Spread: 6
   TrailPrefab: {fileID: 1355359109372824755, guid: 4f6457fff930aa0428e6bf5b620ba5a8, type: 3}
 --- !u!114 &-4472743511577715747
 MonoBehaviour:

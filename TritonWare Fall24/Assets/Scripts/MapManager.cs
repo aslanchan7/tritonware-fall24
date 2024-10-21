@@ -34,13 +34,8 @@ public class MapManager : MonoBehaviour
 
     private void Update()
     {
-     /*   
-        foreach (var tile in Tiles)
-        {
-            tile.SetDebugText(PathfindingUtils.GetNode(tile.Pos).Penalty.ToString());
-        }
+     
         
-        */
     }
 
 

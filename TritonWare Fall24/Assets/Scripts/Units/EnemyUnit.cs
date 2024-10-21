@@ -36,22 +36,7 @@ public abstract class EnemyUnit : Unit
 
     protected override void Update()
     {
-        // This section is from base.Update() but excludes the infection as enemy units can't get infected
-        /////////////////////////////////////
-        bool reachedDestination = false;
-        if (enableMovement && CurrentPath != null)
-        {
-            reachedDestination = MoveAlongPath();
-        }
-        if (reachedDestination)
-        {
-            CheckWorkableTask();
-        }
-        if (CurrentPath == null && advanceMoveDestination != PathfindingUtils.InvalidPos)
-        {
-            AdvanceMove();
-        }
-        /////////////////////////////////////
+        base.Update();
 
         if (CurrentState == EnemyState.Idle)
         {

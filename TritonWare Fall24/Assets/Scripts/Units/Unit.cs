@@ -24,7 +24,7 @@ public abstract class Unit : Entity, IDamageable
     // Stagger (slow when taking damage)
     public float StaggerSlow = 0.7f;
     private float staggerTimer;
-    private float staggerTime = 1f;     
+    private float staggerTime = 0.5f;     
 
     // Tasks
     public List<Task> TaskQueue = new List<Task>();     // stores the immediate next task at index 0
@@ -259,7 +259,7 @@ public abstract class Unit : Entity, IDamageable
         GameManager.AllUnits.Remove(this);
         MapManager.Instance.GetTile(Pos).ContainedUnit = null;
         ClearTasks();
-        ClearPath();
+        ClearPath(false);
         UnitController.Instance.DeselectUnit(this);
         Destroy(this.gameObject);
 
@@ -534,6 +534,7 @@ public abstract class Unit : Entity, IDamageable
 
     protected virtual IEnumerator TurnIntoUnitCoroutine(Unit newUnitPrefab, float time)         // for zombie turning and recruitment
     {
+        IsActive = false;
         TryExitBed();
 
         // Disable movement
@@ -571,7 +572,7 @@ public abstract class Unit : Entity, IDamageable
         }
 
         // Infection
-        if (this is not Doctor && Infection != null)
+        if (this is not EnemyUnit && this is not Doctor && Infection != null)
         {
             if (Time.time - LastIncremented >= IncrementTimeInterval)
             {

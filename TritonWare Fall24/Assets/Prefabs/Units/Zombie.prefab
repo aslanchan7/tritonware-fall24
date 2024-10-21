@@ -281,8 +281,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 20, y: 0}
-  Health: 40
-  MaxHealth: 40
+  Health: 30
+  MaxHealth: 30
   speed: 6.5
   StaggerSlow: 0.6
   TaskQueue: []

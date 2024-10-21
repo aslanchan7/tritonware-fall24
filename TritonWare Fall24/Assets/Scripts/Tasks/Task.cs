@@ -37,7 +37,7 @@ public abstract class Task : MonoBehaviour
         
         if (clone.ProgressBar != null && clone.Structure != null)
         {
-            clone.ProgressBar.transform.localPosition = clone.Structure.GetRelativeWorldCenter() + new Vector3(0, 0.7f, 0);
+            clone.ProgressBar.transform.localPosition = clone.Structure.GetRelativeWorldCenter() + new Vector3(0, 0.85f, 0);
         }
         return clone;
     }

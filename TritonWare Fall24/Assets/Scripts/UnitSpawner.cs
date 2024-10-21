@@ -27,19 +27,22 @@ public class UnitSpawner : MonoBehaviour
     public Unit StandardPatient;
     private List<Vector2Int> spawnablePositions;
 
+    private float initialState;
+
     private void Awake()
     {
         spawnablePositions = MapManager.Instance.GetMapEdge();
         zombieSpawnTimer = minZombieSpawnInterval;
         patientSpawnTimer = 5;
+        initialState = Random.value * 100000;
     }
 
 
     private void Update()
     {
         // Using Perlin Noise for random but smooth fluctuation
-        float spawnRateNoise = Mathf.PerlinNoise(Time.time * spawnRateRandomness, 0);
-
+        float spawnRateNoise = Mathf.PerlinNoise(initialState + Time.time * spawnRateRandomness, 0);
+        Debug.Log($"{Time.time}  {spawnRateNoise}");
         if (zombieSpawnTimer <= 0f)
         {
             zombieSpawnTimer = Mathf.Lerp(minZombieSpawnInterval, maxZombieSpawnInterval, spawnRateNoise) / GameManager.DifficultyScaling; 

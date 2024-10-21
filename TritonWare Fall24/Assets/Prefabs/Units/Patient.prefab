@@ -113,9 +113,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 0, y: 0}
-  Health: 50
-  MaxHealth: 50
-  speed: 5
+  Health: 60
+  MaxHealth: 60
+  speed: 5.5
   StaggerSlow: 0.7
   TaskQueue: []
   UnitSprite: {fileID: 8775065050691159645}

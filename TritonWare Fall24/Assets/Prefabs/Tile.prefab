@@ -369,6 +369,7 @@ MonoBehaviour:
   Pos: {x: 0, y: 0}
   SpriteRenderer: {fileID: 7463065133622369623}
   ContainedUnit: {fileID: 0}
+  ContainedResource: {fileID: 0}
   ContainedStructure: {fileID: 0}
   ReservingWorkstation: {fileID: 0}
   DebugText: {fileID: 9141189599561623093}
