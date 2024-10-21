@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pos: {x: 0, y: 0}
   ResourceType: {fileID: 0}
-  Value: 3
+  Value: 2
 --- !u!1 &8359837300959735227
 GameObject:
   m_ObjectHideFlags: 0

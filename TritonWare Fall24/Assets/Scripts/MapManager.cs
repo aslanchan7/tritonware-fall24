@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.WSA;
 
 
 public class MapManager : MonoBehaviour
@@ -14,6 +15,8 @@ public class MapManager : MonoBehaviour
     public static MapManager Instance;
     public MapTile MapTilePrefab;
     public PermanentWall WallPrefab;
+    public PermanentWall LWallPrefab;
+    public PermanentWall RWallPrefab;
     public Transform GameGrid;
 
     public Vector2Int MapSize = new Vector2Int(80, 50);
@@ -22,7 +25,7 @@ public class MapManager : MonoBehaviour
     public static float TileSize = 1;     // I hope we never need to change this
     public MapTile[,] Tiles;
 
-
+    public List<TileBase> WallTiles;
 
     private void Awake()
     {
@@ -136,7 +139,25 @@ public class MapManager : MonoBehaviour
 
                 if (WallTilemap.HasTile((Vector3Int)pos))
                 {
-                    Instantiate(WallPrefab).Place(pos);
+                    PermanentWall wall;
+                    if (WallTiles.Contains(WallTilemap.GetTile((Vector3Int)pos)))
+                    {
+                        Matrix4x4 tileMatrix = WallTilemap.GetTransformMatrix((Vector3Int)pos);
+                        if (tileMatrix.lossyScale.x > 0)
+                        {
+                            wall = Instantiate(LWallPrefab);
+                        }
+                        else
+                        {
+                            wall = Instantiate(RWallPrefab);
+                        }
+                    }
+                    else
+                    {
+                        wall = Instantiate(WallPrefab);
+                    }
+
+                    wall.Place(pos);
                 }
             }
         }

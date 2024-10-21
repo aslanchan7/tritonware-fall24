@@ -49,7 +49,8 @@ public class Infection
     public void TryTriggerTurn(float multiplier = 1f)
     {
         float rand = Random.Range(0f, 1f);
-        float chanceToTurn = GameManager.Instance.InfectionTurnChance * Mathf.Lerp(GameManager.Instance.MinInfectionToTurn, 1, Progress) * multiplier;
+        float adjustedInfectionFactor = (Progress - GameManager.Instance.MinInfectionToTurn) / (1 - GameManager.Instance.MinInfectionToTurn);
+        float chanceToTurn = GameManager.Instance.InfectionTurnChance * adjustedInfectionFactor * multiplier;
 
         if (rand < chanceToTurn)
         {

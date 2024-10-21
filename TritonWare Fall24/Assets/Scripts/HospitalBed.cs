@@ -33,7 +33,14 @@ public class HospitalBed : Workstation
         }
         Patient.InsideStructure = null;
         Patient.Place(positions[0]);
-        if (Patient is VisitorUnit v) v.TryFindBed();
+        if (Patient is VisitorUnit v) 
+        {
+            if (v.IsActive)
+            {
+                v.TryFindBed();
+            }
+            
+        };
         Patient = null;
         if (!GameManager.Instance.AvailableBeds.Contains(this))
             GameManager.Instance.AvailableBeds.Add(this);
