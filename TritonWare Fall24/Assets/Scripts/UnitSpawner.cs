@@ -88,7 +88,7 @@ public class UnitSpawner : MonoBehaviour
             TrySpawn(tiles, StandardEnemy);
         }
 
-        OverlayManager.Instance.CreateTargetIndicator(origin, TargetIndicatorType.EnemySpawn);
+        // OverlayManager.Instance.CreateTargetIndicator(origin, TargetIndicatorType.EnemySpawn);
 
         /*
         OverlayManager.Instance.Targets.Enqueue(new Tuple<Vector2Int, float>(origin, Time.time));

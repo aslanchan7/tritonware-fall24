@@ -8,7 +8,7 @@ using static UnityEngine.UI.Image;
 
 public enum TargetIndicatorType
 {
-    EnemySpawn, PatientSpawn, ResourceSpawn, ZombieTurn
+    LowHealth, PatientSpawn, ResourceSpawn, ZombieTurn
 }
 
 [Serializable]
@@ -119,7 +119,7 @@ public class OverlayManager : MonoBehaviour
     public void CreateTargetIndicator(Vector2Int pos, TargetIndicatorType indicatorType)
     {
         Targets.Enqueue(new Tuple<Vector2Int, float>(pos, Time.time));
-        IndicatorSprite targetIndicator = new(TargetIndicatorType.EnemySpawn, null);
+        IndicatorSprite targetIndicator = new(TargetIndicatorType.LowHealth, null);
         foreach (IndicatorSprite kvp in IndicatorPrefabs)
         {
             if (kvp.IndicatorType == indicatorType)

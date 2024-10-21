@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Unity.VisualScripting.Member;
 using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.UI.Image;
 
 public class Doctor : AlliedUnit
 {
     public FieldOfView FieldOfView;
+    private bool lowHealth = false;
+
 
     protected override void Awake()
     {
@@ -24,6 +27,25 @@ public class Doctor : AlliedUnit
     protected override void Update()
     {
         base.Update();
+    }
+
+    public override void Damage(int value)
+    {
+        base.Damage(value);
+        if (!lowHealth && Health <= MaxHealth / 3)
+        {
+            lowHealth = true;
+            OverlayManager.Instance.CreateTargetIndicator(Pos, TargetIndicatorType.LowHealth);
+        }
+    }
+
+    public override void Heal(int value)
+    {
+        base.Heal(value);
+        if (lowHealth && Health >= MaxHealth / 3 + 10)
+        {
+            lowHealth = false;
+        }
     }
 
     public bool CanSee(Unit unit)

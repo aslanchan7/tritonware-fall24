@@ -239,7 +239,7 @@ public abstract class Unit : Entity, IDamageable
         }
     }
 
-    public void Damage(int value)
+    public virtual void Damage(int value)
     {
         Health -= value;
         staggerTimer = staggerTime;
@@ -247,7 +247,7 @@ public abstract class Unit : Entity, IDamageable
         if (Health <= 0) TriggerDeath();
     }
 
-    public void Heal(int value)
+    public virtual void Heal(int value)
     {
         Health = Mathf.Clamp(Health + value, 0, MaxHealth);
         UnitDisplay.UpdateDisplay();
