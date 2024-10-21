@@ -13,7 +13,7 @@ public class Workstation : Structure
     public Task WorkstationTaskTemplate;
     private Task taskInProgress;
 
-    public Task TaskInProgress { get => taskInProgress; set { taskInProgress = value; Debug.Log("TaskInProgress changed to " + value); } }
+    public Task TaskInProgress { get => taskInProgress; set { taskInProgress = value; } }
 
     public bool IsEnabled = true;
     public Vector2Int GetWorkPos()

@@ -63,6 +63,15 @@ public class VisitorUnit : Unit
         StartCoroutine(PathfindCoroutine(targetBed.GetSurroundingTiles(false).GetClosest(Pos)));
     }
 
+    protected override void TriggerDeath()
+    {
+        if (targetBed != null && targetBed.ReservedPatient == this)
+        {
+            targetBed.UnReservePatient();
+        }
+        base.TriggerDeath();
+    }
+
     public void TryFindBed()
     {
         targetBed = null;

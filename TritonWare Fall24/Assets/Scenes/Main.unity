@@ -1271,6 +1271,7 @@ MonoBehaviour:
   edgeThreshold: 10
   minCameraPos: {x: -10, y: -10}
   maxCameraPos: {x: 120, y: 100}
+  zoomSensitivity: 1
   mouseControlsEnabled: 1
 --- !u!4 &565607130 stripped
 Transform:
@@ -107253,11 +107254,11 @@ MonoBehaviour:
   MedicPrefab: {fileID: 8489336810557641098, guid: b1d464c742ef5a34182dd737f983dadf, type: 3}
   ScientistPrefab: {fileID: 6759885552694440125, guid: 1c9d460ad7b7fed47b58ce624febce98, type: 3}
   InfectionProgressSpeed: 0.01
-  InfectionTurnChance: 0.75
+  InfectionTurnChance: 0.65
   MinInfectionToTurn: 0.3
-  infectionWaveInterval: 50
-  infectionWaveIntervalRandomness: 0.2
-  setupTime: 5
+  infectionWaveInterval: 55
+  infectionWaveIntervalRandomness: 0.25
+  setupTime: 10
   isSettingUp: 0
   TimeToMaxDifficuly: 600
   MaxDifficultyScaling: 1.5

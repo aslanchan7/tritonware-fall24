@@ -31,7 +31,7 @@ public class UnitSpawner : MonoBehaviour
     {
         spawnablePositions = MapManager.Instance.GetMapEdge();
         zombieSpawnTimer = minZombieSpawnInterval;
-        patientSpawnTimer = minPatientSpawnInterval;
+        patientSpawnTimer = 8;
     }
 
 
@@ -47,7 +47,7 @@ public class UnitSpawner : MonoBehaviour
         }
         if (patientSpawnTimer <= 0f)
         {
-            patientSpawnTimer = Mathf.Lerp(minPatientSpawnInterval, maxPatientSpawnInterval, spawnRateNoise);
+            patientSpawnTimer = Mathf.Lerp(minPatientSpawnInterval, maxPatientSpawnInterval, spawnRateNoise) / GameManager.DifficultyScaling;
             StartCoroutine(SpawnPatientCoroutine());
         }
 

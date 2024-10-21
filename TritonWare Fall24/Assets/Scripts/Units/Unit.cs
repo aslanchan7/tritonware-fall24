@@ -253,7 +253,7 @@ public abstract class Unit : Entity, IDamageable
         UnitDisplay.UpdateDisplay();
     }
 
-    private void TriggerDeath()
+    protected virtual void TriggerDeath()
     {
         IsActive = false;
         GameManager.AllUnits.Remove(this);
@@ -519,7 +519,7 @@ public abstract class Unit : Entity, IDamageable
         // if already infected, speed it up by increasing infected rate by another 10%
         else
         {
-            Infection.IncreaseInfection(0.2f);
+            Infection.IncreaseInfection(0.15f);
         }
     }
 
