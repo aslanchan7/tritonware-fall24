@@ -12,12 +12,13 @@ public class BlackoutController : MonoBehaviour
 
     private bool blackoutActive = false;
     public float BlackoutInterval = 20f;
+    public float BlackoutIntervalVariance = 0.5f;
     private float blackoutTimer;
 
     private void Awake()
     {
         Instance = this;
-        blackoutTimer = BlackoutInterval;   
+        blackoutTimer = 30 + BlackoutInterval * Random.Range(1 - BlackoutIntervalVariance, 1 + BlackoutIntervalVariance);   
         //blackoutTimer = 5f;
 
         foreach (var fusebox in Fuseboxes)
@@ -31,7 +32,7 @@ public class BlackoutController : MonoBehaviour
         if (blackoutTimer <= 0)
         {
             StartBlackout();
-            blackoutTimer = BlackoutInterval;   // todo add randomness
+            blackoutTimer = BlackoutInterval * Random.Range(1 - BlackoutIntervalVariance, 1 + BlackoutIntervalVariance);   // todo add randomness
         }
         else if (!blackoutActive) 
         {
@@ -64,7 +65,7 @@ public class BlackoutController : MonoBehaviour
         Fog.sharedMaterial.color = Color.black.WithAlpha(0.995f);
         VisionController.Instance.ToggleVision(false);
 
-        GameManager.Instance.TriggerInfectionWave(1.5f);
+        GameManager.Instance.TriggerInfectionWave(1.3f);
         BlackoutFusebox chosenFusebox = Fuseboxes.RandomElement();
         chosenFusebox.SetState(true);
 

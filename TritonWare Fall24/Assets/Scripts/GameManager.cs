@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
 
     public float InfectionProgressSpeed = 0.015f;
     [Range(0f, 1f)] public float InfectionTurnChance;
+    [Range(0f, 1f)] public float MinInfectionToTurn = 0.3f;
     [SerializeField] private float infectionWaveInterval;
     [Range(0f, 1f)] [SerializeField] private float infectionWaveIntervalRandomness = 0.2f;
     private float infectionWaveTimer;
@@ -93,6 +94,9 @@ public class GameManager : MonoBehaviour
         {
             DifficultyScaling += difficultyScaleRate * Time.deltaTime;
         }
+
+        Debug.Log("Current Difficulty Scaling is " + DifficultyScaling);
+
     }
 
     private void TriggerWave()
@@ -101,7 +105,7 @@ public class GameManager : MonoBehaviour
         {
             if (unit is EnemyUnit e)
             {
-                if (e.CurrentState == EnemyState.Idle && Random.value < waveAggroChance * DifficultyScaling)
+                if (e.CurrentState == EnemyState.Idle && Random.value < waveAggroChance)
                 {
                     if (Random.value < rushChance) e.CurrentState = EnemyState.Rush;
                     else e.CurrentState = EnemyState.AttackClosest;
@@ -112,6 +116,7 @@ public class GameManager : MonoBehaviour
 
     public void TriggerInfectionWave(float multiplier = 1f)
     {
+        multiplier *= ReducedDifficultyScaling;
         List<Unit> units = GetUnitsOfTeam(Team.Allied);
         units.AddRange(GetUnitsOfTeam(Team.Visitor));
         foreach (Unit unit in units)
