@@ -7,7 +7,7 @@ using static UnityEngine.UI.Image;
 
 public enum TargetIndicator
 {
-    EnemySpawn, PatientSpawn
+    EnemySpawn, PatientSpawn, ResourceSpawn, ZombieTurn
 }
 
 [Serializable]

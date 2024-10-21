@@ -62,6 +62,7 @@ public class ResourceSpawner : MonoBehaviour
 
     private void SpawnResource(Vector2Int pos, ResourcePickup unitTemplate)
     {
+        OverlayManager.Instance.CreateTargetIndicator(pos, TargetIndicator.ResourceSpawn);
         ResourcePickup newUnit = Instantiate(unitTemplate);
         newUnit.Place(pos);
     }

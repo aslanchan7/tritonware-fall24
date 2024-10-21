@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 using Random = UnityEngine.Random;
 
 public class Infection
@@ -23,7 +24,9 @@ public class Infection
     public void TriggerTurn()
     {
         InfectedUnit.Infection = null;
+        OverlayManager.Instance.CreateTargetIndicator(InfectedUnit.Pos, TargetIndicator.ZombieTurn);
         InfectedUnit.TurnIntoUnit(GameManager.Instance.TurnedZombiePrefab);
+        
     }
 
     public void RemoveInfection()
