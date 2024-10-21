@@ -40,7 +40,7 @@ public class UnitSpawner : MonoBehaviour
 
         if (zombieSpawnTimer <= 0f)
         {
-            zombieSpawnTimer = Mathf.Lerp(minZombieSpawnInterval, maxZombieSpawnInterval, spawnRateNoise); ;
+            zombieSpawnTimer = Mathf.Lerp(minZombieSpawnInterval, maxZombieSpawnInterval, spawnRateNoise) / GameManager.DifficultyScaling; 
             SpawnGroup(spawnablePositions[Random.Range(0, spawnablePositions.Count)]);
             // todo if spawn position is occupied try again
         }
@@ -48,7 +48,7 @@ public class UnitSpawner : MonoBehaviour
         {
             patientSpawnTimer = Mathf.Lerp(minPatientSpawnInterval, maxPatientSpawnInterval, spawnRateNoise);
             VisitorUnit newPatient = TrySpawn(spawnablePositions, StandardPatient) as VisitorUnit;
-            if (newPatient != null) newPatient.Infection = new Infection(newPatient, Random.Range(0, patientMaxInfection));
+            if (newPatient != null) newPatient.Infection = new Infection(newPatient, Random.Range(0, patientMaxInfection * GameManager.DifficultyScaling));
         }
 
         if (!GameManager.Instance.isSettingUp)

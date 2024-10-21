@@ -38,7 +38,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float setupTime;
     public bool isSettingUp;
 
-
+    public static float DifficultyScaling = 1f;
+    public static float ReducedDifficultyScaling => Mathf.Sqrt(DifficultyScaling);
+    public float TimeToMaxDifficuly = 300f;
+    private float difficultyScaleRate => (MaxDifficultyScaling - 1) / TimeToMaxDifficuly;
+    public float MaxDifficultyScaling = 1.5f;
 
     public List<Unit> AllUnitPrefabs() => new() { SoldierPrefab, MedicPrefab, ScientistPrefab };
 
@@ -85,7 +89,10 @@ public class GameManager : MonoBehaviour
             infectionWaveTimer -= Time.deltaTime;
         }
 
-        // Debug.Log($"All active tasks : \n{FindObjectsOfType<Task>().ToCommaSeparatedString()}");
+        if (DifficultyScaling <= MaxDifficultyScaling)
+        {
+            DifficultyScaling += difficultyScaleRate * Time.deltaTime;
+        }
     }
 
     private void TriggerWave()
@@ -94,7 +101,7 @@ public class GameManager : MonoBehaviour
         {
             if (unit is EnemyUnit e)
             {
-                if (e.CurrentState == EnemyState.Idle && Random.value < waveAggroChance)
+                if (e.CurrentState == EnemyState.Idle && Random.value < waveAggroChance * DifficultyScaling)
                 {
                     if (Random.value < rushChance) e.CurrentState = EnemyState.Rush;
                     else e.CurrentState = EnemyState.AttackClosest;

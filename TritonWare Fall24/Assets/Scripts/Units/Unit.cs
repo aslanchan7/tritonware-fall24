@@ -564,7 +564,7 @@ public abstract class Unit : Entity, IDamageable
         {
             if (Time.time - LastIncremented >= IncrementTimeInterval)
             {
-                Infection.IncreaseInfection(GameManager.Instance.InfectionProgressSpeed);
+                Infection.IncreaseInfection(GameManager.Instance.InfectionProgressSpeed * GameManager.ReducedDifficultyScaling);
                 LastIncremented = Time.time;
                 // infectionText.text = Infection.Progress.ToString();
             }
