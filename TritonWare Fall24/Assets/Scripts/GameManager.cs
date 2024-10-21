@@ -39,7 +39,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float setupTime;
     public bool isSettingUp;
 
-    public static float DifficultyScaling = 1f;
+    public float InitialDifficultyScaling = 1f;
+
+    public static float DifficultyScaling;
     public static float ReducedDifficultyScaling => Mathf.Sqrt(DifficultyScaling);
     public float TimeToMaxDifficuly = 300f;
     private float difficultyScaleRate => (MaxDifficultyScaling - 1) / TimeToMaxDifficuly;
@@ -50,6 +52,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        DifficultyScaling = InitialDifficultyScaling;
         waveTimer = waveInterval;
         infectionWaveTimer = infectionWaveInterval;
         DoctorUnit = FindObjectOfType<Doctor>();

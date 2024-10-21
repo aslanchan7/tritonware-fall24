@@ -88061,6 +88061,7 @@ MonoBehaviour:
   infectionWaveIntervalRandomness: 0.25
   setupTime: 10
   isSettingUp: 0
+  InitialDifficultyScaling: 1
   TimeToMaxDifficuly: 600
   MaxDifficultyScaling: 1.5
 --- !u!4 &1837833847
