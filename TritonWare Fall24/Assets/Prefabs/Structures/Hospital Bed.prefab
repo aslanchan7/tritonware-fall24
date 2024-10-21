@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7754831778761494767}
@@ -73,8 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.23113209, g: 0.58288914, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 31f44ac754d01e64583923d4ae9fea69, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -221,6 +221,7 @@ MonoBehaviour:
   RelativeWorkTilePos: {x: 0, y: -1}
   WorkTileIcon: {fileID: 5246575592898114864}
   WorkstationTaskTemplate: {fileID: -1843661810600571237, guid: a91d41dcaa1237e4e83a2fdfc93a5052, type: 3}
+  IsEnabled: 1
   Patient: {fileID: 0}
   ReservedPatient: {fileID: 0}
   UnitSlot: {fileID: 5195065788800255661}
@@ -249,7 +250,7 @@ Transform:
   m_GameObject: {fileID: 7454892877442733095}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

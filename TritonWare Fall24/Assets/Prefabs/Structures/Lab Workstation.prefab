@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.5, y: 0.5, z: 0}
-  m_LocalScale: {x: 3, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7754831778761494767}
@@ -73,8 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.23113209, g: 0.58288914, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: f5cc52fc6af6af447903cc69721e5c0e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -215,8 +215,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 5, y: 2}
+  StructureTaskTemplate: {fileID: 0}
   workstationSize: {x: 3, y: 1}
   RelativeWorkTilePos: {x: 1, y: -1}
   WorkTileIcon: {fileID: 5246575592898114864}
   WorkstationTaskTemplate: {fileID: 2059968085308833506, guid: 0613c8b35e88f7340bdab158abc26e68, type: 3}
-  TaskInProgress: {fileID: 0}
+  IsEnabled: 1
