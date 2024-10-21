@@ -283,8 +283,10 @@ MonoBehaviour:
   pos: {x: 20, y: 0}
   Health: 120
   MaxHealth: 120
-  Speed: 7
+  speed: 7.5
+  StaggerSlow: 0.7
   TaskQueue: []
+  UnitSprite: {fileID: 7341565751645686659}
   SelectIndicator: {fileID: 1751389183041611419}
   UnitDisplay: {fileID: 6498875565912834006}
   Seeker: {fileID: 4169987428054787796}
@@ -295,7 +297,7 @@ MonoBehaviour:
   IsActive: 0
   InsideStructure: {fileID: 0}
   Weapon: {fileID: 0}
-  AttackDamage: 10
+  AttackDamage: 12
   CurrentState: 0
   infectionAttackChance: 0.3
 --- !u!1001 &1198500387667876695

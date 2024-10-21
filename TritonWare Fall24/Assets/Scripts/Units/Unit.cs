@@ -11,15 +11,25 @@ public abstract class Unit : Entity, IDamageable
     public override bool BlocksVision => false;
     public override Vector2Int Size => new Vector2Int(1, 1);
 
+    public float Speed {
+        get => staggerTimer > 0 ? speed * StaggerSlow : speed;
+        set => speed = value; 
+    }
+
     // Stats
     public int Health = 100;
     public int MaxHealth = 100;
-    public float Speed = 5f;
+    [SerializeField] private float speed = 5f;
+
+    // Stagger (slow when taking damage)
+    public float StaggerSlow = 0.7f;
+    private float staggerTimer;
+    private float staggerTime = 1f;     
 
     // Tasks
     public List<Task> TaskQueue = new List<Task>();     // stores the immediate next task at index 0
 
-
+    public SpriteRenderer UnitSprite;
     public SpriteRenderer SelectIndicator;
     public UnitDisplay UnitDisplay;
 
@@ -78,7 +88,7 @@ public abstract class Unit : Entity, IDamageable
         Pos = pos;
         MapTile targetTile = MapManager.Instance.GetTile(pos);
         transform.SetParent(MapManager.Instance.GetTile(pos).transform, false);
-        if (targetTile.ContainedUnit != null)
+        if (targetTile.ContainedUnit != null && targetTile.ContainedUnit != this)
         {
             Debug.LogError("Tried to spawn into tile occupied by unit");
         }
@@ -232,6 +242,7 @@ public abstract class Unit : Entity, IDamageable
     public void Damage(int value)
     {
         Health -= value;
+        staggerTimer = staggerTime;
         UnitDisplay.UpdateDisplay();
         if (Health <= 0) TriggerDeath();
     }
@@ -580,7 +591,10 @@ public abstract class Unit : Entity, IDamageable
             else Weapon.ToggleShooting(true);
         }
 
-        
+        if (staggerTimer >= 0)
+        {
+            staggerTimer -= Time.deltaTime;
+        }
 
     }
 

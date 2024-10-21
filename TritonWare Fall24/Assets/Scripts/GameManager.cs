@@ -95,7 +95,6 @@ public class GameManager : MonoBehaviour
             DifficultyScaling += difficultyScaleRate * Time.deltaTime;
         }
 
-        Debug.Log("Current Difficulty Scaling is " + DifficultyScaling);
 
     }
 

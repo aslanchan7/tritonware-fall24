@@ -2,23 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.UI.Image;
 
-public enum TargetIndicator
+public enum TargetIndicatorType
 {
     EnemySpawn, PatientSpawn, ResourceSpawn, ZombieTurn
 }
 
 [Serializable]
-public struct IndicatorSprite
+public class IndicatorSprite
 {
-    public TargetIndicator Indicator;
-    public GameObject IndicatorPrefab;
+    public TargetIndicatorType IndicatorType;
+    public Indicator IndicatorPrefab;
 
-    public IndicatorSprite(TargetIndicator indicator, GameObject indicatorPrefab)
+    public IndicatorSprite(TargetIndicatorType indicator, Indicator indicatorPrefab)
     {
-        Indicator = indicator;
+        IndicatorType = indicator;
         IndicatorPrefab = indicatorPrefab;
     }
 }
@@ -31,7 +32,7 @@ public class OverlayManager : MonoBehaviour
     // Enemy Spawn Indicators
     public GameObject enemySpawnIndicatorPrefab;
     public Queue<Tuple<Vector2Int, float>> Targets = new();
-    public Dictionary<Vector2Int, GameObject> TargetIndicators = new();
+    public Dictionary<Vector2Int, Indicator> TargetIndicators = new();
     private Camera cam;
     private SpriteRenderer indicatorSpriteRenderer;
     private float indicatorSpriteWidth;
@@ -55,10 +56,10 @@ public class OverlayManager : MonoBehaviour
     private void Update()
     {
         // Every frame update the indicator's position
-        foreach (KeyValuePair<Vector2Int, GameObject> entry in TargetIndicators)
+        foreach (KeyValuePair<Vector2Int, Indicator> entry in TargetIndicators)
         {
             Vector2Int target = entry.Key;
-            GameObject indicator = entry.Value;
+            Indicator indicator = entry.Value;
 
             UpdateTargetIndicator(target, indicator);
         }
@@ -69,7 +70,7 @@ public class OverlayManager : MonoBehaviour
             if (Time.time - Targets.Peek().Item2 > 3f)
             {
                 Vector2Int key = Targets.Dequeue().Item1;
-                Destroy(TargetIndicators.GetValueOrDefault(key));
+                Destroy(TargetIndicators.GetValueOrDefault(key).gameObject);
                 TargetIndicators.Remove(key);
             }
         }
@@ -115,13 +116,13 @@ public class OverlayManager : MonoBehaviour
         HoverOverlay.transform.localScale = Vector2.one;
     }
 
-    public void CreateTargetIndicator(Vector2Int pos, TargetIndicator indicator)
+    public void CreateTargetIndicator(Vector2Int pos, TargetIndicatorType indicatorType)
     {
         Targets.Enqueue(new Tuple<Vector2Int, float>(pos, Time.time));
-        IndicatorSprite targetIndicator = new(TargetIndicator.EnemySpawn, enemySpawnIndicatorPrefab);  // backup
+        IndicatorSprite targetIndicator = new(TargetIndicatorType.EnemySpawn, null);
         foreach (IndicatorSprite kvp in IndicatorPrefabs)
         {
-            if (kvp.Indicator == indicator)
+            if (kvp.IndicatorType == indicatorType)
             {
                 targetIndicator = kvp;
                 break;
@@ -130,18 +131,18 @@ public class OverlayManager : MonoBehaviour
         TargetIndicators.Add(pos, Instantiate(targetIndicator.IndicatorPrefab));
     }
 
-    public void UpdateTargetIndicator(Vector2Int target, GameObject indicator)
+    public void UpdateTargetIndicator(Vector2Int target, Indicator indicator)
     {
-        Vector3 targetPos = MapManager.Instance.GetWorldPos(target);
+        Vector3 targetPos = MapManager.Instance.GetWorldPos(target).GetTileCenter() + new Vector2(0,2);
 
         // Takes the world pos and converts it into a position relative to camera
         // Bottom left of the camera is (0,0) and top right is (1,1)
         Vector3 screenPos = cam.WorldToViewportPoint(targetPos);
         bool isOffScreen = screenPos.x <= 0f || screenPos.x >= 1f || screenPos.y <= 0f || screenPos.y >= 1f;
 
-        if (isOffScreen)
+        if (isOffScreen || indicator.ShowIfOnScreen)
         {
-            indicator.SetActive(true);
+            indicator.gameObject.SetActive(true);
             Vector3 spriteSizeInViewPort = cam.WorldToViewportPoint(new Vector3(indicatorSpriteWidth, indicatorSpriteHeight, 0)) - cam.WorldToViewportPoint(Vector3.zero);
 
             screenPos.x = Mathf.Clamp(screenPos.x, spriteSizeInViewPort.x, 1 - spriteSizeInViewPort.x);
@@ -150,10 +151,20 @@ public class OverlayManager : MonoBehaviour
             Vector3 worldPos = cam.ViewportToWorldPoint(screenPos);
             worldPos.z = 0;
             indicator.transform.position = worldPos;
+
+            if (!isOffScreen)
+            {
+                indicator.SpriteRenderer.color = Color.white.WithAlpha(0.3f);
+            }
+            else
+            {
+                indicator.SpriteRenderer.color = Color.white;
+            }
+
         }
         else
         {
-            indicator.SetActive(false);
+            indicator.gameObject.SetActive(false);
         }
     }
 }

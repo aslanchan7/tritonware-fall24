@@ -24,7 +24,7 @@ public class Infection
     public void TriggerTurn()
     {
         InfectedUnit.Infection = null;
-        OverlayManager.Instance.CreateTargetIndicator(InfectedUnit.Pos, TargetIndicator.ZombieTurn);
+        OverlayManager.Instance.CreateTargetIndicator(InfectedUnit.Pos, TargetIndicatorType.ZombieTurn);
         InfectedUnit.TurnIntoUnit(GameManager.Instance.TurnedZombiePrefab);
         
     }

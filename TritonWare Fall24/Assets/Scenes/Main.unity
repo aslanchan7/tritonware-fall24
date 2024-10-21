@@ -927,10 +927,14 @@ MonoBehaviour:
   HoverOverlay: {fileID: 1726227127}
   enemySpawnIndicatorPrefab: {fileID: 4811396593099666599, guid: a5dca6d79dc42b44980657f43c50330c, type: 3}
   IndicatorPrefabs:
-  - Indicator: 0
-    IndicatorPrefab: {fileID: 4811396593099666599, guid: a5dca6d79dc42b44980657f43c50330c, type: 3}
-  - Indicator: 1
-    IndicatorPrefab: {fileID: 4811396593099666599, guid: 01188566a12d438418ae5d19e6218d95, type: 3}
+  - IndicatorType: 0
+    IndicatorPrefab: {fileID: 1379624492100251370, guid: a5dca6d79dc42b44980657f43c50330c, type: 3}
+  - IndicatorType: 1
+    IndicatorPrefab: {fileID: 8815117132891587658, guid: 01188566a12d438418ae5d19e6218d95, type: 3}
+  - IndicatorType: 2
+    IndicatorPrefab: {fileID: 2508415922541729882, guid: 72c1b1fd9e495fc44ade385b4b53d6f7, type: 3}
+  - IndicatorType: 3
+    IndicatorPrefab: {fileID: 301615955638092014, guid: 5fef8fd61d1724744b210ec8398fbe19, type: 3}
 --- !u!4 &332439986
 Transform:
   m_ObjectHideFlags: 0
@@ -107250,6 +107254,7 @@ MonoBehaviour:
   ScientistPrefab: {fileID: 6759885552694440125, guid: 1c9d460ad7b7fed47b58ce624febce98, type: 3}
   InfectionProgressSpeed: 0.01
   InfectionTurnChance: 0.75
+  MinInfectionToTurn: 0.3
   infectionWaveInterval: 50
   infectionWaveIntervalRandomness: 0.2
   setupTime: 5

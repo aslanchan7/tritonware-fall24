@@ -116,8 +116,10 @@ MonoBehaviour:
   pos: {x: 18, y: 18}
   Health: 80
   MaxHealth: 80
-  Speed: 5
+  speed: 5
+  StaggerSlow: 0.7
   TaskQueue: []
+  UnitSprite: {fileID: 1758197269191502093}
   SelectIndicator: {fileID: 6043407117624333952}
   UnitDisplay: {fileID: 5979482480007944719}
   Seeker: {fileID: 0}

@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 using static UnityEngine.UI.Image;
 using Random = UnityEngine.Random;
 
@@ -42,13 +44,11 @@ public class UnitSpawner : MonoBehaviour
         {
             zombieSpawnTimer = Mathf.Lerp(minZombieSpawnInterval, maxZombieSpawnInterval, spawnRateNoise) / GameManager.DifficultyScaling; 
             SpawnGroup(spawnablePositions[Random.Range(0, spawnablePositions.Count)]);
-            // todo if spawn position is occupied try again
         }
         if (patientSpawnTimer <= 0f)
         {
             patientSpawnTimer = Mathf.Lerp(minPatientSpawnInterval, maxPatientSpawnInterval, spawnRateNoise);
-            VisitorUnit newPatient = TrySpawn(spawnablePositions, StandardPatient) as VisitorUnit;
-            if (newPatient != null) newPatient.Infection = new Infection(newPatient, Random.Range(0, patientMaxInfection * GameManager.DifficultyScaling));
+            StartCoroutine(SpawnPatientCoroutine());
         }
 
         if (!GameManager.Instance.isSettingUp)
@@ -62,6 +62,23 @@ public class UnitSpawner : MonoBehaviour
 
     }
 
+    private IEnumerator SpawnPatientCoroutine()
+    {
+        VisitorUnit newPatient = TrySpawn(spawnablePositions, StandardPatient) as VisitorUnit;
+        if (newPatient != null)
+        {
+            // really hacky code
+            newPatient.UnPlace();
+            newPatient.UnitDisplay.enabled = false;
+            MapManager.Instance.GetTile(newPatient.Pos).ContainedUnit = newPatient;     
+            OverlayManager.Instance.CreateTargetIndicator(newPatient.Pos, TargetIndicatorType.PatientSpawn);
+            yield return new WaitForSeconds(3);
+            newPatient.Place(newPatient.Pos);
+            newPatient.UnitDisplay.enabled = true;
+            newPatient.Infection = new Infection(newPatient, Random.Range(0, patientMaxInfection * GameManager.DifficultyScaling));
+        }
+    }
+
 
     private void SpawnGroup(Vector2Int origin)
     {
@@ -71,7 +88,7 @@ public class UnitSpawner : MonoBehaviour
             TrySpawn(tiles, StandardEnemy);
         }
 
-        OverlayManager.Instance.CreateTargetIndicator(origin, TargetIndicator.EnemySpawn);
+        OverlayManager.Instance.CreateTargetIndicator(origin, TargetIndicatorType.EnemySpawn);
 
         /*
         OverlayManager.Instance.Targets.Enqueue(new Tuple<Vector2Int, float>(origin, Time.time));
@@ -115,10 +132,6 @@ public class UnitSpawner : MonoBehaviour
     {
         Unit newUnit = Instantiate(unitTemplate);
         newUnit.Place(pos);
-        if (unitTemplate is VisitorUnit)
-        {
-            OverlayManager.Instance.CreateTargetIndicator(pos, TargetIndicator.PatientSpawn);
-        }
         return newUnit;
     }
 
