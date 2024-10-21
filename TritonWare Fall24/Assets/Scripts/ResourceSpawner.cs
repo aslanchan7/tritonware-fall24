@@ -17,7 +17,7 @@ public class ResourceSpawner : MonoBehaviour
 
     private void Start()
     {
-        spawnablePositions = MapManager.Instance.GetMapEdge();
+        spawnablePositions = MapManager.Instance.GetPlayableMapEdge();
         SpawnGroup(spawnablePositions[Random.Range(0, spawnablePositions.Count)]);
         SpawnGroup(spawnablePositions[Random.Range(0, spawnablePositions.Count)]);
     }
@@ -45,7 +45,7 @@ public class ResourceSpawner : MonoBehaviour
 
     private void SpawnGroup(Vector2Int origin)
     {
-        List<MapTile> positions = MapManager.Instance.GetTilesInRadius(origin, 3);
+        List<MapTile> positions = MapManager.Instance.GetTilesInRadius(origin, 7);
         for (int i = 0; i < groupSize; i++)
         {
             int index = Random.Range(0, positions.Count);

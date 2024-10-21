@@ -19,6 +19,7 @@ public class Zombie : EnemyUnit
         foreach (Unit unit in targetPool)
         {
             if (!unit.IsActive) continue;   // ignore dead or inactive targets (e.g. in bed)
+            if (!MapManager.Instance.InPlayableBounds(unit.Pos)) continue;  // ignore targets outside of playable area (usually patients)
             float dist = Vector2Int.Distance(unit.Pos, Pos);
             if (closest == null || dist < closestDist)
             {

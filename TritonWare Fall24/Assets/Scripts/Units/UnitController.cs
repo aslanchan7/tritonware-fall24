@@ -49,6 +49,7 @@ public class UnitController : MonoBehaviour
     public void GiveOrder(Vector2Int pos)
     {
         if (SelectedUnits.Count <= 0 || !(SelectedUnits[0] is AlliedUnit a)) return;
+        if (!MapManager.Instance.InPlayableBounds(pos)) return;
         if (MapManager.Instance.IsPassable(pos))
         {
             // valid move starts here

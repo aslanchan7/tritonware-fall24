@@ -31,7 +31,7 @@ public class UnitSpawner : MonoBehaviour
     {
         spawnablePositions = MapManager.Instance.GetMapEdge();
         zombieSpawnTimer = minZombieSpawnInterval;
-        patientSpawnTimer = 8;
+        patientSpawnTimer = 5;
     }
 
 
@@ -82,7 +82,7 @@ public class UnitSpawner : MonoBehaviour
 
     private void SpawnGroup(Vector2Int origin)
     {
-        List<MapTile> tiles = MapManager.Instance.GetTilesInRadius(origin, 3);
+        List<MapTile> tiles = MapManager.Instance.GetTilesInRadius(origin, 3, true);
         for (int i = 0; i < groupSize + Random.Range(-2, 3); i++)
         {
             TrySpawn(tiles, StandardEnemy);

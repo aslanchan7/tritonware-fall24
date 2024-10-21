@@ -17,6 +17,8 @@ public class MapManager : MonoBehaviour
     public Transform GameGrid;
 
     public Vector2Int MapSize = new Vector2Int(80, 50);
+    public int MapBoundary = 5;
+
     public static float TileSize = 1;     // I hope we never need to change this
     public MapTile[,] Tiles;
 
@@ -27,6 +29,7 @@ public class MapManager : MonoBehaviour
         Instance = this;
         InitGameGrid();
         InitPathfinder();
+        GetPlayableMapEdge();
     }
 
     private void Update()
@@ -57,7 +60,7 @@ public class MapManager : MonoBehaviour
         return GetTile(pos).ContainedResource;
     }
 
-    public List<MapTile> GetTilesInRadius(Vector2Int origin, float radius)
+    public List<MapTile> GetTilesInRadius(Vector2Int origin, float radius, bool allowOutOfBounds = false)
     {
         int roundedRadius = (int)radius + 1;
         List<MapTile> tiles = new List<MapTile>();
@@ -67,8 +70,12 @@ public class MapManager : MonoBehaviour
             for (int j = origin.y - roundedRadius; j <= origin.y + roundedRadius; j++)
             {
                 Vector2Int pos = new Vector2Int(i, j);
+                bool inBounds;
+                if (allowOutOfBounds) inBounds = InWorldBounds(pos);
+                else inBounds = InPlayableBounds(pos);
+
                 // +0.05 to account for floating point precision
-                if (InBounds(pos) && Vector2Int.Distance(pos, origin) <= radius + 0.05f)
+                if (inBounds && Vector2Int.Distance(pos, origin) <= radius + 0.05f)
                 {
                     tiles.Add(GetTile(pos));
                 }     
@@ -78,7 +85,12 @@ public class MapManager : MonoBehaviour
         return tiles;
     }
 
-    public bool InBounds(Vector2Int pos)
+    public bool InPlayableBounds(Vector2Int pos)
+    {
+        return pos.x >= MapBoundary && pos.x < MapSize.x - MapBoundary && pos.y >= MapBoundary && pos.y < MapSize.y - MapBoundary;
+    }
+
+    public bool InWorldBounds(Vector2Int pos)
     {
         return pos.x >= 0 && pos.x < MapSize.x && pos.y >= 0 && pos.y < MapSize.y;
     }
@@ -221,7 +233,7 @@ public class MapManager : MonoBehaviour
             new Vector2Int(pos.x, pos.y - 1), // Down
             new Vector2Int(pos.x, pos.y + 1) }) { // Up
 
-            if (InBounds(toAdd)) adjacents.Add(toAdd);
+            if (InPlayableBounds(toAdd)) adjacents.Add(toAdd);
         }  
 
         return adjacents;
@@ -237,7 +249,7 @@ public class MapManager : MonoBehaviour
             {
                 if (i == j && i == 0) continue;
                 Vector2Int neighbor = pos + new Vector2Int(i, j);
-                if (InBounds(neighbor)) 
+                if (InPlayableBounds(neighbor)) 
                 {
                     neighbors.Add(neighbor);
                 }
@@ -255,7 +267,7 @@ public class MapManager : MonoBehaviour
             {
                 if (i == j && i == 0) continue;
                 Vector2Int neighbor = pos + new Vector2Int(i, j);
-                if (InBounds(neighbor) && IsPassable(neighbor))
+                if (InPlayableBounds(neighbor) && IsPassable(neighbor))
                 {
                     neighbors.Add(neighbor);
                 }
@@ -289,6 +301,36 @@ public class MapManager : MonoBehaviour
         {
             result.Add(new Vector2Int(0, j));
         }
+        return result;
+    }
+
+    public List<Vector2Int> GetPlayableMapEdge()
+    {
+        List<Vector2Int> result = new();
+        for (int i = MapBoundary; i < MapSize.x - MapBoundary - 1; i++)
+        {
+            result.Add(new Vector2Int(i, MapBoundary));
+        }
+        for (int j = MapBoundary; j < MapSize.y - MapBoundary - 1; j++)
+        {
+            result.Add(new Vector2Int(MapSize.x - MapBoundary - 1, j));
+        }
+        for (int i = MapSize.x - MapBoundary - 1; i >= MapBoundary + 1; i--)
+        {
+            result.Add(new Vector2Int(i, MapSize.y - MapBoundary - 1));
+        }
+        for (int j = MapSize.y - MapBoundary - 1; j >= MapBoundary + 1; j--)
+        {
+            result.Add(new Vector2Int(MapBoundary, j));
+        }
+
+        /*
+        foreach (Vector2Int pos in result)
+        {
+            GetTile(pos).SpriteRenderer.enabled = !GetTile(pos).SpriteRenderer.enabled;
+        }
+        */
+
         return result;
     }
 

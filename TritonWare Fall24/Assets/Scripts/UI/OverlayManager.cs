@@ -135,6 +135,9 @@ public class OverlayManager : MonoBehaviour
     {
         Vector3 targetPos = MapManager.Instance.GetWorldPos(target).GetTileCenter() + new Vector2(0,2);
 
+        targetPos.x = Mathf.Clamp(targetPos.x, MapManager.Instance.MapBoundary, MapManager.Instance.MapSize.x - MapManager.Instance.MapBoundary);
+        targetPos.y = Mathf.Clamp(targetPos.y, MapManager.Instance.MapBoundary, MapManager.Instance.MapSize.y - MapManager.Instance.MapBoundary);
+
         // Takes the world pos and converts it into a position relative to camera
         // Bottom left of the camera is (0,0) and top right is (1,1)
         Vector3 screenPos = cam.WorldToViewportPoint(targetPos);
@@ -147,6 +150,8 @@ public class OverlayManager : MonoBehaviour
 
             screenPos.x = Mathf.Clamp(screenPos.x, spriteSizeInViewPort.x, 1 - spriteSizeInViewPort.x);
             screenPos.y = Mathf.Clamp(screenPos.y, spriteSizeInViewPort.y, 1 - spriteSizeInViewPort.y);
+
+
 
             Vector3 worldPos = cam.ViewportToWorldPoint(screenPos);
             worldPos.z = 0;
