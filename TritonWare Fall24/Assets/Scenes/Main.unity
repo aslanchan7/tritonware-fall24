@@ -88018,6 +88018,26 @@ PrefabInstance:
       propertyPath: WorkstationTaskTemplate
       value: 
       objectReference: {fileID: 602181062148663705, guid: e352d8ced30dfe340b83159f612f2338, type: 3}
+    - target: {fileID: 5246575592898114864, guid: 6798b96535322b74f98f63f72f8315e0, type: 3}
+      propertyPath: m_Color.a
+      value: 0.7490196
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246575592898114864, guid: 6798b96535322b74f98f63f72f8315e0, type: 3}
+      propertyPath: m_Color.b
+      value: 0.3018868
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246575592898114864, guid: 6798b96535322b74f98f63f72f8315e0, type: 3}
+      propertyPath: m_Color.g
+      value: 0.3018868
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246575592898114864, guid: 6798b96535322b74f98f63f72f8315e0, type: 3}
+      propertyPath: m_Color.r
+      value: 0.3018868
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246575592898114864, guid: 6798b96535322b74f98f63f72f8315e0, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 7754831778761494767, guid: 6798b96535322b74f98f63f72f8315e0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 54
