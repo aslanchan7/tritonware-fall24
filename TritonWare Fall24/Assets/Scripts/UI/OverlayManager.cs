@@ -46,7 +46,7 @@ public class OverlayManager : MonoBehaviour
     public Transform IndicatorContainer;
     public List<GameObject> UIObjects;
     public GameObject GameOverScreen;
-    public TMP_Text scoreText, timeText, curesText;
+    public TMP_Text scoreText, timeText, curesText, difficutyText;
 
     private void Awake()
     {
@@ -230,7 +230,7 @@ public class OverlayManager : MonoBehaviour
         scoreText.SetText(score.ToString());
         timeText.SetText(FormatTime(time));
         curesText.SetText(cures.ToString());
-
+        difficutyText.SetText(SceneController.Instance.SelectedDifficulty.Name);
     }
 
     public string FormatTime(float timeInSeconds)

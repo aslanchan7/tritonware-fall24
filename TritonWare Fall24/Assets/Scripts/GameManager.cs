@@ -42,6 +42,9 @@ public class GameManager : MonoBehaviour
     public float InitialDifficultyScaling = 1f;
 
     public static float DifficultyScaling;
+
+    [SerializeField] private float CurrentDifficultyScaling;    // for displaying in inspector only
+
     public static float ReducedDifficultyScaling => Mathf.Sqrt(DifficultyScaling);
     public float TimeToMaxDifficulty = 300f;
     private float difficultyScaleRate => (MaxDifficultyScaling - 1) / TimeToMaxDifficulty;
@@ -124,6 +127,7 @@ public class GameManager : MonoBehaviour
         if (DifficultyScaling <= MaxDifficultyScaling)
         {
             DifficultyScaling += difficultyScaleRate * Time.deltaTime;
+            CurrentDifficultyScaling = DifficultyScaling;
         }
 
 
