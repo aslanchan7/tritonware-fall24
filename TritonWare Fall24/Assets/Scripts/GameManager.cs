@@ -51,6 +51,13 @@ public class GameManager : MonoBehaviour
     public float MaxDifficultyScaling = 1.5f;
 
     public List<Unit> AllUnitPrefabs() => new() { SoldierPrefab, MedicPrefab, ScientistPrefab };
+    public Unit GetWeightedUnitDraw()
+    {
+        float roll = Random.value;
+        if (roll < 0.5f) return SoldierPrefab;
+        else if (roll < 0.75f) return MedicPrefab;
+        else return ScientistPrefab;
+    }
 
     public int PatientsCured = 0;
 
@@ -92,6 +99,11 @@ public class GameManager : MonoBehaviour
         spriteVariants.Add(UnitType.Solider, soldierSprites);
         spriteVariants.Add(UnitType.Medic, medicSprites);
         spriteVariants.Add(UnitType.Zombie, zombieSprites);
+
+        for (int i = 0; i < 100; i++)
+        {
+            Debug.Log(GetWeightedUnitDraw());
+        }
 
     }
 

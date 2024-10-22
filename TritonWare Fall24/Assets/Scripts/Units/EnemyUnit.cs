@@ -147,7 +147,7 @@ public abstract class EnemyUnit : Unit
         {
             float rand = Random.Range(0f, 1f);
             // 10% chance of infecting an allied unit every attack
-            if (!(unit is Doctor) && rand < infectionAttackChance)
+            if (!(unit is Doctor) && rand < infectionAttackChance * GameManager.ReducedDifficultyScaling)
             {
                 unit.GetInfected();
             }

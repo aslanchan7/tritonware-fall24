@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponHolder: {fileID: 0}
-  Damage: 8
+  Damage: 6
   Firerate: 3
   WeaponRange: 12
   Spread: 7

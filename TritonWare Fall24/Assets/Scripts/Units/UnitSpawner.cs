@@ -49,7 +49,7 @@ public class UnitSpawner : MonoBehaviour
         }
         if (patientSpawnTimer <= 0f)
         {
-            patientSpawnTimer = Mathf.Lerp(minPatientSpawnInterval, maxPatientSpawnInterval, spawnRateNoise) / GameManager.DifficultyScaling;
+            patientSpawnTimer = Mathf.Lerp(minPatientSpawnInterval, maxPatientSpawnInterval, spawnRateNoise) / GameManager.ReducedDifficultyScaling;
             StartCoroutine(SpawnPatientCoroutine());
         }
 
