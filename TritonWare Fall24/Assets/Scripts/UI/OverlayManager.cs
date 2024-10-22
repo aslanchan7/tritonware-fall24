@@ -102,6 +102,10 @@ public class OverlayManager : MonoBehaviour
                     Tooltip.Instance.SetTooltipText(tile.ContainedStructure.StructureTaskTemplate.Description);
                 }
             }
+            else if (tile.ContainedResource != null)
+            {
+                Tooltip.Instance.SetTooltipText("Pick up Supplies");
+            }
             else Tooltip.Instance.SetEnabled(false);
         }
         else Tooltip.Instance.SetEnabled(false);

@@ -25,6 +25,7 @@ public class BlackoutController : MonoBehaviour
         {
             fusebox.SetState(false);
         }
+
     }
 
     private void Update()

@@ -7,6 +7,7 @@ public class Tooltip : MonoBehaviour
 
     public RectTransform CanvasRectTransform;
     public TMP_Text TooltipText;
+    public RectTransform TooltipContainer;
     public RectTransform TooltipFrame;
 
 
@@ -22,7 +23,7 @@ public class Tooltip : MonoBehaviour
 
     public void SetEnabled(bool enabled)
     {
-        TooltipFrame.gameObject.SetActive(enabled);
+        TooltipContainer.gameObject.SetActive(enabled);
     }
 
     public void SetPosition()
@@ -39,7 +40,7 @@ public class Tooltip : MonoBehaviour
                 out localPoint))           // Output parameter for local coordinates
         {
             // Now localPoint is in local coordinates relative to the canvas
-            TooltipFrame.anchoredPosition = localPoint;
+            TooltipContainer.anchoredPosition = localPoint;
         }
     }
 
@@ -47,6 +48,9 @@ public class Tooltip : MonoBehaviour
     {
         SetPosition();
         SetEnabled(true);
-        TooltipText.text = text;
+        TooltipText.text = "> " + text;
+        int textLength = text.Length + 2;
+        Rect rect = TooltipFrame.rect;
+        TooltipFrame.sizeDelta = new Vector2(20 + 13 * textLength, rect.height);
     }
 }
