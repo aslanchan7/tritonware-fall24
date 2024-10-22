@@ -632,7 +632,7 @@ public abstract class Unit : Entity, IDamageable
         if (bed != null)
         {
             bed.RemovePatient();
-            Debug.Log("Removed patient " + name);
+            // Debug.Log("Removed patient " + name);
         }
     }
 

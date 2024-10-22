@@ -24,7 +24,7 @@ public class HospitalBed : Workstation
 
     public void RemovePatient()
     {
-        Debug.Log("successfuly removed");
+        // Debug.Log("successfuly removed");
         var positions = GetSurroundingTiles();
         if (positions.Count == 0)
         {
@@ -33,13 +33,13 @@ public class HospitalBed : Workstation
         }
         Patient.InsideStructure = null;
         Patient.Place(positions[0]);
-        if (Patient is VisitorUnit v) 
+        if (Patient is VisitorUnit v)
         {
             if (v.IsActive)
             {
                 v.TryFindBed();
             }
-            
+
         };
         Patient = null;
         if (!GameManager.Instance.AvailableBeds.Contains(this))
