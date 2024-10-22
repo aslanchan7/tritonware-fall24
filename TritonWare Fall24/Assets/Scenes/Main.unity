@@ -4736,7 +4736,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '> Pick up Supplies'
+  m_text: '> Tooltip Text'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e489ea1315b32514a935b24dcdc00268, type: 2}
   m_sharedMaterial: {fileID: 7887201749533341957, guid: e489ea1315b32514a935b24dcdc00268, type: 2}
@@ -5526,8 +5526,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35688c3ca75e5144e889e571e2656e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxZombieSpawnInterval: 10
-  minZombieSpawnInterval: 3
+  maxZombieSpawnInterval: 12
+  minZombieSpawnInterval: 4.5
   minPatientSpawnInterval: 30
   maxPatientSpawnInterval: 50
   spawnRateRandomness: 0.05
@@ -89266,14 +89266,14 @@ MonoBehaviour:
   MedicPrefab: {fileID: 8489336810557641098, guid: b1d464c742ef5a34182dd737f983dadf, type: 3}
   ScientistPrefab: {fileID: 6759885552694440125, guid: 1c9d460ad7b7fed47b58ce624febce98, type: 3}
   InfectionProgressSpeed: 0.01
-  InfectionTurnChance: 0.8
+  InfectionTurnChance: 0.7
   MinInfectionToTurn: 0.2
   infectionWaveInterval: 55
   infectionWaveIntervalRandomness: 0.25
   setupTime: 10
   isSettingUp: 0
   InitialDifficultyScaling: 1
-  TimeToMaxDifficuly: 900
+  TimeToMaxDifficulty: 900
   MaxDifficultyScaling: 2
   PatientsCured: 0
   doctorSprites:

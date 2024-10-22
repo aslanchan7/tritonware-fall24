@@ -43,8 +43,8 @@ public class GameManager : MonoBehaviour
 
     public static float DifficultyScaling;
     public static float ReducedDifficultyScaling => Mathf.Sqrt(DifficultyScaling);
-    public float TimeToMaxDifficuly = 300f;
-    private float difficultyScaleRate => (MaxDifficultyScaling - 1) / TimeToMaxDifficuly;
+    public float TimeToMaxDifficulty = 300f;
+    private float difficultyScaleRate => (MaxDifficultyScaling - 1) / TimeToMaxDifficulty;
     public float MaxDifficultyScaling = 1.5f;
 
     public List<Unit> AllUnitPrefabs() => new() { SoldierPrefab, MedicPrefab, ScientistPrefab };
@@ -64,6 +64,13 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        DifficultySetting difficulty = SceneController.Instance.SelectedDifficulty;
+        InitialDifficultyScaling = difficulty.InitialDifficultyScaling;
+        TimeToMaxDifficulty = difficulty.TimeToMaxDifficulty;
+        MaxDifficultyScaling = difficulty.MaxDifficultyScaling;
+
+
         DifficultyScaling = InitialDifficultyScaling;
         waveTimer = waveInterval;
         infectionWaveTimer = infectionWaveInterval;
