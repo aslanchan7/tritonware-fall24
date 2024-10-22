@@ -552,9 +552,8 @@ public abstract class Unit : Entity, IDamageable
 
     protected virtual IEnumerator TurnIntoUnitCoroutine(Unit newUnitPrefab, float time)         // for zombie turning and recruitment
     {
-        IsActive = false;
         TryExitBed();
-
+        IsActive = false;
         // Disable movement
         enableMovement = false;
         Unit newUnit = Instantiate(newUnitPrefab, transform.parent);

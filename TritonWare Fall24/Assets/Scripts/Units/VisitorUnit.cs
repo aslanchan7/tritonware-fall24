@@ -16,6 +16,7 @@ public class VisitorUnit : Unit
     protected override void Update()
     {
         base.Update();
+        if (!IsActive) return;
         if (CurrentState == PatientState.PathingToBed)
         {
             if (pathTimer <= 0f)
