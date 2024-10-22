@@ -16,7 +16,7 @@ public class VisionController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        fog.sharedMaterial.color = Color.black.WithAlpha(FogAlpha);
+        fog.sharedMaterial.color = new (0,0,0,FogAlpha);
     }
 
     private void Update()

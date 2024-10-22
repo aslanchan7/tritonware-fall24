@@ -54,7 +54,7 @@ public class BlackoutController : MonoBehaviour
         if (startWithVision)
         {
             // flicker
-            Fog.sharedMaterial.color = Color.black.WithAlpha(0.6f);
+            Fog.sharedMaterial.color = new(0,0,0,0.6f);
             yield return new WaitForSeconds(0.1f);
             VisionController.Instance.ToggleVision(true);
             yield return new WaitForSeconds(0.15f);
@@ -63,7 +63,7 @@ public class BlackoutController : MonoBehaviour
             VisionController.Instance.ToggleVision(true);
             yield return new WaitForSeconds(0.6f);
         }
-        Fog.sharedMaterial.color = Color.black.WithAlpha(0.995f);
+        Fog.sharedMaterial.color = new(0, 0, 0, 0.995f);
         VisionController.Instance.ToggleVision(false);
 
         GameManager.Instance.TriggerInfectionWave(1.3f);
@@ -81,7 +81,7 @@ public class BlackoutController : MonoBehaviour
         }
         ControlStation.ToggleEnabled(true);
         blackoutActive = false;
-        Fog.sharedMaterial.color = Color.black.WithAlpha(VisionController.Instance.FogAlpha);
+        Fog.sharedMaterial.color = new(0, 0, 0, VisionController.Instance.FogAlpha);
     }
 
 }

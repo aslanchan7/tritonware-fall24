@@ -204,7 +204,7 @@ public class OverlayManager : MonoBehaviour
 
             if (!isOffScreen)
             {
-                indicator.SpriteRenderer.color = Color.white.WithAlpha(0.5f);
+                indicator.SpriteRenderer.color = new(1, 1, 1, 0.5f);
             }
             else
             {
