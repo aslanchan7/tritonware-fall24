@@ -48,6 +48,8 @@ public class OverlayManager : MonoBehaviour
     public GameObject GameOverScreen;
     public TMP_Text scoreText, timeText, curesText, difficutyText;
 
+    public Transform ZombieActivityBar;
+
     private void Awake()
     {
         Instance = this;
@@ -247,5 +249,10 @@ public class OverlayManager : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         SceneController.Instance.ReturnToMenu();
+    }
+
+    public void ShowZombieActivity(float activity)
+    {
+        ZombieActivityBar.localScale = new Vector3(activity, 1, 1);
     }
 }

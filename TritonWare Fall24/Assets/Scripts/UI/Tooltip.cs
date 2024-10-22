@@ -63,9 +63,11 @@ public class Tooltip : MonoBehaviour
         }
         SetPosition();
         SetEnabled(true);
+        int textLength = text.Length;
         if (type == TooltipType.Interactable)
         {
-            TooltipText.text = "> " + text;
+            TooltipText.text = "<u>> " + text + "</u>";
+            textLength += 2;
             TooltipText.color = InteractableColor;
         }
         else
@@ -80,7 +82,7 @@ public class Tooltip : MonoBehaviour
             }
         }
         
-        int textLength = TooltipText.text.Length;
+        
         Rect rect = TooltipFrame.rect;
         TooltipFrame.sizeDelta = new Vector2(15 + 13 * textLength, rect.height);
     }

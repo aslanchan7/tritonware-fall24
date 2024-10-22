@@ -27,6 +27,8 @@ public class UnitSpawner : MonoBehaviour
 
     private float initialState;
 
+
+
     private void Awake()
     {
         spawnablePositions = MapManager.Instance.GetMapEdge();
@@ -40,14 +42,22 @@ public class UnitSpawner : MonoBehaviour
     {
         // Using Perlin Noise for random but smooth fluctuation
         float spawnRateNoise = Mathf.PerlinNoise(initialState + Time.time * spawnRateRandomness, 0);
+        float patientSpawnRateNoise = Mathf.PerlinNoise(initialState + Time.time * spawnRateRandomness, 1000);
+        OverlayManager.Instance.ShowZombieActivity(1 - Mathf.Clamp(
+                Mathf.Lerp(-0.2f, 1.2f, spawnRateNoise), 0, 0.9f));
         if (zombieSpawnTimer <= 0f)
         {
-            zombieSpawnTimer = Mathf.Lerp(minZombieSpawnInterval, maxZombieSpawnInterval, spawnRateNoise) / GameManager.DifficultyScaling;
+            zombieSpawnTimer = Mathf.Clamp(
+                Mathf.Lerp(0.85f * minZombieSpawnInterval, 1.15f * maxZombieSpawnInterval, spawnRateNoise),
+                minZombieSpawnInterval,
+                maxZombieSpawnInterval);
+            zombieSpawnTimer /= GameManager.DifficultyScaling;
+            Debug.Log(zombieSpawnTimer);
             SpawnGroup(spawnablePositions[Random.Range(0, spawnablePositions.Count)]);
         }
         if (patientSpawnTimer <= 0f)
         {
-            patientSpawnTimer = Mathf.Lerp(minPatientSpawnInterval, maxPatientSpawnInterval, spawnRateNoise) / GameManager.ReducedDifficultyScaling;
+            patientSpawnTimer = Mathf.Lerp(minPatientSpawnInterval, maxPatientSpawnInterval, patientSpawnRateNoise) / GameManager.ReducedDifficultyScaling;
             StartCoroutine(SpawnPatientCoroutine());
         }
 
@@ -134,4 +144,6 @@ public class UnitSpawner : MonoBehaviour
         newUnit.Place(pos);
         return newUnit;
     }
+
+
 }

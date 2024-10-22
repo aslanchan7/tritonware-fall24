@@ -20,7 +20,7 @@ public class ResourceManager : MonoBehaviour
     {
         ResourceValue += changeBy;
         ResourceValue = Math.Clamp(ResourceValue, 0, maxResourceValue);
-        // ResourceAmountText.text = ResourceValue.ToString();
+        ResourceAmountText.text = ResourceValue.ToString();
         ResourceBar.localScale = new Vector3((float)ResourceValue / maxResourceValue, 1, 1);
     }
 
@@ -28,13 +28,13 @@ public class ResourceManager : MonoBehaviour
     {
         ResourceValue = level;
         ResourceValue = Math.Clamp(ResourceValue, 0, maxResourceValue);
-        // ResourceAmountText.text = ResourceValue.ToString();
+        ResourceAmountText.text = ResourceValue.ToString();
         ResourceBar.localScale = new Vector3((float)ResourceValue / maxResourceValue, 1, 1);
     }
 
     public void Init()
     {
-        // ResourceAmountText.text = ResourceValue.ToString();
+        ResourceAmountText.text = ResourceValue.ToString();
         ResourceBar.localScale = new Vector3((float)ResourceValue / maxResourceValue, 1, 1);
     }
 }
