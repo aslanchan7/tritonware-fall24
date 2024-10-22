@@ -50,12 +50,14 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) camMoveVector.x = -1;
         else if (Input.GetKey(KeyCode.D)) camMoveVector.x = 1;
 
+        float mouseHorizontal = (mousePos.x / screenWidth - 0.5f) * 2;  // -1 to 1, centered at 0
+        float mouseVertical = (mousePos.y / screenHeight - 0.5f) * 2;
+
         if (mouseControlsEnabled && camMoveVector == Vector2.zero)
         {
             // MOUSE CONTROLS
 
-            float mouseHorizontal = (mousePos.x / screenWidth - 0.5f) * 2;  // -1 to 1, centered at 0
-            float mouseVertical = (mousePos.y / screenHeight - 0.5f) * 2;
+
 
 
             // Pan camera to the right if mouse is near the right edge
@@ -82,21 +84,26 @@ public class CameraController : MonoBehaviour
                 camMoveVector = new Vector2(mouseHorizontal, -1);
             }
             
-            cameraTargetLocation += camMoveVector.normalized * Time.deltaTime * panSpeed;
-
-            // Camera zoom
-            Vector2 mouseScroll = Input.mouseScrollDelta;
-
-            if(mouseScroll.magnitude > 0 ) {
-                float newOrthographicSize = zoomTargetOrthographicSize - mouseScroll.y * zoomSensitivity;
-                zoomTargetOrthographicSize = Math.Clamp(newOrthographicSize, 5, 25);
-
-                float zoomMultiplier = (1 - zoomTargetOrthographicSize / mainCamera.orthographicSize);
-
-                cameraTargetLocation += new Vector2((mouseHorizontal*cameraWidth/2f)*(zoomMultiplier), (mouseVertical*cameraHeight/2f)*(zoomMultiplier));
             
-                mainCamera.orthographicSize = zoomTargetOrthographicSize;
-            }            
+
+       
+        }
+
+        cameraTargetLocation += camMoveVector.normalized * Time.deltaTime * panSpeed;
+
+        // Camera zoom
+        Vector2 mouseScroll = Input.mouseScrollDelta;
+
+        if (mouseScroll.magnitude > 0)
+        {
+            float newOrthographicSize = zoomTargetOrthographicSize - mouseScroll.y * zoomSensitivity;
+            zoomTargetOrthographicSize = Math.Clamp(newOrthographicSize, 5, 25);
+
+            float zoomMultiplier = (1 - zoomTargetOrthographicSize / mainCamera.orthographicSize);
+
+            cameraTargetLocation += new Vector2((mouseHorizontal * cameraWidth / 2f) * (zoomMultiplier), (mouseVertical * cameraHeight / 2f) * (zoomMultiplier));
+
+            mainCamera.orthographicSize = zoomTargetOrthographicSize;
         }
 
 
@@ -109,8 +116,13 @@ public class CameraController : MonoBehaviour
         Vector2 newMaxCameraPos = new(maxCameraPos.x - cameraWidth / 2f, maxCameraPos.y - cameraHeight / 2f);
         // cameraPos.x = Mathf.Clamp(cameraPos.x, newMinCameraPos.x, newMaxCameraPos.x);
         // cameraPos.y = Mathf.Clamp(cameraPos.y, newMinCameraPos.y, newMaxCameraPos.y);
-        cameraPos.x = Mathf.Clamp(cameraTargetLocation.x, newMinCameraPos.x, newMaxCameraPos.x);
-        cameraPos.y = Mathf.Clamp(cameraTargetLocation.y, newMinCameraPos.y, newMaxCameraPos.y);
+        cameraTargetLocation.x = Mathf.Clamp(cameraTargetLocation.x, newMinCameraPos.x, newMaxCameraPos.x);
+        cameraTargetLocation.y = Mathf.Clamp(cameraTargetLocation.y, newMinCameraPos.y, newMaxCameraPos.y);
+
+        cameraPos.x = cameraTargetLocation.x;
+        cameraPos.y = cameraTargetLocation.y;
+
+
 
         // Apply the new camera position
         mainCamera.transform.position = cameraPos;
