@@ -5767,6 +5767,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1224959874258794566, guid: 557838c8c0497f843aa277cf8142ff3b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3577739172105443083, guid: 557838c8c0497f843aa277cf8142ff3b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -89281,7 +89285,7 @@ MonoBehaviour:
   patientSprites:
   - {fileID: 21300000, guid: 5fb1132cf3cb13d44b014ed24f3aa17f, type: 3}
   scientistSprites:
-  - {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+  - {fileID: 21300000, guid: 2a39cf33e8ec3404199ac1fbd33c49c4, type: 3}
   soldierSprites:
   - {fileID: 21300000, guid: 54e996a660754bd4b967ac1460a4500b, type: 3}
   medicSprites:
