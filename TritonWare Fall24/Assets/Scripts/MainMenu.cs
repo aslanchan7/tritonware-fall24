@@ -6,4 +6,9 @@ public class MainMenu : MonoBehaviour
     {
         SceneController.Instance.StartGame();
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
