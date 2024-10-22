@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Medic : AlliedUnit
 {
+    public override UnitType GetUnitType()
+    {
+        return UnitType.Medic;
+    }
+
     public override void SetEfficiencyValues()
     {
         Efficiency.Add(Tasks.Hospital, 1f);

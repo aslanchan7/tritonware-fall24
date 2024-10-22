@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public ResourceManager CureResource;
 
     public float waveInterval = 30f;       // average seconds between waves
-    [Range(0f,1f)] public float waveIntervalVariance = 0.3f;  // randomness multiplier
+    [Range(0f, 1f)] public float waveIntervalVariance = 0.3f;  // randomness multiplier
     private float waveTimer;
     [Range(0f, 1f)] public float waveAggroChance = 0.8f;
     [Range(0f, 1f)] public float rushChance = 0.4f;
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     [Range(0f, 1f)] public float InfectionTurnChance;
     [Range(0f, 1f)] public float MinInfectionToTurn = 0.3f;
     [SerializeField] private float infectionWaveInterval;
-    [Range(0f, 1f)] [SerializeField] private float infectionWaveIntervalRandomness = 0.2f;
+    [Range(0f, 1f)][SerializeField] private float infectionWaveIntervalRandomness = 0.2f;
     private float infectionWaveTimer;
 
     private float startTime;
@@ -51,6 +51,16 @@ public class GameManager : MonoBehaviour
 
     public int PatientsCured = 0;
 
+    public Dictionary<UnitType, List<Sprite>> spriteVariants = new();
+
+    [Header("Sprite Variants")]
+    public List<Sprite> doctorSprites;
+    public List<Sprite> patientSprites;
+    public List<Sprite> scientistSprites;
+    public List<Sprite> soldierSprites;
+    public List<Sprite> medicSprites;
+    public List<Sprite> zombieSprites;
+
     private void Awake()
     {
         Instance = this;
@@ -64,6 +74,14 @@ public class GameManager : MonoBehaviour
 
         startTime = Time.time;
         isSettingUp = true;
+
+        // Setup spriteVariants HashMap
+        spriteVariants.Add(UnitType.Doctor, doctorSprites);
+        spriteVariants.Add(UnitType.Patient, patientSprites);
+        spriteVariants.Add(UnitType.Scientist, scientistSprites);
+        spriteVariants.Add(UnitType.Solider, soldierSprites);
+        spriteVariants.Add(UnitType.Medic, medicSprites);
+        spriteVariants.Add(UnitType.Zombie, zombieSprites);
     }
 
     private void Update()

@@ -42,4 +42,9 @@ public class Zombie : EnemyUnit
         if (possible.Count > 0) { return possible[Random.Range(0, possible.Count)]; }
         return null;
     }
+
+    public override UnitType GetUnitType()
+    {
+        return UnitType.Zombie;
+    }
 }

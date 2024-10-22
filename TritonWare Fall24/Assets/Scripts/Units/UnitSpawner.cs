@@ -44,7 +44,7 @@ public class UnitSpawner : MonoBehaviour
         float spawnRateNoise = Mathf.PerlinNoise(initialState + Time.time * spawnRateRandomness, 0);
         if (zombieSpawnTimer <= 0f)
         {
-            zombieSpawnTimer = Mathf.Lerp(minZombieSpawnInterval, maxZombieSpawnInterval, spawnRateNoise) / GameManager.DifficultyScaling; 
+            zombieSpawnTimer = Mathf.Lerp(minZombieSpawnInterval, maxZombieSpawnInterval, spawnRateNoise) / GameManager.DifficultyScaling;
             SpawnGroup(spawnablePositions[Random.Range(0, spawnablePositions.Count)]);
         }
         if (patientSpawnTimer <= 0f)
@@ -56,7 +56,7 @@ public class UnitSpawner : MonoBehaviour
         if (!GameManager.Instance.isSettingUp)
         {
             zombieSpawnTimer -= Time.deltaTime;
-            
+
         }
         patientSpawnTimer -= Time.deltaTime;
 
@@ -72,7 +72,7 @@ public class UnitSpawner : MonoBehaviour
             // really hacky code
             newPatient.UnPlace();
             newPatient.UnitDisplay.enabled = false;
-            MapManager.Instance.GetTile(newPatient.Pos).ContainedUnit = newPatient;     
+            MapManager.Instance.GetTile(newPatient.Pos).ContainedUnit = newPatient;
             OverlayManager.Instance.CreateTargetIndicator(newPatient.Pos, TargetIndicatorType.PatientSpawn);
             yield return new WaitForSeconds(3);
             newPatient.Place(newPatient.Pos);
@@ -136,8 +136,4 @@ public class UnitSpawner : MonoBehaviour
         newUnit.Place(pos);
         return newUnit;
     }
-
-
-
-
 }

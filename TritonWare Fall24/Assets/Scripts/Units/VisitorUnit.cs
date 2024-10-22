@@ -78,4 +78,9 @@ public class VisitorUnit : Unit
         pathTimer = 1f;
         CurrentState = PatientState.PathingToBed;
     }
+
+    public override UnitType GetUnitType()
+    {
+        return UnitType.Patient;
+    }
 }

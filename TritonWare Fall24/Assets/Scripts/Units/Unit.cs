@@ -11,9 +11,10 @@ public abstract class Unit : Entity, IDamageable
     public override bool BlocksVision => false;
     public override Vector2Int Size => new Vector2Int(1, 1);
 
-    public float Speed {
+    public float Speed
+    {
         get => staggerTimer > 0 ? speed * StaggerSlow : speed;
-        set => speed = value; 
+        set => speed = value;
     }
 
     // Stats
@@ -24,7 +25,7 @@ public abstract class Unit : Entity, IDamageable
     // Stagger (slow when taking damage)
     public float StaggerSlow = 0.7f;
     private float staggerTimer;
-    private float staggerTime = 0.5f;     
+    private float staggerTime = 0.5f;
 
     // Tasks
     public List<Task> TaskQueue = new List<Task>();     // stores the immediate next task at index 0
@@ -65,7 +66,7 @@ public abstract class Unit : Entity, IDamageable
 
     public Weapon Weapon;
 
-    public GameObject GetGameObject() 
+    public GameObject GetGameObject()
     {
         if (this == null || gameObject == null)
         {
@@ -81,6 +82,20 @@ public abstract class Unit : Entity, IDamageable
         Seeker = GetComponent<Seeker>();
         Weapon = GetComponentInChildren<Weapon>();
         LastIncremented = Time.time;
+    }
+
+    void Start()
+    {
+        // Assign random sprite of the correct unit type to this unit
+        UnitType unitType = GetUnitType();
+        if (GameManager.Instance.spriteVariants.ContainsKey(unitType))
+        {
+            List<Sprite> sprites = GameManager.Instance.spriteVariants.GetValueOrDefault(unitType, null);
+            if (sprites != null)
+            {
+                UnitSprite.sprite = sprites.RandomElement();
+            }
+        }
     }
 
     public void Place(Vector2Int pos)
@@ -621,5 +636,15 @@ public abstract class Unit : Entity, IDamageable
         }
     }
 
+    public abstract UnitType GetUnitType();
+}
 
+public enum UnitType
+{
+    Zombie,
+    Solider,
+    Doctor,
+    Medic,
+    Scientist,
+    Patient
 }

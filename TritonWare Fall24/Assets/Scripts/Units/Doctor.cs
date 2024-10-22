@@ -67,7 +67,7 @@ public class Doctor : AlliedUnit
             Entity hitEntity = hit.collider.GetComponent<Entity>();
             if (unit == hitEntity)
             {
-                
+
                 return true;
             }
             else if (hitEntity.BlocksVision)
@@ -76,5 +76,10 @@ public class Doctor : AlliedUnit
             }
         }
         return false;
+    }
+
+    public override UnitType GetUnitType()
+    {
+        return UnitType.Doctor;
     }
 }
