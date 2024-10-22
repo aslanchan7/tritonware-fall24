@@ -52,7 +52,6 @@ public class UnitSpawner : MonoBehaviour
                 minZombieSpawnInterval,
                 maxZombieSpawnInterval);
             zombieSpawnTimer /= GameManager.DifficultyScaling;
-            Debug.Log(zombieSpawnTimer);
             SpawnGroup(spawnablePositions[Random.Range(0, spawnablePositions.Count)]);
         }
         if (patientSpawnTimer <= 0f)
