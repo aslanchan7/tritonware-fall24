@@ -99,12 +99,6 @@ public class GameManager : MonoBehaviour
         spriteVariants.Add(UnitType.Solider, soldierSprites);
         spriteVariants.Add(UnitType.Medic, medicSprites);
         spriteVariants.Add(UnitType.Zombie, zombieSprites);
-
-        for (int i = 0; i < 100; i++)
-        {
-            Debug.Log(GetWeightedUnitDraw());
-        }
-
     }
 
     private void Update()
