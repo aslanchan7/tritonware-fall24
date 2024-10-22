@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 using Random = UnityEngine.Random;
 
 public class Infection
@@ -32,9 +31,9 @@ public class Infection
         {
             OverlayManager.Instance.CreateTargetIndicator(InfectedUnit.Pos, TargetIndicatorType.ZombieTurn);
         }
-        
+
         InfectedUnit.TurnIntoUnit(GameManager.Instance.TurnedZombiePrefab);
-        
+
 
     }
 

@@ -11,6 +11,15 @@ public class ResourcePickup : Entity
 
     public ResourceManager ResourceType;
     public int Value;
+
+    public SpriteRenderer spriteRenderer;
+    public List<Sprite> spriteVariants = new();
+
+    public void Awake()
+    {
+        spriteRenderer.sprite = spriteVariants.RandomElement();
+    }
+
     public void Place(Vector2Int pos)
     {
         Pos = pos;

@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.WSA;
 
 
 public class MapManager : MonoBehaviour
@@ -37,8 +36,8 @@ public class MapManager : MonoBehaviour
 
     private void Update()
     {
-     
-        
+
+
     }
 
 
@@ -76,7 +75,7 @@ public class MapManager : MonoBehaviour
                 if (inBounds && Vector2Int.Distance(pos, origin) <= radius + 0.05f)
                 {
                     tiles.Add(GetTile(pos));
-                }     
+                }
 
             }
         }
@@ -174,7 +173,7 @@ public class MapManager : MonoBehaviour
         // Setup a grid graph with some values
         float nodeSize = 1;
 
-        gg.center = new Vector3(MapSize.x/2f, MapSize.y/2f, 0);
+        gg.center = new Vector3(MapSize.x / 2f, MapSize.y / 2f, 0);
 
         // Updates internal size from the above values
         gg.SetDimensions(MapSize.x, MapSize.y, nodeSize);
@@ -247,10 +246,11 @@ public class MapManager : MonoBehaviour
             new Vector2Int(pos.x - 1, pos.y), // Left
             new Vector2Int(pos.x + 1, pos.y), // Right
             new Vector2Int(pos.x, pos.y - 1), // Down
-            new Vector2Int(pos.x, pos.y + 1) }) { // Up
+            new Vector2Int(pos.x, pos.y + 1) })
+        { // Up
 
             if (InPlayableBounds(toAdd)) adjacents.Add(toAdd);
-        }  
+        }
 
         return adjacents;
     }
@@ -265,7 +265,7 @@ public class MapManager : MonoBehaviour
             {
                 if (i == j && i == 0) continue;
                 Vector2Int neighbor = pos + new Vector2Int(i, j);
-                if (InPlayableBounds(neighbor)) 
+                if (InPlayableBounds(neighbor))
                 {
                     neighbors.Add(neighbor);
                 }
