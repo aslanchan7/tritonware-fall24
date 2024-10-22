@@ -524,6 +524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pos: {x: 13, y: 27}
   StructureTaskTemplate: {fileID: 0}
+  Description: 
 --- !u!4 &121968203
 Transform:
   m_ObjectHideFlags: 0
@@ -4713,7 +4714,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 15, y: -4}
+  m_AnchoredPosition: {x: 10, y: -4}
   m_SizeDelta: {x: 250, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &669092466
@@ -5767,7 +5768,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneManager
       objectReference: {fileID: 0}
-    - target: {fileID: 1224959874258794566, guid: 557838c8c0497f843aa277cf8142ff3b, type: 3}
+    - target: {fileID: 2826343951291066583, guid: 557838c8c0497f843aa277cf8142ff3b, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -6359,7 +6360,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 15, y: 0}
   m_SizeDelta: {x: 250, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1481648097
@@ -89554,6 +89555,11 @@ MonoBehaviour:
   TooltipText: {fileID: 669092466}
   TooltipContainer: {fileID: 1909439591}
   TooltipFrame: {fileID: 1481648096}
+  InteractableColor: {r: 0.49411765, g: 0.9254902, b: 0.4745098, a: 1}
+  AllyColor: {r: 0.38412246, g: 0.93247163, b: 0.9811321, a: 1}
+  NormalColor: {r: 0.9245283, g: 0.9245283, b: 0.9245283, a: 1}
+  PatientColor: {r: 1, g: 0.955935, b: 0.3537736, a: 1}
+  EnemyColor: {r: 1, g: 0.4669811, b: 0.4669811, a: 1}
 --- !u!1 &1910399205
 GameObject:
   m_ObjectHideFlags: 0

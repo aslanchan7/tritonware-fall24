@@ -135,6 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pos: {x: 5, y: 2}
   StructureTaskTemplate: {fileID: 0}
+  Description: Fusebox
   workstationSize: {x: 1, y: 1}
   RelativeWorkTilePos: {x: -1, y: 0}
   WorkTileIcon: {fileID: 8312230866362561685}

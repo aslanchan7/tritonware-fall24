@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 50, y: 40}
+  Description: The Doctor
   Health: 150
   MaxHealth: 150
   speed: 5

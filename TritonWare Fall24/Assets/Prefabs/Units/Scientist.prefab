@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 18, y: 18}
+  Description: Scientist
   Health: 80
   MaxHealth: 80
   speed: 5

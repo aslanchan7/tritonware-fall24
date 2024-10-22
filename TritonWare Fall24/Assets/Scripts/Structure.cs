@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class Structure : Entity
 {
     public Task StructureTaskTemplate = null;   // task performed by walking up to structure e.g. getting in bed
-    
+    public string Description;
     public Task PrepareStructureTask(Unit worker)
     {
         if (StructureTaskTemplate == null) return null;

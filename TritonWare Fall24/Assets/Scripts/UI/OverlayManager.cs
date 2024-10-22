@@ -87,9 +87,9 @@ public class OverlayManager : MonoBehaviour
     public void HoverTile(Vector2Int pos)
     {
         HoverOverlay.transform.position = MapManager.Instance.GetWorldPos(pos);
+        MapTile tile = MapManager.Instance.GetTile(pos);
         if (UnitController.Instance.SelectedUnits.Count > 0)
         { 
-            MapTile tile = MapManager.Instance.GetTile(pos);
             if (tile.ReservingWorkstation != null)
             {
                 Tooltip.Instance.SetTooltipText(tile.ReservingWorkstation.WorkstationTaskTemplate.Description);
@@ -100,13 +100,37 @@ public class OverlayManager : MonoBehaviour
                 if (tile.ContainedStructure.StructureTaskTemplate != null)
                 {
                     Tooltip.Instance.SetTooltipText(tile.ContainedStructure.StructureTaskTemplate.Description);
+                    return;
                 }
             }
             else if (tile.ContainedResource != null)
             {
                 Tooltip.Instance.SetTooltipText("Pick up Supplies");
+                return;
             }
-            else Tooltip.Instance.SetEnabled(false);
+        }
+        if (tile.ContainedUnit != null)
+        {
+            TooltipType type;
+            switch (tile.ContainedUnit.Team)
+            {
+                case Team.Allied: type = TooltipType.Ally; break;
+                case Team.Visitor: type = TooltipType.Patient; break;
+                case Team.Enemy: type = TooltipType.Enemy; break;
+                default: type = TooltipType.Neutral; break;
+            }
+            Tooltip.Instance.SetTooltipText(tile.ContainedUnit.Description, type);
+            return;
+        }
+        else if (tile.ContainedStructure != null)
+        {
+            Tooltip.Instance.SetTooltipText(tile.ContainedStructure.Description, TooltipType.Neutral);
+            return;
+        }
+        else if (tile.ContainedResource != null)
+        {
+            Tooltip.Instance.SetTooltipText("Supplies", TooltipType.Patient);
+            return;
         }
         else Tooltip.Instance.SetEnabled(false);
     }

@@ -1,6 +1,11 @@
 using TMPro;
 using UnityEngine;
 
+public enum TooltipType
+{
+    Interactable, Ally, Neutral, Patient, Enemy
+}
+
 public class Tooltip : MonoBehaviour
 {
     public static Tooltip Instance;
@@ -10,6 +15,11 @@ public class Tooltip : MonoBehaviour
     public RectTransform TooltipContainer;
     public RectTransform TooltipFrame;
 
+    public Color InteractableColor;
+    public Color AllyColor;
+    public Color NormalColor;
+    public Color PatientColor;
+    public Color EnemyColor;
 
     private void Awake()
     {
@@ -44,13 +54,34 @@ public class Tooltip : MonoBehaviour
         }
     }
 
-    public void SetTooltipText(string text)
+    public void SetTooltipText(string text, TooltipType type = TooltipType.Interactable)
     {
+        if (text.Length == 0)
+        {
+            SetEnabled(false);
+            return;
+        }
         SetPosition();
         SetEnabled(true);
-        TooltipText.text = "> " + text;
-        int textLength = text.Length + 2;
+        if (type == TooltipType.Interactable)
+        {
+            TooltipText.text = "> " + text;
+            TooltipText.color = InteractableColor;
+        }
+        else
+        {
+            TooltipText.text = text;
+            switch (type)
+            {
+                case TooltipType.Neutral: TooltipText.color = NormalColor; break;
+                case TooltipType.Ally: TooltipText.color = AllyColor; break;
+                case TooltipType.Patient: TooltipText.color = PatientColor; break;
+                case TooltipType.Enemy: TooltipText.color = EnemyColor; break;
+            }
+        }
+        
+        int textLength = TooltipText.text.Length;
         Rect rect = TooltipFrame.rect;
-        TooltipFrame.sizeDelta = new Vector2(20 + 13 * textLength, rect.height);
+        TooltipFrame.sizeDelta = new Vector2(15 + 13 * textLength, rect.height);
     }
 }

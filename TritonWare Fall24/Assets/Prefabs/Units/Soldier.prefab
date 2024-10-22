@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 0, y: 0}
+  Description: Soldier
   Health: 100
   MaxHealth: 100
   speed: 5

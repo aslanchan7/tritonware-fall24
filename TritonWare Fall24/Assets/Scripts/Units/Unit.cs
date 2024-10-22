@@ -11,6 +11,7 @@ public abstract class Unit : Entity, IDamageable
     public override bool BlocksVision => false;
     public override Vector2Int Size => new Vector2Int(1, 1);
 
+    public string Description;
     public float Speed
     {
         get => staggerTimer > 0 ? speed * StaggerSlow : speed;

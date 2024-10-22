@@ -281,6 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 20, y: 0}
+  Description: Viral Zombie
   Health: 130
   MaxHealth: 130
   speed: 7.5

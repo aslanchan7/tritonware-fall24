@@ -24,6 +24,7 @@ public class SceneController : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         SelectDifficulty(1);
+        fadeScreen.gameObject.SetActive(true);
     }
 
     public void StartGame()

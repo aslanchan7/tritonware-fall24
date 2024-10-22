@@ -281,6 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 20, y: 0}
+  Description: Zombie
   Health: 40
   MaxHealth: 40
   speed: 6.5

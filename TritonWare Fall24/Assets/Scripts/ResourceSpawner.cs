@@ -19,7 +19,7 @@ public class ResourceSpawner : MonoBehaviour
     {
 
         spawnablePositions = MapManager.Instance.GetPlayableMapEdge();
-        spawnTimer = minSpawnInterval;
+        spawnTimer = maxSpawnInterval;
         SpawnGroup(spawnablePositions[Random.Range(0, spawnablePositions.Count)]);
         SpawnGroup(spawnablePositions[Random.Range(0, spawnablePositions.Count)]);
     }
