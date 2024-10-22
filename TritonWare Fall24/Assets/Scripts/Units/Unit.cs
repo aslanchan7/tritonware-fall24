@@ -158,7 +158,7 @@ public abstract class Unit : Entity, IDamageable
         else return null;
     }
 
-    protected void CheckWorkableTask()    // on arriving at move destination, see if the enqueued task is workable, and start working if yes
+    public bool CheckWorkableTask()    // on arriving at move destination, see if the enqueued task is workable, and start working if yes
     {
         Task currentTask = GetCurrentTask();
         if (currentTask != null)
@@ -166,8 +166,10 @@ public abstract class Unit : Entity, IDamageable
             if (currentTask.ValidWorkingPositions.Contains(Pos))
             {
                 currentTask.StartTask();
+                return true;
             }
         }
+        return false;
     }
 
     public IEnumerator PathfindCoroutine(Vector2Int targetPos, bool resetCounters = true)

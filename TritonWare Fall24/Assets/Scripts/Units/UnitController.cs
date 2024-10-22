@@ -77,6 +77,7 @@ public class UnitController : MonoBehaviour
         }
         else if (SelectedUnits.Count == 1) 
         {
+            if (SelectedUnits[0].CheckWorkableTask()) return;
             Structure structure = MapManager.Instance.GetTile(pos).ContainedStructure;
             if (structure != null && structure.StructureTaskTemplate != null)
             {
@@ -92,6 +93,7 @@ public class UnitController : MonoBehaviour
                     Debug.LogWarning("Structure returned null task");
                     return;
                 }
+                if (SelectedUnits[0].CheckWorkableTask()) return;
                 OrderMove(task.ValidWorkingPositions.GetClosest(SelectedUnits[0].Pos));
             }
         }

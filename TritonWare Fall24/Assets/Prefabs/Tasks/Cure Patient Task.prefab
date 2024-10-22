@@ -52,6 +52,7 @@ MonoBehaviour:
   ValidWorkingPositions: []
   Structure: {fileID: 0}
   ProgressBar: {fileID: 4630872733638749576}
+  Description: Treat Patient
   cureProgress: 0
   cureSpeed: 0.05
 --- !u!1001 &288762662578458959

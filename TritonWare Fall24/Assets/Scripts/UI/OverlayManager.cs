@@ -87,17 +87,24 @@ public class OverlayManager : MonoBehaviour
     public void HoverTile(Vector2Int pos)
     {
         HoverOverlay.transform.position = MapManager.Instance.GetWorldPos(pos);
-
-        /*
-        foreach (MapTile tile in MapManager.Instance.Tiles)
-        {
-            tile.SpriteRenderer.enabled = false;
+        if (UnitController.Instance.SelectedUnits.Count > 0)
+        { 
+            MapTile tile = MapManager.Instance.GetTile(pos);
+            if (tile.ReservingWorkstation != null)
+            {
+                Tooltip.Instance.SetTooltipText(tile.ReservingWorkstation.WorkstationTaskTemplate.Description);
+                return;
+            }
+            else if (tile.ContainedStructure != null)
+            {
+                if (tile.ContainedStructure.StructureTaskTemplate != null)
+                {
+                    Tooltip.Instance.SetTooltipText(tile.ContainedStructure.StructureTaskTemplate.Description);
+                }
+            }
+            else Tooltip.Instance.SetEnabled(false);
         }
-        foreach (MapTile tile in MapManager.Instance.GetTilesInRadius(pos, 2.5f))
-        {
-            tile.SpriteRenderer.enabled = true;
-        }
-        */
+        else Tooltip.Instance.SetEnabled(false);
     }
 
     public void SelectTiles(Vector2Int pos1, Vector2Int pos2)

@@ -51,3 +51,4 @@ MonoBehaviour:
   ValidWorkingPositions: []
   Structure: {fileID: 0}
   ProgressBar: {fileID: 0}
+  Description: Get in Bed

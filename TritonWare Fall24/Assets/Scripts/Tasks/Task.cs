@@ -12,6 +12,8 @@ public abstract class Task : MonoBehaviour
     public List<Vector2Int> ValidWorkingPositions = new List<Vector2Int>();
     public Structure Structure;
     public ProgressBar ProgressBar = null;
+    public string Description = "Begin Task";
+
 
     private void Awake()
     {
